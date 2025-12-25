@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Franoll Fantu - Portfolio</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e5ddd5;
+        color: #2c2c2c;
+        overflow-x: hidden;
+      }
+
+      /* Navigation */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        padding: 2rem 4rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        background-color: rgba(229, 221, 213, 0.95);
+        backdrop-filter: blur(10px);
+      }
+
+      .logo {
+        font-size: 1.2rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: #1a1a1a;
+      }
+
+      
+
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+  display: inline-block; 
+  text-decoration: none;
+  color: #2c2c2c;
+  font-size: 1rem;
+  transition: transform 0.25s ease, color 0.3s ease;
+  position: relative;
+}
+
+
+      .nav-links a:hover {
+        transform: scale(1.15);
+      }
+
+      
+
+      /* Hero Section */
+      .hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  /* Change this from 500px to something larger, or remove it */
+  max-width: 1200px; 
+  margin: 0 auto;
+  gap: 2rem; /* Adds some space between text and image */
+}
+
+
+      .hero h1 {
+        font-size: 4rem;
+        color: #1a1a1a;
+        line-height: 1.2;
+      }
+
+      .hero h1 .name {
+        color: #FFFF;
+        display: block;
+      }
+
+      .rotating-text {
+        display: inline-block;
+        color: #1a1a1a;
+        min-width: 300px;
+        position: relative;
+      }
+
+      .rotating-text::after {
+        content: "|";
+        animation: blink 0.7s infinite;
+        margin-left: 2px;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      .subtitle {
+        font-size: 2.2rem;
+        color: #6b6b6b;
+        margin-bottom: 0.25rem;
+        font-weight: 300;
+        min-height: 70px;
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1.5rem;
+        size: 100px;
+      }
+
+      .social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.social-links a:hover {
+  transform: scale(1.15);
+}
+
+      /* Hero Image */
+      .hero-image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+
+      /* Scroll Indicator */
+      .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        animation: bounce 2s infinite;
+      }
+
+      .scroll-indicator span {
+        color: #6b6b6b;
+        font-size: 0.9rem;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateX(-50%) translateY(0);
+        }
+        40% {
+          transform: translateX(-50%) translateY(-10px);
+        }
+        60% {
+          transform: translateX(-50%) translateY(-5px);
+        }
+      }
+
+      .side-social {
+        position: fixed;
+        left: 24px;
+        bottom:24px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .side-social a {
+        color: #111;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+
+      .side-social a:hover {
+        opacity: 0.6;
+        transform: translateY(-2px);
+      }
+
+      .icon {
+  width: 40px;   /* try 36–48px */
+  height: 40px;
+  opacity: 1;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.sideicon{
+  width: 25px;
+  height: 25px;
+}
+
+
+.social-links a:hover .icon {
+  opacity: 0.6;
+  transform: translateY(-2px);
+}
+
+
+
+      .piskel-gif {
+       width: 731px;       /* adjust size */
+       height: auto;
+       image-rendering: pixelated;
+
+      }
+
+      /* Credit */
+      .credit {
+        position: fixed;
+        right: 1rem;
+        bottom: 1rem;
+        font-size: 0.75rem;
+        color: #6b6b6b;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        nav {
+          padding: 1.5rem 2rem;
+        }
+
+        .nav-links {
+          gap: 1.5rem;
+        }
+
+        .hero {
+          flex-direction: column;
+          padding: 6rem 2rem 2rem;
+          text-align: center;
+        }
+
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .subtitle {
+          font-size: 1.3rem;
+        }
+
+
+        .side-social {
+          display: none;
+        }
+
+        .social-links {
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">FRANOLL <span class="logo-name">FANTU</span></div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Side Social Links -->
+<div class="side-social">
+  <a href="#github" title="GitHub">
+    <img src="icons/github.svg" alt="GitHub" class="sideicon" />
+  </a>
+
+  <a href="#linkedin" title="LinkedIn">
+    <img src="icons/linkedin.svg" alt="LinkedIn" class="sideicon" />
+  </a>
+
+  <a href="#email" title="Email">
+    <img src="icons/email.svg" alt="Email" class="sideicon" />
+  </a>
+</div>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Hi, I'm <strong>Franoll</h1>
+        <p class="subtitle">
+          <span class="rotating-text" id="typewriter"></span>
+        </p>
+
+       <div class="social-links">
+  <a href="https://github.com/franollf" title="GitHub">
+    <img src="icons/github.svg" alt="GitHub" class="icon" />
+  </a>
+
+  <a href="https://www.linkedin.com/in/franollfantu/" title="LinkedIn">
+    <img src="icons/linkedin.svg" alt="LinkedIn" class="icon" />
+  </a>
+
+  <a href="mailto:ffa28@sfu.ca" title="Email">
+    <img src="icons/email.svg" alt="Email" class="icon" />
+  </a>
+</div>
+      </div>
+
+      <div class="hero-image">
+  <img
+    src="assets/franoll-piskel-blinking.gif"
+    alt="Pixel avatar of Franoll"
+    class="piskel-gif"
+  />
+</div>
+
+        </div>
+      </div>
+      <div class="scroll-indicator">
+        <span>↓</span>
+      </div>
+    </section>
+
+    <div class="credit">ffa28@sfu.ca</div>
+
+    <script>
+      // Typewriter effect
+      const texts = [
+        "a Frontend Developer",
+        "an Athlete",
+        "a Problem Solver",
+        "a Student",
+      ];
+      let textIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+      const typewriterElement = document.getElementById("typewriter");
+      const typingSpeed = 100;
+      const deletingSpeed = 50;
+      const pauseTime = 2000;
+
+      function typeWriter() {
+        const currentText = texts[textIndex];
+
+        if (isDeleting) {
+          typewriterElement.textContent = currentText.substring(
+            0,
+            charIndex - 1
+          );
+          charIndex--;
+        } else {
+          typewriterElement.textContent = currentText.substring(
+            0,
+            charIndex + 1
+          );
+          charIndex++;
+        }
+
+        let speed = isDeleting ? deletingSpeed : typingSpeed;
+
+        if (!isDeleting && charIndex === currentText.length) {
+          speed = pauseTime;
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          textIndex = (textIndex + 1) % texts.length;
+          speed = 500;
+        }
+
+        setTimeout(typeWriter, speed);
+      }
+
+      // Start the typewriter effect
+      typeWriter();
+    </script>
+  </body>
+</html>
