@@ -447,6 +447,123 @@
   object-fit: contain;
 }
 
+.projects-section {
+  padding: 8rem 4rem;
+  background: #e5ddd5;
+}
+
+.projects-title {
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+.projects-underline {
+  width: 60px;
+  height: 4px;
+  background: #111;
+  margin: 0 auto 3rem;
+  border-radius: 2px;
+}
+
+.projects-grid {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+}
+
+.project-card {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-6px);
+}
+
+.project-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.project-icon{
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+}
+
+.project-content {
+  padding: 1.75rem;
+}
+
+.project-content h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.project-content p {
+  font-size: 0.95rem;
+  color: #555;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.project-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: #f3f3f3;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #111;
+}
+
+.project-tag img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+
+.project-tags span {
+  background: #f3f3f3;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.project-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.project-links a {
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #111;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.project-links a:hover {
+  border-color: #111;
+}
+
+
 
 
 
@@ -486,6 +603,8 @@
         }
 
       }
+
+      
       
 
     </style>
@@ -628,7 +747,7 @@
     </div>
 
     <!-- Frameworks -->
-    <div class="skills-grid reveal active" id="frameworks">
+    <div class="skills-grid" id="frameworks">
       <div class="skill"><img src="icons/react.svg"><span>React.js</span></div>
       <div class="skill"><img src="icons/node.svg"><span>Node.js</span></div>
       <div class="skill"><img src="icons/express.svg"><span>Express.js</span></div>
@@ -654,6 +773,187 @@
     </div>
   </div>
 </section>
+
+<section id="projects" class="projects-section reveal">
+  <h2 class="projects-title">Projects</h2>
+  <div class="projects-underline"></div>
+
+  <div class="projects-grid">
+
+
+    <div class="project-card">
+      <img src="projects/nutriscan.png" alt="NutriScan preview" />
+      <div class="project-content">
+        <h3>NutriScan</h3>
+        <p>
+          Barcode-based nutrition tracker inspired by MyFitnessPal,
+          built as a full-stack project.
+        </p>
+
+        <div class="project-tags">
+  <span class="project-tag">
+    <img src="icons/react.svg" alt="JavaScript" />
+    React
+  </span>
+   <span class="project-tag">
+    <img src="icons/reactnative.svg" alt="JavaScript" />
+    React Native
+  </span>
+  <span class="project-tag">
+    <img src="icons/node.svg" alt="Node.js" />
+    Node.js
+  </span>
+  <span class="project-tag">
+    <img src="icons/mongodb.svg" alt="MongoDB" />
+    MongoDB
+  </span>
+  <span class="project-tag">
+    <img src="icons/fastapi.svg" alt="FastAPI" />
+    FastAPI
+  </span>
+</div>
+
+        <div class="project-links">
+          <a href="#" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="projects/elevate.png" alt="QuizLing preview" />
+      <div class="project-content">
+        <h3>Elevate</h3>
+        <p>
+          A full-stack running app that generates optimal low-elevation routes in real time, optimizing performance and reducing strain for runners anywhere.
+        </p>
+
+       <div class="project-tags">
+  <span class="project-tag">
+    <img src="icons/react.svg" alt="JavaScript" />
+    React
+  </span>
+   
+  <span class="project-tag">
+    <img src="icons/node.svg" alt="Node.js" />
+    Node.js
+  </span>
+  <span class="project-tag">
+    <img src="icons/tailwind.svg" alt="MongoDB" />
+    Tailwind
+  </span>
+  <span class="project-tag">
+    <img src="icons/google.svg" alt="FastAPI" />
+    GoogleMaps API
+  </span>
+</div>
+        <div class="project-links">
+          <a href="#" target="_blank">GitHub</a>
+          <a href="#" target="_blank">Live</a>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="project-card">
+      <img src="projects/quizling.png" alt="QuizLing preview" />
+      <div class="project-content">
+        <h3>QuizLing</h3>
+        <p>
+          An AI language learning web app featuring translation, quizzes,
+          flashcards, and progress tracking.
+        </p>
+
+        <div class="project-tags">
+  <span class="project-tag">
+    <img src="icons/react.svg" alt="JavaScript" />
+    React
+  </span>
+  <span class="project-tag">
+    <img src="icons/node.svg" alt="Node.js" />
+    Node.js
+  </span>
+  <span class="project-tag">
+    <img src="icons/google.svg" alt="MongoDB" />
+    Google API 
+  </span>
+  <span class="project-tag">
+    <img src="icons/gemini.png" alt="FastAPI" />
+    Gemini
+  </span>
+</div>
+
+        <div class="project-links">
+          <a href="#" target="_blank">GitHub</a>
+          <a href="#" target="_blank">Live</a>
+        </div>
+      </div>
+    </div>
+
+   
+    <div class="project-card">
+      <img src="projects/vibeify.png" alt="QuizLing preview" />
+      <div class="project-content">
+        <h3>Vibeify</h3>
+        <p>
+          A backend app that generates Spotify playlists based on user mood using Spotify API. Users enter a mood/concept and it automatically curates a playlist that matches that vibe to your Spotify account.
+
+
+        </p>
+
+        <div class="project-tags">
+  <span class="project-tag">
+    <img src="icons/python.svg" alt="JavaScript" />
+    Python
+  </span>
+  <span class="project-tag">
+    <img src="icons/postgresql.svg" alt="Node.js" />
+    PostgreSQL
+  </span>
+  <span class="project-tag">
+    <img src="icons/fastapi.svg" alt="MongoDB" />
+    FastAPI
+  </span>
+</div>
+
+        <div class="project-links">
+          <a href="#" target="_blank">GitHub</a>
+          <a href="#" target="_blank">Live</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <img src="projects/capturethestar.png" alt="QuizLing preview" />
+      <div class="project-content">
+        <h3>Capture the Star</h3>
+        <p>
+          Real-time multiplayer game built using a client–server architecture that combines TCP and UDP networking for synchronized gameplay and low-latency player movement. 
+
+        <div class="project-tags">
+  <span class="project-tag">
+    <img src="icons/python.svg" alt="JavaScript" />
+    Python
+  </span>
+  <span class="project-tag">
+    <img src="icons/pygame.svg" alt="Node.js" />
+    Pygame
+  </span>
+  <span class="project-tag">
+    <img src="icons/google.svg" alt="API" />
+    TCP/UDP Protocol
+  </span>
+</div>
+
+        <div class="project-links">
+          <a href="#" target="_blank">GitHub</a>
+          <a href="#" target="_blank">Live</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
 
 
