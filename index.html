@@ -32,7 +32,6 @@
         background-color: rgba(229, 221, 213, 0.95);
         backdrop-filter: blur(10px);
       }
-
       .logo {
         font-size: 1.2rem;
         font-weight: 600;
@@ -216,10 +215,9 @@
   transform: translateY(-2px);
 }
 
-
-
       .piskel-gif {
-       width: 620px;       /* adjust size */
+       width: 700px;       
+       margin-right: -100px;
        height: auto;
        image-rendering: pixelated;
 
@@ -265,30 +263,24 @@
           color: #2c2c2c;
         }
 
-              .about-gallery {
+
+        .about-gallery {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 1.25rem;
+        grid-template-columns: repeat(3, 1fr);
+        grid-auto-rows: 220px;
+        gap: 1rem;
       }
 
-      .about-gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
-  grid-auto-flow: dense; /* 🔥 FIXES THE GAPS */
-}
+      .about-gallery img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 16px;
+      }
 
-.about-gallery img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.about-gallery img.feature {
-  grid-column: span 2;
-  height: 250px;
-} 
+      .about-gallery img.feature {
+      grid-column: span 2;
+    }
 
         /* Mobile */
         @media (max-width: 768px) {
@@ -385,15 +377,15 @@
 
     <!-- Side Social Links -->
 <div class="side-social">
-  <a href="#github" title="GitHub">
+  <a href="https://github.com/franollf" title="GitHub">
     <img src="icons/github.svg" alt="GitHub" class="sideicon" />
   </a>
 
-  <a href="#linkedin" title="LinkedIn">
+  <a href="https://www.linkedin.com/in/franollfantu/" title="LinkedIn">
     <img src="icons/linkedin.svg" alt="LinkedIn" class="sideicon" />
   </a>
 
-  <a href="#email" title="Email">
+  <a href="mailto:ffa28@sfu.ca" title="Email">
     <img src="icons/email.svg" alt="Email" class="sideicon" />
   </a>
 </div>
@@ -451,7 +443,6 @@
   />
       <p>
         Hi there! I'm <span class="name">Franoll Fantu</span> <p>I'm an undergraduate student at Simon Fraser University with a passion for building projects to make peoples lives easier. Solving problems and turning ideas into functional projects is what I call fun! </p>
-        
       </p>
       <p>
         Outside of coding, I’m actively involved in my home church and have a strong passion for physical health and fitness. I love to cook, weightlift, play basketball, hike, but most importantly running. As I am training for my first marathon right now! I really enjoy the balance and applying the same consistency and mindset from training to the way I approach development and tech.
@@ -461,21 +452,17 @@
 
     <div class="about-gallery">
       <img src="photos/dinner.jpg" style="object-position: center 35%;" alt="About image 3" class ="feature"/>
-      <img src="photos/marathonphoto.JPG" style="object-position: center 35%;"alt="About image 1" />
+      <img src="photos/marathonphoto.JPG" style = "margin-bottom: 10px;" "object-position: center 35%;"alt="About image 1" />
       <img src="photos/runclub.JPG" style="object-position: center 75%;" alt="About image 6" />
+      <img src="photos/halfmarathonphoto.JPG" style = "margin-top: -10px;" style= "object-position: center 75%;" alt="About image 6" class ="feature" />
       <img src="photos/hikephoto.jpeg" style="object-position: center 65%;" alt="About image 2" />
       <img src="photos/marathongroup.JPG" style="object-position: center 75%;" alt="About image 4" />
-      <img src="photos/halfmarathonphoto.JPG" style="object-position: center 75%;" alt="About image 6" class ="feature" />
-      
-      
       <img src="photos/church.JPG" style="object-position: center 75%;" alt="About image 6" class = "feature"/>
       <img src="photos/basketball.JPG" style="object-position: center 75%;" alt="About image 5" />
       <img src="photos/volleyball.JPG" style="object-position: center 55%;" alt="About image 6" />
-
     </div>
   </div>
 </section>
-
 
     <div class="credit">ffa28@sfu.ca</div>
 
