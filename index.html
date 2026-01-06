@@ -1,1074 +1,583 @@
-<!DOCTYPE html> <html lang="en"> <head> 
-  <meta charset="UTF-8" /> 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-  <title>Franoll Fantu - Portfolio</title> 
-  <style> 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Franoll Fantu - Portfolio</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="logo">FRANOLL FANTU</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
 
-   body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; 
-   background-color: #e5ddd5; 
-   color: #2c2c2c; 
-   overflow-x: hidden; } 
-   
-   /* Navigation */
-    nav { position: fixed;
-      top: 0; 
-      left: 0;
-      right: 0;
-      padding: 2rem 4rem; 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      z-index: 1000; 
-      background-color: rgba(229, 221, 213, 0.95); 
-      backdrop-filter: blur(10px); } 
-      
-    .logo { font-size: 1.2rem; 
-      font-weight: 600; 
-      letter-spacing: 2px; 
-      color: #1a1a1a; } 
-      
-    .nav-links { 
-      display: flex;
-       gap: 2.5rem; 
-       list-style: none; } 
-       
-    .nav-links a { 
-      display: inline-block; 
-      text-decoration: none; 
-      color: #2c2c2c; 
-      font-size: 1rem; 
-      transition: transform 0.25s ease, color 0.3s ease; 
-      position: relative; } 
-      
-    .nav-links a:hover { 
-      transform: scale(1.15); } 
-      
-    /* Hero Section */ 
-    .hero { 
-      min-height: 100vh; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      position: relative; 
-      max-width: 1200px; 
-      margin: 0 auto; 
-      gap: 2rem; 
-      } 
-    
-    .hero h1 { 
-      font-size: 4rem; 
-      color: #1a1a1a; 
-      line-height: 1.2; } 
-      
-    .hero h1 .name {
-       color: #FFFF; 
-       display: block; } 
-       
-    .rotating-text { 
-      display: inline-block; 
-      color: #1a1a1a; 
-      min-width: 300px; 
-      position: relative; } 
-      
-    .rotating-text::after { 
-      content: "|"; 
-      animation: blink 0.7s infinite; 
-      margin-left: 2px; } 
-      
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } } 
-    
-    .subtitle { font-size: 2.2rem; 
-      color: #6b6b6b; 
-      margin-bottom: 0.25rem; 
-      font-weight: 300; 
-      min-height: 70px; } 
-      
-    .social-links { 
-      display: flex; 
-      gap: 1.5rem; 
-      size: 100px; } 
-    
-    .social-links a { 
-      display: flex;
-      align-items: center; 
-      justify-content: center; 
-      transition: transform 0.25s ease; } 
-         
-    .social-links a:hover { 
-      transform: scale(1.15); } 
-    
-      /* Hero Image */ 
-    .hero-image { 
-      flex: 1; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      position: relative; } 
-      
-        /* Scroll Indicator */ 
-    
-    .scroll-indicator {
-        position: absolute; 
-        bottom: 2rem; 
-        left: 50%; 
-        transform: translateX(-50%); 
-        display: flex; 
-        flex-direction: column; 
-        align-items: center; 
-        gap: 0.5rem; 
-        animation: bounce 2s infinite; } 
+    <!-- Side Social Links -->
+    <div class="side-social">
+      <a href="https://github.com/franollf" title="GitHub">
+        <img src="icons/github.svg" alt="GitHub" class="sideicon" />
+      </a>
+      <a href="https://www.linkedin.com/in/franollfantu/" title="LinkedIn">
+        <img src="icons/linkedin.svg" alt="LinkedIn" class="sideicon" />
+      </a>
+      <a href="mailto:ffa28@sfu.ca" title="Email">
+        <img src="icons/email.svg" alt="Email" class="sideicon" />
+      </a>
+    </div>
 
-    .scroll-indicator span { 
-      color: #6b6b6b; 
-      font-size: 0.9rem; } 
-      
-    @keyframes bounce { 0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); } 40% { transform: translateX(-50%) translateY(-10px); } 60% { transform: translateX(-50%) translateY(-5px); } } 
-    
-    .side-social {
-  position: fixed;
-  left: 24px;
-  bottom: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-
-  z-index: 9999; /* 🔥 forces it above all sections */
-}
-      
-    .side-social a { 
-      color: #111; 
-      transition: opacity 0.2s ease, 
-      transform 0.2s ease; } 
-      
-    .side-social a:hover { 
-      opacity: 0.6; 
-      transform: translateY(-2px); } 
-      
-    .icon { width: 40px; /* try 36–48px */ 
-      height: 40px; 
-      opacity: 1; 
-      transition: 
-      opacity 0.2s ease, 
-      transform 0.2s ease; }
-      
-    .sideicon{ 
-      width: 25px;
-       height: 25px; } 
-       
-    .social-links a:hover .icon { 
-      opacity: 0.6; 
-      transform: translateY(-2px); } 
-      
-    .piskel-gif { 
-      width: 700px;
-       margin-right: -100px; 
-       height: auto; 
-       image-rendering: pixelated; } /* Credit */
-       
-    .credit { 
-      position: fixed; 
-      right: 1rem; 
-      bottom: 1rem; 
-      font-size: 0.75rem; 
-      color: #6b6b6b; 
-      writing-mode: vertical-rl; 
-      text-orientation: mixed; } 
-      
-    /* About Section */
-     .about-section { 
-      padding: 8rem 4rem; 
-      background-color: #e5ddd5; } 
-      
-    .about-container { 
-      max-width: 1200px; 
-      margin: 0 auto; 
-      display: flex; 
-      flex-direction: column;
-       gap: 3.5rem; } 
-       
-    .about-text h2 { 
-      font-size: 2.5rem; 
-      margin-bottom: 2rem; 
-      color: #1a1a1a; } 
-      
-    .about-text p {
-       font-size: 1.05rem;
-       line-height: 1.7; 
-       margin-bottom: 1.5rem; 
-       color: #2c2c2c; } 
-       
-    .about-gallery { 
-      display: grid; 
-      grid-template-columns: repeat(3, 1fr); 
-      gap: 15px; } 
-      
-    .about-gallery img { 
-      width: 100%; 
-      aspect-ratio: 4 / 3; 
-      object-fit: cover; 
-      border-radius: 16px; 
-      display: block; 
-      transition: transform 0.6s ease; } 
-      
-    .about-gallery img:hover { 
-      transform: scale(1.1); } 
-      
-    .about-gallery img.feature { 
-      grid-column: 
-      span 2; 
-      height: 300px; 
-      width: 300; } 
-      
-      /* Mobile */ 
-      @media (max-width: 768px) 
-      { 
-        .about-container 
-        { grid-template-columns: 1fr; } 
-        
-        .about-section { padding: 6rem 2rem; } 
-        
-        .about-text h2 { text-align: center; } 
-      
-      } 
-        
-    .about-portrait { 
-      float: left; 
-      width: 240px; 
-      margin-top: -100px;
-      margin-right: 2rem; 
-      margin-bottom: 1rem; 
-      opacity: 0.95; 
-      filter: drop-shadow(0 0 5px #16ec0e80) drop-shadow(0 0 5px #16ec0e80); } 
-          
-          
-    .intro-line { 
-      font-size: 1.1rem; 
-      margin-bottom: 1rem; } 
-      
-    .name { 
-      font-size: 2.5rem; /* h2-ish size */ 
-      font-weight: 700; margin-left: 0.6rem; } 
-      
-    .reveal { 
-      opacity: 0; 
-      transform: translateY(30px); 
-      transition: opacity 2s ease, transform 2s ease; } 
-      
-    .reveal.show { opacity: 3; 
-      transform: translateY(0); } 
-    
-    .skills-section { 
-      margin-top: -130px; 
-      padding: 8rem 4rem; 
-      background: #e5ddd5; } 
-      
-    .skills-title { 
-      text-align: center; 
-      font-size: 2.5rem; 
-      margin-bottom: 0.5rem; } 
-      
-    .skills-underline { 
-      width: 60px; 
-      height: 4px; 
-      background: #111; 
-      margin: 0 auto 3rem; 
-      border-radius: 2px; } 
-      
-    /* Tabs */ 
-    .skills-tabs { 
-      padding: 1rem 1.75rem; /* taller + wider */ 
-      display: flex; 
-      justify-content: center; 
-      gap: 1rem; 
-      margin-bottom: 2.5rem; 
-      font-size: 1.5rem; } 
-      
-    .skills-tabs .tab { 
-      padding: 0.8rem 2rem; /* BIGGER button */ 
-      font-size: 1.2rem; /* BIGGER text */ 
-      border-radius: 12px; 
-      border: none; 
-      background: #fff; 
-      cursor: pointer; 
-      font-weight: 500; 
-      transition: all 0.25s ease; } 
-
-      .skills-tabs .tab.active { 
-        background: linear-gradient(135deg, #1f2937, #111); 
-        color: white; } /* Card */ 
-        
-      .skills-card {
-         max-width: 1000px; 
-         margin: 0 auto; 
-         background: white; 
-         border-radius: 16px; 
-         padding: 2.5rem; 
-         box-shadow: 0 10px 25px rgba(0,0,0,0.06); } 
-         
-      /* Grid */ 
-      .skills-grid { 
-        display: none;
-         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); 
-         gap: 1.5rem; } 
-         
-      .skills-grid.active { 
-        display: grid; } /* Skill item */ 
-        
-      .skill {
-         background: #fafafa; 
-         border-radius: 14px; 
-         padding: 1.5rem 1rem; 
-         text-align: center; 
-         transition: transform 0.25s ease; } 
-         
-      .skill:hover { 
-        transform: translateY(-4px); } 
-        
-      .skill img { 
-        width: 36px; 
-        height: 36px; 
-        margin-bottom: 0.5rem; } 
-        
-      .skill span { 
-        display: block; 
-        font-size: 0.9rem; 
-        font-weight: 500; } 
-        
-      .tab { 
-        display: flex; 
-        align-items: center; 
-        gap: 0.6rem; } 
-        
-      .tab-icon {
-         width: 20px; 
-         height: 20px; 
-         object-fit: contain; }
-         
-      .projects-section { 
-        padding: 8rem 4rem; 
-        background: #e5ddd5; }
-        
-      .projects-title { 
-        text-align: center; 
-        font-size: 2.5rem; } 
-        
-      .projects-underline { 
-        width: 60px; 
-        height: 4px; 
-        background: #111; 
-        margin: 0 auto 3rem; 
-        border-radius: 2px; } 
-        
-      .projects-grid { 
-        max-width: 1100px; 
-        margin: 0 auto; 
-        display: grid; 
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); 
-        gap: 2.5rem; } 
-        
-      .project-card { 
-        background: white; 
-        border-radius: 18px; 
-        overflow: hidden; 
-        box-shadow: 0 10px 25px rgba(0,0,0,0.06); 
-        transition: transform 0.3s ease; } 
-        
-      .project-card:hover { 
-        transform: translateY(-6px); } 
-        
-      .project-card .project-preview { 
-        width: 100%; 
-        height: 200px; 
-        object-fit: cover; }
-        
-      .project-content { 
-        padding: 1.75rem; 
-        position: relative;   /* 🔑 anchor */} 
-        
-      .project-content h3 { 
-        font-size: 1.4rem; 
-        margin-bottom: 0.5rem; } 
-        
-      .project-content p { 
-        font-size: 0.95rem; 
-        color: #555; 
-        margin-bottom: 1rem; 
-        line-height: 1.6; } 
-        
-      .project-tags {
-         display: flex; 
-         flex-wrap: wrap; 
-         gap: 0.5rem; 
-         margin-bottom: 1.25rem; } 
-         
-      .project-tag {
-         display: inline-flex; 
-         align-items: center; 
-         gap: 0.35rem; 
-         background: #f3f3f3; 
-         padding: 0.35rem 0.7rem; 
-         border-radius: 999px; 
-         font-size: 0.75rem; 
-         font-weight: 500; 
-         color: #111; } 
-         
-      .project-tag img {
-         width: 14px; 
-         height: 14px; 
-         object-fit: contain; } 
-         
-      .project-tags span { 
-        background: #f3f3f3; 
-        padding: 0.3rem 0.7rem; 
-        border-radius: 999px; 
-        font-size: 0.75rem; 
-        font-weight: 500; } 
-        
-        .project-links { 
-        display: flex;
-         gap: 1rem; 
-         align-items: center; 
-         pointer-events: auto;
-        } 
-        
-      .project-links a { 
-        text-decoration: none; 
-        font-size: 0.9rem; 
-        font-weight: 600; 
-        color: #111; 
-        border-bottom: 2px solid transparent; 
-        transition: border-color 0.2s ease; } 
-        
-      .project-links a:hover { border-color: #111; } 
-      
-     
-         .project-icon {
-          width: 28px;
-          height: 28px;
-          cursor: pointer;
-
-          transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-      .project-links a:hover .project-icon { 
-        transform: scale(1.15); 
-        opacity: 0.75; } 
-        
-        /* Responsive */ 
-        @media (max-width: 768px) { nav { padding: 1.5rem 2rem; } 
-        
-        .nav-links { gap: 1.5rem; } 
-        
-        .hero { flex-direction: column; padding: 6rem 2rem 2rem; text-align: center; } 
-        
-        .hero h1 { font-size: 2.5rem; } 
-        
-        .subtitle { font-size: 1.3rem; } 
-        
-        .side-social { display: none; } 
-        
-        .social-links { justify-content: center; } }
-
-        /* Contact Section */
-.contact-section {
-  padding: 1rem 4rem;
-  background: #e5ddd5;
-  text-align: center;
-}
-
-.contact-title {
-  font-size: 2.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.contact-underline {
-  width: 60px;
-  height: 4px;
-  background: #111;
-  margin: 0 auto 2.5rem;
-  border-radius: 2px;
-}
-
-.contact-text {
-  max-width: 600px;
-  margin: 0 auto 3rem;
-  font-size: 1.05rem;
-  color: #444;
-  line-height: 1.7;
-}
-
-.contact-links {
-  display: flex;
-  justify-content: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-
-.contact-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.75rem 1.5rem;
-  background: white;
-  border-radius: 999px;
-  text-decoration: none;
-  color: #111;
-  font-weight: 600;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.contact-btn img {
-  width: 20px;
-  height: 20px;
-}
-
-.contact-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
-}
-
-.about-photo {
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-}
-
-/* Side caption panel */
-.gallery-caption {
-  position: fixed;
-  max-width: 260px;
-  background: #fff;
-  padding: 14px 16px;
-  border-radius: 14px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
-  font-size: 0.9rem;
-  line-height: 1.45;
-  color: #222;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 1000;
-  transition: opacity 0.2s ease;
-}
-
-
-.gallery-caption.show {
-  opacity: 1;
-}
-
-
-.gallery-caption p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #111;
-}
-
-
-
-
-/* Mobile */
-@media (max-width: 768px) {
-  .contact-section {
-    padding: 6rem 2rem;
-  }
-}
-
-
-        
-        
-
-      </style>
-    </head>
-    <body>
-      <!-- Navigation -->
-      <nav>
-        <div class="logo">FRANOLL FANTU</div>
-        <ul class="nav-links">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#experience">Experience</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-
-      <!-- Side Social Links -->
-  <div class="side-social">
-    <a href="https://github.com/franollf" title="GitHub">
-      <img src="icons/github.svg" alt="GitHub" class="sideicon" />
-    </a>
-
-    <a href="https://www.linkedin.com/in/franollfantu/" title="LinkedIn">
-      <img src="icons/linkedin.svg" alt="LinkedIn" class="sideicon" />
-    </a>
-
-    <a href="mailto:ffa28@sfu.ca" title="Email">
-      <img src="icons/email.svg" alt="Email" class="sideicon" />
-    </a>
-  </div>
-
-
-      <!-- Hero Section -->
-      <section class="hero">
-        <div class="hero-content">
-          <h1>Hi, I'm <strong>Franoll</h1>
-          <p class="subtitle">
-            <span class="rotating-text" id="typewriter"></span>
-          </p>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Hi, I'm <strong>Franoll</strong></h1>
+        <p class="subtitle">
+          <span class="rotating-text" id="typewriter"></span>
+        </p>
 
         <div class="social-links">
-    <a href="https://github.com/franollf" title="GitHub">
-      <img src="icons/github.svg" alt="GitHub" class="icon" />
-    </a>
-
-    <a href="https://www.linkedin.com/in/franollfantu/" title="LinkedIn">
-      <img src="icons/linkedin.svg" alt="LinkedIn" class="icon" />
-    </a>
-
-    <a href="mailto:ffa28@sfu.ca" title="Email">
-      <img src="icons/email.svg" alt="Email" class="icon" />
-    </a>
-  </div>
-        </div>
-
-        <div class="hero-image">
-    <img
-      src="assets/franoll-piskel-blinking.gif"
-      alt="Pixel avatar of Franoll"
-      class="piskel-gif"
-    />
-  </div>
-
-          </div>
-        </div>
-        <div class="scroll-indicator">
-          <span>↓</span>
-        </div>
-      </section>
-
-      <!-- About Section -->
-  <section id="about" class="about-section reveal">
-    <div class="about-container">
-      <div class="about-top">
-      <div class="about-text reveal">
-        <h2>A bit about me!</h2>
-
-    <img
-      src="photos/headshot.png"
-      alt="Franoll smiling"
-      class="about-portrait"
-    />
-        <p>
-          Hi there! I'm <span class="name">Franoll Fantu</span> <p>I'm an undergraduate student at Simon Fraser University with a passion for building projects to make peoples lives easier. Solving problems and turning ideas into functional projects is what I call fun! </p>
-          
-        </p>
-        <p>
-          Outside of coding, I’m actively involved in my home church and have a strong passion for physical health and fitness. I love to cook, weightlift, play basketball, hike, but above all I love to run. As I am training for my first marathon right now! I really enjoy the balance and applying the same consistency and mindset from training to the way I approach development and tech.
-        </p>
-      </div>
-      </div>
-
-      <div class="about-gallery">
-
-        <img src="photos/dinner.jpg"
-             style= "object-position: center 35%;""
-             class="feature"
-             data-caption="Dinner with friends — one of my favourite ways to unwind."
-             alt="Dinner" />
-      
-        <img src="photos/marathonphoto.JPG"
-             data-caption="My first half marathon experience in Victoria!! "
-             alt="Marathon" />
-      
-        <img src="photos/hikephoto.jpeg"
-             data-caption="Hiking to reset after finals at Stawamus Chief "
-             alt="Hike" />
-      
-        <img src="photos/church.JPG"
-             class="feature"
-             data-caption="Serving at my young adults group at my home church !!"
-             alt="Church" />
-      
-        <img src="photos/halfmarathonphoto.JPG"
-             class="feature"
-             data-caption="Solo shot before the finish line during my race" 
-             alt="Half Marathon" />
-      
-        <img src="photos/volleyball.JPG"
-             data-caption="Beach volleyball nights with friends."
-             alt="Volleyball" />
-      
-      </div>
-      
-      <!-- SIDE CAPTION PANEL -->
-      <div class="gallery-caption" id="galleryCaption">
-        <p id="captionText">Hover over a photo to learn more.</p>
-      </div>
-      
-    </div>
-  </section>
-
-  <section id="skills" class="skills-section reveal">
-    <h2 class="skills-title">Technical Skills</h2>
-    <div class="skills-underline"></div>
-
-    <!-- Tabs -->
-    <div class="skills-tabs">
-      <button class="tab active" data-tab="languages">
-        <img src="icons/code.svg" class="tab-icon" alt="" /> Languages
-      </button>
-      <button class="tab" data-tab="frameworks">
-        <img src="icons/frameworks.svg" class="tab-icon" alt="" />
-    Frameworks
-      </button>
-      <button class="tab" data-tab="tools">
-        <img src="icons/tools.svg" class="tab-icon" alt="" />Tools
-      </button>
-    </div>
-
-    <!-- Content -->
-    <div class="skills-card reveal active">
-      <!-- Languages -->
-      <div class="skills-grid active" id="languages">
-        <div class="skill"><img src="icons/python.svg"><span>Python</span></div>
-        <div class="skill"><img src="icons/java.svg"><span>Java</span></div>
-        <div class="skill"><img src="icons/cpp.svg"><span>C++</span></div>
-        <div class="skill"><img src="icons/c.svg"><span>C</span></div>
-        <div class="skill"><img src="icons/javascript.svg"><span>JavaScript</span></div>
-        <div class="skill"><img src="icons/typescript.svg"><span>TypeScript</span></div>
-        <div class="skill"><img src="icons/html.svg"><span>HTML</span></div>
-        <div class="skill"><img src="icons/css.svg"><span>CSS</span></div>
-      </div>
-
-      <!-- Frameworks -->
-      <div class="skills-grid" id="frameworks">
-        <div class="skill"><img src="icons/react.svg"><span>React.js</span></div>
-        <div class="skill"><img src="icons/node.svg"><span>Node.js</span></div>
-        <div class="skill"><img src="icons/express.svg"><span>Express.js</span></div>
-        <div class="skill"><img src="icons/next.svg"><span>Next.js</span></div>
-        <div class="skill"><img src="icons/fastapi.svg"><span>FastAPI</span></div>
-        <div class="skill"><img src="icons/tailwind.svg"><span>Tailwind</span></div>
-      </div>
-
-      <!-- Tools -->
-      <div class="skills-grid" id="tools">
-        <div class="skill"><img src="icons/git.svg"><span>Git</span></div>
-        <div class="skill"><img src="icons/github.svg"><span>GitHub</span></div>
-        <div class="skill"><img src="icons/vscode.svg"><span>VS Code</span></div>
-        <div class="skill"><img src="icons/aws.svg"><span>AWS</span></div>
-        <div class="skill"><img src="icons/figma.svg"><span>Figma</span></div>
-        <div class="skill"><img src="icons/postman.svg"><span>Postman</span></div>
-        <div class="skill"><img src="icons/firebase.svg"><span>Firebase</span></div>
-        <div class="skill"><img src="icons/mongodb.svg"><span>MongoDB</span></div>
-        <div class="skill"><img src="icons/mysql.svg"><span>MySQL</span></div>
-        <div class="skill"><img src="icons/postgresql.svg"><span>PostgreSQL</span></div>
-        <div class="skill"><img src="icons/docker.svg"><span>Docker</span></div>
-        
-      </div>
-    </div>
-  </section>
-
-  <section id="projects" class="projects-section reveal">
-    <h2 class="projects-title">Projects</h2>
-    <div class="projects-underline"></div>
-  
-    <div class="projects-grid">
-  
-      <!-- NutriScan -->
-      <div class="project-card">
-        <img class="project-preview" src="projects/nutriscan.png" alt="NutriScan preview" />
-        <div class="project-content">
-          <h3>NutriScan</h3>
-          <p>
-            Barcode-based nutrition tracker inspired by MyFitnessPal,
-            built as a full-stack project.
-          </p>
-  
-          <div class="project-tags">
-            <span class="project-tag"><img src="icons/react.svg" alt="">React</span>
-            <span class="project-tag"><img src="icons/reactnative.svg" alt="">React Native</span>
-            <span class="project-tag"><img src="icons/node.svg" alt="">Node.js</span>
-            <span class="project-tag"><img src="icons/mongodb.svg" alt="">MongoDB</span>
-            <span class="project-tag"><img src="icons/fastapi.svg" alt="">FastAPI</span>
-          </div>
-  
-          <div class="project-links">
-            <a href="https://github.com/franollf/nutriscan" target="_blank" aria-label="GitHub">
-              <img src="icons/github.svg" alt="GitHub" class="project-icon" />
-            </a>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Elevate -->
-      <div class="project-card">
-        <img class="project-preview" src="projects/elevate.png" alt="Elevate preview" />
-        <div class="project-content">
-          <h3>Elevate</h3>
-          <p>
-            A full-stack running app that generates optimal low-elevation routes in real time.
-          </p>
-  
-          <div class="project-tags">
-            <span class="project-tag"><img src="icons/react.svg" alt="">React</span>
-            <span class="project-tag"><img src="icons/node.svg" alt="">Node.js</span>
-            <span class="project-tag"><img src="icons/tailwind.svg" alt="">Tailwind</span>
-            <span class="project-tag"><img src="icons/google.svg" alt="">Google Maps API</span>
-          </div>
-  
-          <div class="project-links">
-            <a href="https://github.com/franollf/Elevate" target="_blank" aria-label="GitHub">
-              <img src="icons/github.svg" alt="GitHub" class="project-icon" />
-            </a>
-            
-          </div>
-        </div>
-      </div>
-  
-      <!-- QuizLing -->
-      <div class="project-card">
-        <img class="project-preview" src="projects/quizling.png" alt="QuizLing preview" />
-        <div class="project-content">
-          <h3>QuizLing</h3>
-          <p>
-            An AI language learning web app featuring translation, quizzes,
-            flashcards, and progress tracking.
-          </p>
-  
-          <div class="project-tags">
-            <span class="project-tag"><img src="icons/react.svg" alt="">React</span>
-            <span class="project-tag"><img src="icons/node.svg" alt="">Node.js</span>
-            <span class="project-tag"><img src="icons/google.svg" alt="">Google API</span>
-            <span class="project-tag"><img src="icons/gemini.png" alt="">Gemini</span>
-          </div>
-  
-          <div class="project-links">
-            <a href="https://github.com/gunmack/QuizLing" target="_blank" aria-label="GitHub">
-              <img src="icons/github.svg" alt="GitHub" class="project-icon" />
-            </a>
-          </div>
-        </div>
-      </div>
-  
-      <!-- Vibeify -->
-      <div class="project-card">
-        <img class="project-preview" src="projects/vibeify.png" alt="Vibeify preview" />
-        <div class="project-content">
-          <h3>Vibeify</h3>
-          <p>
-            Backend service that generates personalized Spotify playlists from user-inputted mood data, leveraging the Spotify Web API.
-
-          </p>
-  
-          <div class="project-tags">
-            <span class="project-tag"><img src="icons/python.svg" alt="">Python</span>
-            <span class="project-tag"><img src="icons/postgresql.svg" alt="">PostgreSQL</span>
-            <span class="project-tag"><img src="icons/fastapi.svg" alt="">FastAPI</span>
-          </div>
-  
-          <div class="project-links">
-            <a href="https://github.com/franollf/vibeify" target="_blank" aria-label="GitHub">
-              <img src="icons/github.svg" alt="GitHub" class="project-icon" />
-            </a>
-          </div>
+          <a href="https://github.com/franollf" title="GitHub">
+            <img src="icons/github.svg" alt="GitHub" class="icon" />
+          </a>
+          <a href="https://www.linkedin.com/in/franollfantu/" title="LinkedIn">
+            <img src="icons/linkedin.svg" alt="LinkedIn" class="icon" />
+          </a>
+          <a href="mailto:ffa28@sfu.ca" title="Email">
+            <img src="icons/email.svg" alt="Email" class="icon" />
+          </a>
         </div>
       </div>
 
-      <!-- Capture the Star -->
-      <div class="project-card">
-        <img class="project-preview" src="projects/capturethestar.png" alt="Capture the Star preview" />
-        <div class="project-content">
-          <h3>Capture the Star</h3>
-          <p>
-            Real-time multiplayer game using a hybrid TCP/UDP client–server
-            architecture for low-latency gameplay. 
-          </p>
-  
-          <div class="project-tags">
-            <span class="project-tag"><img src="icons/python.svg" alt="">Python</span>
-            <span class="project-tag"><img src="icons/pygame.svg" alt="">Pygame</span>
-            <span class="project-tag"><img src="icons/google.svg" alt="">TCP/UDP</span>
+      <div class="hero-image">
+        <img
+          src="assets/franoll-piskel-blinking.gif"
+          alt="Pixel avatar of Franoll"
+          class="piskel-gif"
+        />
+      </div>
+
+      <div class="scroll-indicator">
+        <span>↓</span>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section reveal">
+      <div class="about-container">
+        <div class="about-top">
+          <div class="about-text reveal">
+            <h2>A bit about me!</h2>
+
+            <img
+              src="photos/headshot.png"
+              alt="Franoll smiling"
+              class="about-portrait"
+            />
+            <p>Hi there! I'm <span class="name">Franoll Fantu</span></p>
+            <p>
+              I'm an undergraduate student at Simon Fraser University with a
+              passion for building projects to make peoples lives easier.
+              Solving problems and turning ideas into functional projects is
+              what I call fun!
+            </p>
+            <p>
+              Outside of coding, I'm actively involved in my home church and
+              have a strong passion for physical health and fitness. I love to
+              cook, weightlift, play basketball, hike, but above all I love to
+              run. As I am training for my first marathon right now! I really
+              enjoy the balance and applying the same consistency and mindset
+              from training to the way I approach development and tech.
+            </p>
           </div>
-  
-          <div class="project-links">
-            <a href="https://github.com/p-north/TCP_Networking_Game" target="_blank" aria-label="GitHub">
-              <img src="icons/github.svg" alt="GitHub" class="project-icon" />
-            </a>
+        </div>
+
+        <div class="about-gallery">
+          <img
+            src="photos/dinner.jpg"
+            style="object-position: center 35%"
+            class="feature"
+            data-caption="Dinner with friends after finals!!"
+            alt="Dinner"
+          />
+
+          <img
+            src="photos/marathonphoto.JPG"
+            data-caption="My first half marathon experience in Victoria!!"
+            alt="Marathon"
+          />
+
+          <img
+            src="photos/hikephoto.jpeg"
+            data-caption="Hiking to reset after finals at Stawamus Chief"
+            alt="Hike"
+          />
+
+          <img
+            src="photos/church.JPG"
+            class="feature"
+            data-caption="Serving at my young adults group at my home church!!"
+            alt="Church"
+          />
+
+          <img
+            src="photos/halfmarathonphoto.JPG"
+            class="feature"
+            data-caption="Solo shot before the finish line during my race"
+            alt="Half Marathon"
+          />
+
+          <img
+            src="photos/volleyball.JPG"
+            data-caption="Beach volleyball nights with friends."
+            alt="Volleyball"
+          />
+        </div>
+
+        <!-- SIDE CAPTION PANEL -->
+        <div class="gallery-caption" id="galleryCaption">
+          <p id="captionText">Hover over a photo to learn more.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="skills-section reveal">
+      <h2 class="skills-title">Technical Skills</h2>
+      <div class="skills-underline"></div>
+
+      <!-- Tabs -->
+      <div class="skills-tabs">
+        <button class="tab active" data-tab="languages">
+          <img src="icons/code.svg" class="tab-icon" alt="" /> Languages
+        </button>
+        <button class="tab" data-tab="frameworks">
+          <img src="icons/frameworks.svg" class="tab-icon" alt="" /> Frameworks
+        </button>
+        <button class="tab" data-tab="tools">
+          <img src="icons/tools.svg" class="tab-icon" alt="" /> Tools
+        </button>
+      </div>
+
+      <!-- Content -->
+      <div class="skills-card reveal active">
+        <!-- Languages -->
+        <div class="skills-grid active" id="languages">
+          <div class="skill">
+            <img src="icons/python.svg" /><span>Python</span>
+          </div>
+          <div class="skill"><img src="icons/java.svg" /><span>Java</span></div>
+          <div class="skill"><img src="icons/cpp.svg" /><span>C++</span></div>
+          <div class="skill"><img src="icons/c.svg" /><span>C</span></div>
+          <div class="skill">
+            <img src="icons/javascript.svg" /><span>JavaScript</span>
+          </div>
+          <div class="skill">
+            <img src="icons/typescript.svg" /><span>TypeScript</span>
+          </div>
+          <div class="skill"><img src="icons/html.svg" /><span>HTML</span></div>
+          <div class="skill"><img src="icons/css.svg" /><span>CSS</span></div>
+        </div>
+
+        <!-- Frameworks -->
+        <div class="skills-grid" id="frameworks">
+          <div class="skill">
+            <img src="icons/react.svg" /><span>React.js</span>
+          </div>
+          <div class="skill">
+            <img src="icons/node.svg" /><span>Node.js</span>
+          </div>
+          <div class="skill">
+            <img src="icons/express.svg" /><span>Express.js</span>
+          </div>
+          <div class="skill">
+            <img src="icons/next.svg" /><span>Next.js</span>
+          </div>
+          <div class="skill">
+            <img src="icons/fastapi.svg" /><span>FastAPI</span>
+          </div>
+          <div class="skill">
+            <img src="icons/tailwind.svg" /><span>Tailwind</span>
+          </div>
+        </div>
+
+        <!-- Tools -->
+        <div class="skills-grid" id="tools">
+          <div class="skill"><img src="icons/git.svg" /><span>Git</span></div>
+          <div class="skill">
+            <img src="icons/github.svg" /><span>GitHub</span>
+          </div>
+          <div class="skill">
+            <img src="icons/vscode.svg" /><span>VS Code</span>
+          </div>
+          <div class="skill"><img src="icons/aws.svg" /><span>AWS</span></div>
+          <div class="skill">
+            <img src="icons/figma.svg" /><span>Figma</span>
+          </div>
+          <div class="skill">
+            <img src="icons/postman.svg" /><span>Postman</span>
+          </div>
+          <div class="skill">
+            <img src="icons/firebase.svg" /><span>Firebase</span>
+          </div>
+          <div class="skill">
+            <img src="icons/mongodb.svg" /><span>MongoDB</span>
+          </div>
+          <div class="skill">
+            <img src="icons/mysql.svg" /><span>MySQL</span>
+          </div>
+          <div class="skill">
+            <img src="icons/postgresql.svg" /><span>PostgreSQL</span>
+          </div>
+          <div class="skill">
+            <img src="icons/docker.svg" /><span>Docker</span>
           </div>
         </div>
       </div>
-  
-    </div>
-  </section>
+    </section>
 
-  <section id="contact" class="contact-section reveal">
-    <h2 class="contact-title">Thank you for visiting!</h2>
-    <div class="contact-underline"></div>
-  
-    <p class="contact-text">
-      Feel free to reach out — I’ll get back to you as soon as I can.
-    </p>
-  
-    <div class="contact-links">
-      <a href="mailto:ffa28@sfu.ca" class="contact-btn">
-        <img src="icons/email.svg" alt="Email" />
-        Email Me
-      </a>
-  
-      <a href="https://www.linkedin.com/in/franollfantu/" target="_blank" class="contact-btn">
-        <img src="icons/linkedin.svg" alt="LinkedIn" />
-        LinkedIn
-      </a>
-  
-      <a href="https://github.com/franollf" target="_blank" class="contact-btn">
-        <img src="icons/github.svg" alt="GitHub" />
-        GitHub
-      </a>
-    </div>
-  </section>
+    <!-- Experience Section -->
+    <section id="experience" class="experience-section reveal">
+      <h2 class="experience-title">Experience</h2>
+      <div class="experience-underline"></div>
 
-  
-  
+      <div class="timeline">
+        <!-- Experience Item 1 - Right -->
+        <div class="timeline-item right">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="card-header">
+              <div class="company-logo">
+                <img src="icons/rogue.u.png" alt="Outlier" />
+              </div>
+              <div class="company-info">
+                <h3>RogueU</h3>
+                <span class="job-title"
+                  >Software Developer (API Integration)</span
+                >
+              </div>
+              <span class="date">Jan 2026 - Present</span>
+            </div>
+            <ul class="responsibilities">
+              <li>
+                Integrate cloud-based APIs (CRM/ERP/marketing) for data exchange
+                and analysis
+              </li>
+              <li>
+                Develop plan covering mapping, auth, exceptions, and business
+                ops optimization
+              </li>
+            </ul>
+          </div>
+        </div>
 
+        <!-- Experience Item 2 - Left -->
+        <div class="timeline-item left">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="card-header">
+              <div class="company-logo">
+                <img src="icons/outlierai.png" alt="SFU CSSS" />
+              </div>
+              <div class="company-info">
+                <h3>Outlier AI</h3>
+                <span class="job-title">AI/ML Quality Engineer</span>
+              </div>
+              <span class="date">Sep 2025 - Present</span>
+            </div>
+            <ul class="responsibilities">
+              <li>
+                Evaluate and refine LLM outputs using RLHF methods, providing
+                feedback on accuracy, reasoning, and safety
+              </li>
+              <li>
+                Design training prompts for Python, ML workflows, data analysis,
+                and feature engineering tasks
+              </li>
+            </ul>
+           
+          </div>
+        </div>
 
+        <!-- Experience Item 3 - Right -->
+        <div class="timeline-item right">
+          <div class="timeline-dot"></div>
+          <div class="timeline-card">
+            <div class="card-header">
+              <div class="company-logo">
+                <img src="icons/sharetea.png" alt="CJSF" />
+              </div>
+              <div class="company-info">
+                <h3>ShareTea</h3>
+                <span class="job-title">Barista</span>
+              </div>
+              <span class="date">Jan 2025 - Present</span>
+            </div>
+            <ul class="responsibilities">
+              <li>
+                Prepared 100+ customized beverages daily in a fast-paced environment while delivering efficient, friendly customer service.
+              </li>
+              <li>
+                Trained new team members on drink preparation, POS operations, and store procedures to ensure consistent quality and service.
+              </li>
+            </ul>
+            <div class="tech-tags">
+            </div>
+          </div>
+        </div>
 
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section reveal">
+      <h2 class="projects-title">Projects</h2>
+      <div class="projects-underline"></div>
 
-      <div class="credit">ffa28@sfu.ca</div>
+      <div class="projects-grid">
+        <!-- NutriScan -->
+        <div class="project-card">
+          <img
+            class="project-preview"
+            src="projects/nutriscan.png"
+            alt="NutriScan preview"
+          />
+          <div class="project-content">
+            <h3>NutriScan</h3>
+            <p>
+              Barcode-based nutrition tracker inspired by MyFitnessPal, built as
+              a full-stack project.
+            </p>
 
-      <script>
+            <div class="project-tags">
+              <span class="project-tag"
+                ><img src="icons/react.svg" alt="" />React</span
+              >
+              <span class="project-tag"
+                ><img src="icons/reactnative.svg" alt="" />React Native</span
+              >
+              <span class="project-tag"
+                ><img src="icons/node.svg" alt="" />Node.js</span
+              >
+              <span class="project-tag"
+                ><img src="icons/mongodb.svg" alt="" />MongoDB</span
+              >
+              <span class="project-tag"
+                ><img src="icons/fastapi.svg" alt="" />FastAPI</span
+              >
+            </div>
 
-const images = document.querySelectorAll(".about-gallery img");
-const captionBox = document.getElementById("galleryCaption");
-const captionText = document.getElementById("captionText");
-const gallery = document.querySelector(".about-gallery");
+            <div class="project-links">
+              <a
+                href="https://github.com/franollf/nutriscan"
+                target="_blank"
+                aria-label="GitHub"
+              >
+                <img src="icons/github.svg" alt="GitHub" class="project-icon" />
+              </a>
+            </div>
+          </div>
+        </div>
 
-let activeImage = null;
+        <!-- Elevate -->
+        <div class="project-card">
+          <img
+            class="project-preview"
+            src="projects/elevate.png"
+            alt="Elevate preview"
+          />
+          <div class="project-content">
+            <h3>Elevate</h3>
+            <p>
+              A full-stack running app that generates optimal low-elevation
+              routes in real time.
+            </p>
 
-if (images.length && captionBox && captionText && gallery) {
-  images.forEach(img => {
-    img.addEventListener("mouseenter", () => {
-      if (activeImage === img) return; // 🔒 prevent recalculation
-      activeImage = img;
+            <div class="project-tags">
+              <span class="project-tag"
+                ><img src="icons/react.svg" alt="" />React</span
+              >
+              <span class="project-tag"
+                ><img src="icons/node.svg" alt="" />Node.js</span
+              >
+              <span class="project-tag"
+                ><img src="icons/tailwind.svg" alt="" />Tailwind</span
+              >
+              <span class="project-tag"
+                ><img src="icons/google.svg" alt="" />Google Maps API</span
+              >
+            </div>
 
-      const imgRect = img.getBoundingClientRect();
-      const galleryRect = gallery.getBoundingClientRect();
-      const gap = 16;
-      const captionWidth = 260;
+            <div class="project-links">
+              <a
+                href="https://github.com/franollf/Elevate"
+                target="_blank"
+                aria-label="GitHub"
+              >
+                <img src="icons/github.svg" alt="GitHub" class="project-icon" />
+              </a>
+            </div>
+          </div>
+        </div>
 
-      captionText.textContent = img.dataset.caption || "";
+        <!-- QuizLing -->
+        <div class="project-card">
+          <img
+            class="project-preview"
+            src="projects/quizling.png"
+            alt="QuizLing preview"
+          />
+          <div class="project-content">
+            <h3>QuizLing</h3>
+            <p>
+              An AI language learning web app featuring translation, quizzes,
+              flashcards, and progress tracking.
+            </p>
 
-      const distToLeft = imgRect.left - galleryRect.left;
-      const distToRight = galleryRect.right - imgRect.right;
+            <div class="project-tags">
+              <span class="project-tag"
+                ><img src="icons/react.svg" alt="" />React</span
+              >
+              <span class="project-tag"
+                ><img src="icons/node.svg" alt="" />Node.js</span
+              >
+              <span class="project-tag"
+                ><img src="icons/google.svg" alt="" />Google API</span
+              >
+              <span class="project-tag"
+                ><img src="icons/gemini.png" alt="" />Gemini</span
+              >
+            </div>
 
-      let left;
-      if (distToLeft < distToRight) {
-        left = Math.round(imgRect.left - captionWidth - gap);
-      } else {
-        left = Math.round(imgRect.right + gap);
-      }
+            <div class="project-links">
+              <a
+                href="https://github.com/gunmack/QuizLing"
+                target="_blank"
+                aria-label="GitHub"
+              >
+                <img src="icons/github.svg" alt="GitHub" class="project-icon" />
+              </a>
+            </div>
+          </div>
+        </div>
 
-      const top = Math.round(imgRect.top + imgRect.height * 1);
+        <!-- Vibeify -->
+        <div class="project-card">
+          <img
+            class="project-preview"
+            src="projects/vibeify.png"
+            alt="Vibeify preview"
+          />
+          <div class="project-content">
+            <h3>Vibeify</h3>
+            <p>
+              Backend service that generates personalized Spotify playlists from
+              user-inputted mood data, leveraging the Spotify Web API.
+            </p>
 
-      captionBox.style.left = `${left}px`;
-      captionBox.style.top = `${top}px`;
-      captionBox.style.transform = "none";
+            <div class="project-tags">
+              <span class="project-tag"
+                ><img src="icons/python.svg" alt="" />Python</span
+              >
+              <span class="project-tag"
+                ><img src="icons/postgresql.svg" alt="" />PostgreSQL</span
+              >
+              <span class="project-tag"
+                ><img src="icons/fastapi.svg" alt="" />FastAPI</span
+              >
+            </div>
 
-      captionBox.classList.add("show");
-    });
+            <div class="project-links">
+              <a
+                href="https://github.com/franollf/vibeify"
+                target="_blank"
+                aria-label="GitHub"
+              >
+                <img src="icons/github.svg" alt="GitHub" class="project-icon" />
+              </a>
+            </div>
+          </div>
+        </div>
 
-    img.addEventListener("mouseleave", () => {
-      activeImage = null;
-      captionBox.classList.remove("show");
-    });
-  });
-}
+        <!-- Capture the Star -->
+        <div class="project-card">
+          <img
+            class="project-preview"
+            src="projects/capturethestar.png"
+            alt="Capture the Star preview"
+          />
+          <div class="project-content">
+            <h3>Capture the Star</h3>
+            <p>
+              Real-time multiplayer game using a hybrid TCP/UDP client–server
+              architecture for low-latency gameplay.
+            </p>
 
+            <div class="project-tags">
+              <span class="project-tag"
+                ><img src="icons/python.svg" alt="" />Python</span
+              >
+              <span class="project-tag"
+                ><img src="icons/pygame.svg" alt="" />Pygame</span
+              >
+              <span class="project-tag"
+                ><img src="icons/google.svg" alt="" />TCP/UDP</span
+              >
+            </div>
 
+            <div class="project-links">
+              <a
+                href="https://github.com/p-north/TCP_Networking_Game"
+                target="_blank"
+                aria-label="GitHub"
+              >
+                <img src="icons/github.svg" alt="GitHub" class="project-icon" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section reveal">
+      <h2 class="contact-title">Thank you for visiting!</h2>
+      <div class="contact-underline"></div>
 
+      <p class="contact-text">
+        Feel free to reach out — I'll get back to you as soon as I can.
+      </p>
 
+      <div class="contact-links">
+        <a href="mailto:ffa28@sfu.ca" class="contact-btn">
+          <img src="icons/email.svg" alt="Email" />
+          Email Me
+        </a>
 
-        /* Reveal on scroll */
-        const reveals = document.querySelectorAll(".reveal");
+        <a
+          href="https://www.linkedin.com/in/franollfantu/"
+          target="_blank"
+          class="contact-btn"
+        >
+          <img src="icons/linkedin.svg" alt="LinkedIn" />
+          LinkedIn
+        </a>
 
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("show");
-                observer.unobserve(entry.target);
-              }
-            });
-          },
-          { threshold: 0.15 }
-        );
+        <a
+          href="https://github.com/franollf"
+          target="_blank"
+          class="contact-btn"
+        >
+          <img src="icons/github.svg" alt="GitHub" />
+          GitHub
+        </a>
+      </div>
+    </section>
 
-        reveals.forEach((el) => observer.observe(el));
+    <div class="credit">ffa28@sfu.ca</div>
 
-        // Typewriter effect
-        const texts = [
-          "a Frontend Developer",
-          "an Athlete",
-          "a Problem Solver",
-          "a Student",
-        ];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const typewriterElement = document.getElementById("typewriter");
-        const typingSpeed = 100;
-        const deletingSpeed = 50;
-        const pauseTime = 2000;
-
-        function typeWriter() {
-          const currentText = texts[textIndex];
-
-          if (isDeleting) {
-            typewriterElement.textContent = currentText.substring(
-              0,
-              charIndex - 1
-            );
-            charIndex--;
-          } else {
-            typewriterElement.textContent = currentText.substring(
-              0,
-              charIndex + 1
-            );
-            charIndex++;
-          }
-
-          let speed = isDeleting ? deletingSpeed : typingSpeed;
-
-          if (!isDeleting && charIndex === currentText.length) {
-            speed = pauseTime;
-            isDeleting = true;
-          } else if (isDeleting && charIndex === 0) {
-            isDeleting = false;
-            textIndex = (textIndex + 1) % texts.length;
-            speed = 500;
-          }
-
-          setTimeout(typeWriter, speed);
-        }
-
-        // Start the typewriter effect
-        typeWriter();
-
-        // Tabs functionality
-        const tabs = document.querySelectorAll(".tab");
-        const grids = document.querySelectorAll(".skills-grid");
-
-        tabs.forEach(tab => {
-          tab.addEventListener("click", () => {
-            tabs.forEach(t => t.classList.remove("active"));
-            grids.forEach(g => g.classList.remove("active"));
-
-            tab.classList.add("active");
-            document.getElementById(tab.dataset.tab).classList.add("active");
-          });
-        });
-
-      </script>
-    </body>
-  </html>
+    <script src="script.js"></script>
+  </body>
+</html>
