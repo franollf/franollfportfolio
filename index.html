@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,7 +18,23 @@
         <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <!-- Hamburger button (mobile only) -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
+
+    <!-- Mobile Nav Overlay -->
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#home" class="mobile-nav-link">Home</a>
+      <a href="#about" class="mobile-nav-link">About</a>
+      <a href="#skills" class="mobile-nav-link">Skills</a>
+      <a href="#experience" class="mobile-nav-link">Experience</a>
+      <a href="#projects" class="mobile-nav-link">Projects</a>
+      <a href="#contact" class="mobile-nav-link">Contact</a>
+    </div>
 
     <!-- Side Social Links -->
     <div class="side-social">
@@ -34,7 +50,7 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section id="home" class="hero">
       <div class="hero-content">
         <h1>Hi, I'm <strong>Franoll</strong></h1>
         <p class="subtitle">
@@ -253,22 +269,22 @@
           <div class="timeline-card">
             <div class="card-header">
               <div class="company-logo">
-                <img src="icons/vjds.png" alt="Outlier" />
+                <img src="icons/vjds.png" alt="VJDS" />
               </div>
               <div class="company-info">
                 <h3>VJDS International Inc.</h3>
-                <span class="job-title"
-                  >Machine Learning Intern</span
-                >
+                <span class="job-title">Machine Learning Intern</span>
               </div>
               <span class="date">Jan 2026 - Present</span>
             </div>
             <ul class="responsibilities">
               <li>
-                Deployed scalable ML inference endpoints via secure RESTful APIs with monitoring and error handling
+                Deployed scalable ML inference endpoints via secure RESTful APIs
+                with monitoring and error handling
               </li>
               <li>
-                Performed spatial analysis to compute density metrics and generate heatmap visualizations for trend analysis
+                Performed spatial analysis to compute density metrics and
+                generate heatmap visualizations for trend analysis
               </li>
             </ul>
           </div>
@@ -280,7 +296,7 @@
           <div class="timeline-card">
             <div class="card-header">
               <div class="company-logo">
-                <img src="icons/enactusfu.png" alt="SFU CSSS" />
+                <img src="icons/enactusfu.png" alt="Enactus SFU" />
               </div>
               <div class="company-info">
                 <h3>Enactus SFU</h3>
@@ -290,16 +306,16 @@
             </div>
             <ul class="responsibilities">
               <li>
-                Leading development of a healthcare web application using React with modular, component-based architecture
+                Leading development of a healthcare web application using React
+                with modular, component-based architecture
               </li>
               <li>
-                Integrated cloud authentication, data storage, and deployment workflows using AWS Amplify and Cognito
+                Integrated cloud authentication, data storage, and deployment
+                workflows using AWS Amplify and Cognito
               </li>
             </ul>
-           
           </div>
         </div>
-
 
         <!-- Experience Item 3 - Right -->
         <div class="timeline-item right">
@@ -307,7 +323,7 @@
           <div class="timeline-card">
             <div class="card-header">
               <div class="company-logo">
-                <img src="icons/ewb.png" alt="ewb" />
+                <img src="icons/ewb.png" alt="EWB" />
               </div>
               <div class="company-info">
                 <h3>Engineering without Borders (SFU Chapter)</h3>
@@ -317,23 +333,24 @@
             </div>
             <ul class="responsibilities">
               <li>
-               Developed and deployed frontend features and pages using modern HTML, CSS, JavaScript, and React-based workflows
+                Developed and deployed frontend features and pages using modern
+                HTML, CSS, JavaScript, and React-based workflows
+              </li>
               <li>
-              Managed site structure, content updates, and deployment workflows to support events, recruitment, and project launches
+                Managed site structure, content updates, and deployment
+                workflows to support events, recruitment, and project launches
               </li>
             </ul>
-            <div class="tech-tags">
-            </div>
           </div>
         </div>
 
-        <!-- Experience Item 2 - Left -->
+        <!-- Experience Item 4 - Left -->
         <div class="timeline-item left">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
             <div class="card-header">
               <div class="company-logo">
-                <img src="icons/outlierai.png" alt="SFU CSSS" />
+                <img src="icons/outlierai.png" alt="Outlier AI" />
               </div>
               <div class="company-info">
                 <h3>Outlier AI</h3>
@@ -351,17 +368,16 @@
                 and feature engineering tasks
               </li>
             </ul>
-           
           </div>
         </div>
 
-        <!-- Experience Item 3 - Right -->
+        <!-- Experience Item 5 - Right -->
         <div class="timeline-item right">
           <div class="timeline-dot"></div>
           <div class="timeline-card">
             <div class="card-header">
               <div class="company-logo">
-                <img src="icons/sharetea.png" alt="CJSF" />
+                <img src="icons/sharetea.png" alt="ShareTea" />
               </div>
               <div class="company-info">
                 <h3>ShareTea</h3>
@@ -371,16 +387,19 @@
             </div>
             <ul class="responsibilities">
               <li>
-                Prepared 100+ customized beverages daily in a fast-paced environment while delivering efficient, friendly customer service.
+                Prepared 100+ customized beverages daily in a fast-paced
+                environment while delivering efficient, friendly customer
+                service.
               </li>
               <li>
-                Trained new team members on drink preparation, POS operations, and store procedures to ensure consistent quality and service.
+                Trained new team members on drink preparation, POS operations,
+                and store procedures to ensure consistent quality and service.
               </li>
             </ul>
-            <div class="tech-tags">
-            </div>
           </div>
         </div>
+      </div>
+    </section>
 
     <!-- Projects Section -->
     <section id="projects" class="projects-section reveal">
@@ -398,9 +417,9 @@
           <div class="project-content">
             <h3>SafeRx</h3>
             <p>
-               SafeRx, a healthcare application built during a hackathon to identify potential adverse drug interactions (ADR)
+              SafeRx, a healthcare application built during a hackathon to
+              identify potential adverse drug interactions (ADR)
             </p>
-
             <div class="project-tags">
               <span class="project-tag"
                 ><img src="icons/react.svg" alt="" />React</span
@@ -418,7 +437,6 @@
                 ><img src="icons/Flask.svg" alt="" />Flask</span
               >
             </div>
-
             <div class="project-links">
               <a
                 href="https://github.com/p-north/Polypharmacy_Safety-Agent"
@@ -430,6 +448,7 @@
             </div>
           </div>
         </div>
+
         <!-- NutriScan -->
         <div class="project-card">
           <img
@@ -443,7 +462,6 @@
               Barcode-based nutrition tracker inspired by MyFitnessPal, built as
               a full-stack project.
             </p>
-
             <div class="project-tags">
               <span class="project-tag"
                 ><img src="icons/react.svg" alt="" />React</span
@@ -461,7 +479,6 @@
                 ><img src="icons/fastapi.svg" alt="" />FastAPI</span
               >
             </div>
-
             <div class="project-links">
               <a
                 href="https://github.com/franollf/nutriscan"
@@ -487,7 +504,6 @@
               A full-stack running app that generates optimal low-elevation
               routes in real time.
             </p>
-
             <div class="project-tags">
               <span class="project-tag"
                 ><img src="icons/react.svg" alt="" />React</span
@@ -502,7 +518,6 @@
                 ><img src="icons/google.svg" alt="" />Google Maps API</span
               >
             </div>
-
             <div class="project-links">
               <a
                 href="https://github.com/franollf/Elevate"
@@ -528,7 +543,6 @@
               An AI language learning web app featuring translation, quizzes,
               flashcards, and progress tracking.
             </p>
-
             <div class="project-tags">
               <span class="project-tag"
                 ><img src="icons/react.svg" alt="" />React</span
@@ -543,7 +557,6 @@
                 ><img src="icons/gemini.png" alt="" />Gemini</span
               >
             </div>
-
             <div class="project-links">
               <a
                 href="https://github.com/gunmack/QuizLing"
@@ -569,7 +582,6 @@
               Backend service that generates personalized Spotify playlists from
               user-inputted mood data, leveraging the Spotify Web API.
             </p>
-
             <div class="project-tags">
               <span class="project-tag"
                 ><img src="icons/python.svg" alt="" />Python</span
@@ -581,7 +593,6 @@
                 ><img src="icons/fastapi.svg" alt="" />FastAPI</span
               >
             </div>
-
             <div class="project-links">
               <a
                 href="https://github.com/franollf/vibeify"
@@ -607,7 +618,6 @@
               Real-time multiplayer game using a hybrid TCP/UDP client–server
               architecture for low-latency gameplay.
             </p>
-
             <div class="project-tags">
               <span class="project-tag"
                 ><img src="icons/python.svg" alt="" />Python</span
@@ -619,7 +629,6 @@
                 ><img src="icons/google.svg" alt="" />TCP/UDP</span
               >
             </div>
-
             <div class="project-links">
               <a
                 href="https://github.com/p-north/TCP_Networking_Game"
@@ -648,7 +657,6 @@
           <img src="icons/email.svg" alt="Email" />
           Email Me
         </a>
-
         <a
           href="https://www.linkedin.com/in/franollfantu/"
           target="_blank"
@@ -657,7 +665,6 @@
           <img src="icons/linkedin.svg" alt="LinkedIn" />
           LinkedIn
         </a>
-
         <a
           href="https://github.com/franollf"
           target="_blank"
@@ -672,5 +679,27 @@
     <div class="credit">ffa28@sfu.ca</div>
 
     <script src="script.js"></script>
+    <script>
+      // Hamburger menu toggle
+      const hamburger = document.getElementById("hamburger");
+      const mobileNav = document.getElementById("mobileNav");
+
+      hamburger.addEventListener("click", () => {
+        hamburger.classList.toggle("open");
+        mobileNav.classList.toggle("open");
+        document.body.style.overflow = mobileNav.classList.contains("open")
+          ? "hidden"
+          : "";
+      });
+
+      // Close mobile nav when a link is clicked
+      document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+        link.addEventListener("click", () => {
+          hamburger.classList.remove("open");
+          mobileNav.classList.remove("open");
+          document.body.style.overflow = "";
+        });
+      });
+    </script>
   </body>
 </html>
