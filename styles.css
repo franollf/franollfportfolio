@@ -18,6 +18,11 @@ body {
   width: 100%;
 }
 
+.company-logo img[alt="Shared Services Canada"] {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
 /* ==================== */
 /* Navigation           */
 /* ==================== */
