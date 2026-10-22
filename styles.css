@@ -5,7 +5,7 @@
 }
 
 html {
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
 }
 
@@ -13,7 +13,7 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #e5ddd5;
   color: #2c2c2c;
-  overflow-x: hidden;
+  overflow-x: clip;
   max-width: 100%;
   width: 100%;
 }
@@ -986,10 +986,10 @@ nav {
 /* Responsive: Mobile   */
 /* ==================== */
 @media (max-width: 768px) {
-  /* Ensure nothing bleeds out */
+  /* Keep responsive sections within the viewport without making each one a
+     competing scroll container on touch devices. */
   section, nav, .timeline, .projects-grid, .about-gallery, .skills-card {
     max-width: 100%;
-    overflow-x: hidden;
   }
 
   /* Nav */

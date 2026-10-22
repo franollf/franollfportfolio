@@ -55,6 +55,8 @@ Assert-NotContains $html 'document.body.style.overflow' "Mobile navigation shoul
 Assert-Contains $html 'mobileNav.classList.remove("open")' "Mobile navigation should have an explicit close path."
 Assert-Contains $html 'mobileBreakpoint.addEventListener("change", closeMobileNav)' "Crossing the mobile breakpoint should clear an open menu and its scroll lock."
 Assert-Contains $css 'body.mobile-nav-open' "The mobile navigation scroll lock should be represented by a removable class."
+Assert-NotContains $css 'overflow-x: hidden;' "Horizontal clipping must not create nested vertical scroll containers on mobile."
+Assert-Contains $css 'overflow-x: clip;' "Wide content should be clipped without capturing vertical touch scrolling."
 
 if ($failures.Count -gt 0) {
   $failures | ForEach-Object { Write-Error $_ -ErrorAction Continue }
