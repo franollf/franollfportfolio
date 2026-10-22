@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -19,7 +19,13 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
       <!-- Hamburger button (mobile only) -->
-      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <button
+        class="hamburger"
+        id="hamburger"
+        aria-label="Toggle menu"
+        aria-expanded="false"
+        aria-controls="mobileNav"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -91,8 +97,8 @@
             <h2>A bit about me!</h2>
 
             <img
-              src="photos/headshot.png"
-              alt="Franoll smiling"
+              src="photos/transparentpfp.png"
+              alt="Portrait of Franoll Fantu"
               class="about-portrait"
             />
             <p>Hi there! I'm <span class="name">Franoll Fantu</span></p>
@@ -103,29 +109,29 @@
               what I call fun!
             </p>
             <p>
-              Outside of coding, I'm actively involved in my home church and
-              have a strong passion for physical health and fitness. I love to
-              cook, weightlift, play basketball, hike, but above all I love to
-              run. As I am training for my first marathon right now! I really
-              enjoy the balance and applying the same consistency and mindset
-              from training to the way I approach development and tech.
+              Outside of coding, I have a strong passion for physical health and
+              fitness. I love to cook, weightlift, play basketball, hike, but
+              above all I love to run. Currently planning to do my second full
+              marathon! I really enjoy the balance and applying the same
+              consistency and mindset from training to the way I approach
+              development and tech.
             </p>
           </div>
         </div>
 
         <div class="about-gallery">
           <img
-            src="photos/dinner.jpg"
-            style="object-position: center 35%"
-            class="feature"
-            data-caption="Dinner with friends after finals!!"
-            alt="Dinner"
+            src="photos/shared services team.jpg"
+            class="feature gallery-bowling"
+            data-caption="Bowling social with the CanAI Garage Vancouver team!"
+            alt="CanAI Garage Vancouver team at a bowling social"
           />
 
           <img
-            src="photos/marathonphoto.JPG"
-            data-caption="My first half marathon experience in Victoria!!"
-            alt="Marathon"
+            src="photos/fullmarathon.JPG"
+            class="gallery-full-marathon"
+            data-caption="Running my first full marathon!"
+            alt="Franoll running a full marathon with friends"
           />
 
           <img
@@ -136,22 +142,22 @@
 
           <img
             src="photos/church.JPG"
-            class="feature"
+            class="feature gallery-church"
             data-caption="Serving at my young adults group at my home church!!"
             alt="Church"
           />
 
           <img
             src="photos/halfmarathonphoto.JPG"
-            class="feature"
-            data-caption="Solo shot before the finish line during my race"
-            alt="Half Marathon"
+            class="feature gallery-half-marathon"
+            data-caption="My first half marathon ever!"
+            alt="Franoll finishing his first half marathon"
           />
 
           <img
-            src="photos/volleyball.JPG"
-            data-caption="Beach volleyball nights with friends."
-            alt="Volleyball"
+            src="photos/rumble.jpeg"
+            data-caption="Boxing with family."
+            alt="Franoll boxing with family"
           />
         </div>
 
@@ -377,7 +383,8 @@
             </ul>
           </div>
         </div>
-
+      </div>
+    </section>
 
     <!-- Projects Section -->
     <section id="projects" class="projects-section reveal">
@@ -385,6 +392,73 @@
       <div class="projects-underline"></div>
 
       <div class="projects-grid">
+        <!-- PokéVault -->
+        <div class="project-card">
+          <img
+            class="project-preview pokevault-project-preview"
+            src="projects/pokevault.png"
+            alt="PokéVault project preview"
+          />
+          <div class="project-content">
+            <h3>PokéVault</h3>
+            <p>
+              A Java 21 Spring Boot REST API for storing and retrieving Pokémon
+              TCG collections, with versioned PostgreSQL migrations,
+              containerized development, and automated integration testing.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag"
+                ><img src="icons/java.svg" alt="" />Java</span
+              >
+              <span class="project-tag"
+                ><img src="icons/spring.svg" alt="" />Spring Boot</span
+              >
+              <span class="project-tag"
+                ><img src="icons/postgresql.svg" alt="" />PostgreSQL</span
+              >
+              <span class="project-tag"
+                ><img src="icons/docker.svg" alt="" />Docker</span
+              >
+              <span class="project-tag"
+                ><img src="icons/spring.svg" alt="" />Spring Data JPA</span
+              >
+              <span class="project-tag"
+                ><img src="icons/flyway.svg" alt="" />Flyway</span
+              >
+              <span class="project-tag"
+                ><img
+                  src="icons/testcontainers.svg"
+                  alt=""
+                />Testcontainers</span
+              >
+              <span class="project-tag"
+                ><img src="icons/junit.svg" alt="" />JUnit</span
+              >
+              <span class="project-tag"
+                ><img src="icons/mockito.png" alt="" />Mockito</span
+              >
+            </div>
+            <div class="project-links">
+              <a
+                href="https://github.com/franollf/pokevault"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="View PokéVault on GitHub"
+              >
+                <img src="icons/github.svg" alt="" class="project-icon" />
+              </a>
+              <a
+                href="https://youtu.be/MLe6hXhtoc8"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Watch the PokéVault demo"
+              >
+                <span class="demo-icon" aria-hidden="true">▶</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
         <!-- Safe Rx -->
         <div class="project-card">
           <img
@@ -661,23 +735,30 @@
       // Hamburger menu toggle
       const hamburger = document.getElementById("hamburger");
       const mobileNav = document.getElementById("mobileNav");
+      const mobileBreakpoint = window.matchMedia("(max-width: 768px)");
+
+      const closeMobileNav = () => {
+        hamburger.classList.remove("open");
+        mobileNav.classList.remove("open");
+        document.body.classList.remove("mobile-nav-open");
+        hamburger.setAttribute("aria-expanded", "false");
+      };
 
       hamburger.addEventListener("click", () => {
-        hamburger.classList.toggle("open");
-        mobileNav.classList.toggle("open");
-        document.body.style.overflow = mobileNav.classList.contains("open")
-          ? "hidden"
-          : "";
+        const isOpen = mobileNav.classList.toggle("open");
+        hamburger.classList.toggle("open", isOpen);
+        document.body.classList.toggle("mobile-nav-open", isOpen);
+        hamburger.setAttribute("aria-expanded", String(isOpen));
       });
 
       // Close mobile nav when a link is clicked
       document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-        link.addEventListener("click", () => {
-          hamburger.classList.remove("open");
-          mobileNav.classList.remove("open");
-          document.body.style.overflow = "";
-        });
+        link.addEventListener("click", closeMobileNav);
       });
+
+      // Prevent a hidden mobile menu from leaving the page scroll-locked after
+      // a phone rotation or a responsive breakpoint change.
+      mobileBreakpoint.addEventListener("change", closeMobileNav);
     </script>
   </body>
 </html>

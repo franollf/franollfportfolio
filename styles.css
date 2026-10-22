@@ -18,6 +18,11 @@ body {
   width: 100%;
 }
 
+/* Applied only while the mobile navigation overlay is visible. */
+body.mobile-nav-open {
+  overflow: hidden;
+}
+
 .company-logo img[alt="Shared Services Canada"] {
   width: 70px;
   height: 70px;
@@ -348,10 +353,28 @@ nav {
   width: 100%;
 }
 
+.about-gallery img.gallery-bowling {
+  object-position: center 48%;
+}
+
+.about-gallery img.gallery-full-marathon {
+  object-position: center 42%;
+}
+
+.about-gallery img.gallery-church {
+  object-position: center 46%;
+}
+
+.about-gallery img.gallery-half-marathon {
+  object-position: center 52%;
+}
+
 .about-portrait {
   float: left;
-  width: 200px;
-  margin-top: -60px;
+  width: 220px;
+  height: auto;
+  object-fit: contain;
+  margin-top: 0;
   margin-right: 2rem;
   margin-bottom: 1rem;
   opacity: 0.95;
@@ -562,6 +585,14 @@ nav {
   object-fit: cover;
 }
 
+.project-card .pokevault-project-preview {
+  box-sizing: border-box;
+  object-fit: contain;
+  object-position: center;
+  padding: 0.5rem;
+  background: #fff;
+}
+
 .project-content {
   padding: 1.75rem;
   position: relative;
@@ -620,6 +651,9 @@ nav {
 }
 
 .project-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 600;
@@ -637,6 +671,16 @@ nav {
   height: 28px;
   cursor: pointer;
   transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.demo-icon {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.7rem;
 }
 
 .project-links a:hover .project-icon {
@@ -1054,7 +1098,8 @@ nav {
     float: none;
     display: block;
     margin: 0 auto 1rem;
-    width: 110px;
+    width: 150px;
+    max-width: 55vw;
     margin-top: 0;
   }
 
