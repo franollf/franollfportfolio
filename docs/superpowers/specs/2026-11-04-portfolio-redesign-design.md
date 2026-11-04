@@ -137,6 +137,25 @@ overflow, text contrast ≥ 4.5:1. Fix before reporting done.
 Font choices, exact color values, resized-image approach, section numbering,
 dark-mode palette, tag chip styling.
 
-## Open content questions (Franoll decides)
+## Content decisions (approved by Franoll, 2026-11-04)
 
-See conversation; defaults to "keep current text" if unanswered.
+- **Match the resume** (`franoll_fantu_resume (14).pdf`) wherever site and resume overlap:
+  - Experience: SSC, VJDS, EWB, Enactus use the resume's titles, dates, locations
+    and bullets (VJDS Jan–Apr 2026; EWB Jan 2026–Present; Enactus "Software
+    Engineer", React Native). EWB/Enactus shown under a "Leadership" sub-heading.
+  - Education added: Simon Fraser University, B.Sc. Computer Science, graduating Apr 2028.
+  - Projects on the resume (PokéVault, AI Polypharmacy Agent [was SafeRx],
+    QuizLing) use the resume's name, context line, stack and a summary built from
+    its bullets. Projects not on the resume (NutriScan, Elevate, Vibeify, Capture
+    the Star) keep current site text.
+  - Skills: the resume's five groups (resume typo "JavaScfipt" fixed).
+- **Featured:** PokéVault, AI Polypharmacy Agent, NutriScan. Grid: Elevate,
+  QuizLing, Vibeify, Capture the Star.
+- **Hero line:** "Computer Science student at Simon Fraser University. Currently a
+  Software Developer Co-op at Shared Services Canada."
+- Fix "peoples lives" → "people's lives".
+- Phone number public via resume PDF: OK.
+- **Delete unused files:** SSC.png, SSC2.png, basketball.JPG, marathongroup.JPG,
+  runclub.JPG, headshot.png, dinner.jpg, marathonphoto.JPG, volleyball.JPG,
+  running sprite.png, outlierai.png, sharetea.png, rogue.u.png, and any icon
+  left unreferenced after the redesign.
