@@ -11,15 +11,16 @@ avatar) that makes him memorable. Change the design, not the substance.
 
 - First screen (375px and 1440px): name, one-line role, **Resume** button, email.
   On desktop the first featured project starts above the fold (1440×900).
-- Featured projects first: SafeRx, NutriScan, Elevate. Then QuizLing, Vibeify,
-  Capture the Star.
+- Featured projects first (3, pending final pick now that PokéVault exists):
+  SafeRx, NutriScan, Elevate. Remaining projects (PokéVault, QuizLing, Vibeify,
+  Capture the Star) follow in a compact grid.
 - Fast (no framework, optimized images, lazy-loading), accessible (WCAG AA
   contrast, keyboard, screen reader), responsive (375 → 1440+).
 
 ## Non-goals
 
-- No new content, no placeholder text. No new projects (e.g. PokéVault) unless
-  Franoll adds them.
+- No new content, no placeholder text. (PokéVault was added by Franoll on
+  `main` on 2026-10-22 and is existing content.)
 - No stack change: stays plain HTML + CSS + vanilla JS, no build step.
 
 ## Anti-goals
@@ -69,7 +70,9 @@ Chosen by Franoll: A.
    grid (1 column on mobile) with screenshot, description, tech, link.
 5. **Experience:** clean dated list — logo, role, company, mono dates, existing
    bullets. SSC, VJDS, Enactus, EWB in current order.
-6. **About:** headshot + existing bio paragraphs; the six current photos in a
+6. **About:** `transparentpfp.png` portrait (uncropped, `object-fit: contain`)
+   + existing bio paragraphs; the six current photos (SSC team bowling, full
+   marathon, hike, church, half marathon, boxing) with their focal-point classes, in a
    strip with captions always visible (scroll-snap row on mobile, grid on
    desktop).
 7. **Skills:** the same three groups (Languages / Frameworks / Tools) as plain
@@ -93,12 +96,26 @@ typewriter; its wording needs his approval.
 - Tech tags become text-only, which removes the broken `reactnative.svg`
   reference and the Google icon on "TCP/UDP".
 - Unused files are left in place until Franoll decides.
+- `.gitignore` ignores `/assets`, `/photos/*`, `/projects/*`, `/icons/*` except
+  an allowlist. Any new file there (resume PDF, resized images) must be added to
+  the allowlist or it won't be committed/deployed.
+
+### Tests
+
+`tests/portfolio-content.tests.ps1` asserts current markup (photos, captions,
+PokéVault card + icons + links, `rel="noopener noreferrer"`, mobile-nav close
+path and breakpoint reset, `overflow-x: clip`, portrait `object-fit: contain`).
+The redesign keeps every content assertion true and updates only the assertions
+that are tied to old structure (e.g. inline nav script moving into `script.js`).
+PowerShell isn't installed locally; equivalent checks are mirrored in the
+Playwright verification script.
 
 ### Removed
 
 Typewriter, side social rail, scroll indicator, skills tabs + JS, hover-only
-gallery caption JS, inline hamburger script (moved into `script.js`), the
-broken/unclosed experience markup.
+gallery caption JS, inline hamburger script (moved into `script.js`, keeping
+its close-on-link and close-on-breakpoint behaviour and the
+`body.mobile-nav-open` class).
 
 ### Added
 
