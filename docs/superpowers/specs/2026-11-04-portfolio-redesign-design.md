@@ -93,8 +93,11 @@ typewriter; its wording needs his approval.
 - Resized web copies of used photos/screenshots (via macOS `sips`) next to the
   originals; originals kept. All `<img>` get `width`/`height`,
   `loading="lazy"` below the fold, and real alt text.
-- Tech tags become text-only, which removes the broken `reactnative.svg`
-  reference and the Google icon on "TCP/UDP".
+- Tech tags keep their small icons (the tests require them on PokéVault), restyled
+  as quiet mono chips. The broken `reactnative.svg` icon is dropped (text stays);
+  the Google icon on "TCP/UDP" is flagged for Franoll.
+- Project GitHub/demo links stay icon-only with descriptive `aria-label`s, as the
+  tests require.
 - Unused files are left in place until Franoll decides.
 - `.gitignore` ignores `/assets`, `/photos/*`, `/projects/*`, `/icons/*` except
   an allowlist. Any new file there (resume PDF, resized images) must be added to
@@ -132,7 +135,7 @@ overflow, text contrast ≥ 4.5:1. Fix before reporting done.
 ## Builder's calls (Claude)
 
 Font choices, exact color values, resized-image approach, section numbering,
-dark-mode palette, text-only tech tags.
+dark-mode palette, tag chip styling.
 
 ## Open content questions (Franoll decides)
 
