@@ -1,9 +1,11 @@
 /photos/*
+!/photos/web/
 !/photos/fullmarathon.JPG
 !/photos/rumble.jpeg
 !/photos/transparentpfp.png
 !/photos/shared services team.jpg
 /projects/*
+!/projects/web/
 !/projects/pokevault.png
 /icons/*
 !/icons/spring.svg
@@ -11,4 +13,6 @@
 !/icons/testcontainers.svg
 !/icons/junit.svg
 !/icons/mockito.png
-/assets
+/assets/*
+!/assets/franoll-fantu-resume.pdf
+!/assets/franoll-piskel-blinking.gif
