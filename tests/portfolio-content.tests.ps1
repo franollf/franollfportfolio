@@ -2,6 +2,7 @@ $ErrorActionPreference = "Stop"
 
 $html = Get-Content -Raw (Join-Path $PSScriptRoot "..\index.html")
 $css = Get-Content -Raw (Join-Path $PSScriptRoot "..\styles.css")
+$js = Get-Content -Raw (Join-Path $PSScriptRoot "..\script.js")
 $pokevaultCard = [regex]::Match($html, '<!-- PokéVault -->(.*?)<!-- Safe Rx -->', 'Singleline').Groups[1].Value
 $failures = [System.Collections.Generic.List[string]]::new()
 
@@ -51,9 +52,9 @@ Assert-NotContains $css '.pokevault-preview' "Unused generated PokéVault previe
 Assert-Contains $css '.pokevault-project-preview' "PokéVault preview should define dedicated centering styles."
 
 # The mobile menu must never leave a stale inline overflow lock on the page.
-Assert-NotContains $html 'document.body.style.overflow' "Mobile navigation should not lock scrolling with an inline body style."
-Assert-Contains $html 'mobileNav.classList.remove("open")' "Mobile navigation should have an explicit close path."
-Assert-Contains $html 'mobileBreakpoint.addEventListener("change", closeMobileNav)' "Crossing the mobile breakpoint should clear an open menu and its scroll lock."
+Assert-NotContains ($html + $js) 'document.body.style.overflow' "Mobile navigation should not lock scrolling with an inline body style."
+Assert-Contains $js 'mobileNav.classList.remove("open")' "Mobile navigation should have an explicit close path."
+Assert-Contains $js 'mobileBreakpoint.addEventListener("change", closeMobileNav)' "Crossing the mobile breakpoint should clear an open menu and its scroll lock."
 Assert-Contains $css 'body.mobile-nav-open' "The mobile navigation scroll lock should be represented by a removable class."
 Assert-NotContains $css 'overflow-x: hidden;' "Horizontal clipping must not create nested vertical scroll containers on mobile."
 Assert-Contains $css 'overflow-x: clip;' "Wide content should be clipped without capturing vertical touch scrolling."

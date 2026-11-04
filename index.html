@@ -3,91 +3,103 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Franoll Fantu - Portfolio</title>
+    <title>Franoll Fantu — Software Developer</title>
+    <meta
+      name="description"
+      content="Franoll Fantu — Computer Science student at Simon Fraser University. Currently a Software Developer Co-op at Shared Services Canada."
+    />
+    <meta name="theme-color" content="#f5f0e8" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Franoll Fantu — Software Developer" />
+    <meta
+      property="og:description"
+      content="Computer Science student at Simon Fraser University. Currently a Software Developer Co-op at Shared Services Canada."
+    />
+    <meta property="og:image" content="photos/transparentpfp.png" />
+    <link rel="icon" href="assets/franoll-piskel-blinking.gif" type="image/gif" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
     <link rel="stylesheet" href="styles.css" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
   </head>
   <body>
-    <!-- Navigation -->
-    <nav>
-      <div class="logo">FRANOLL FANTU</div>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <!-- Hamburger button (mobile only) -->
-      <button
-        class="hamburger"
-        id="hamburger"
-        aria-label="Toggle menu"
-        aria-expanded="false"
-        aria-controls="mobileNav"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </nav>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <!-- Mobile Nav Overlay -->
-    <div class="mobile-nav" id="mobileNav">
-      <a href="#home" class="mobile-nav-link">Home</a>
-      <a href="#about" class="mobile-nav-link">About</a>
-      <a href="#skills" class="mobile-nav-link">Skills</a>
-      <a href="#experience" class="mobile-nav-link">Experience</a>
-      <a href="#projects" class="mobile-nav-link">Projects</a>
-      <a href="#contact" class="mobile-nav-link">Contact</a>
-    </div>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#top">Franoll Fantu</a>
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+        <a class="btn btn--primary btn--small" href="assets/franoll-fantu-resume.pdf">Resume</a>
+        <button
+          class="hamburger"
+          id="hamburger"
+          type="button"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          aria-controls="mobileNav"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+      <nav class="mobile-nav" id="mobileNav" aria-label="Mobile">
+        <a href="#work" class="mobile-nav-link">Work</a>
+        <a href="#experience" class="mobile-nav-link">Experience</a>
+        <a href="#about" class="mobile-nav-link">About</a>
+        <a href="#skills" class="mobile-nav-link">Skills</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+      </nav>
+    </header>
 
-    <!-- Side Social Links -->
-    <div class="side-social">
-      <a href="https://github.com/franollf" title="GitHub">
-        <img src="icons/github.svg" alt="GitHub" class="sideicon" />
-      </a>
-      <a href="https://www.linkedin.com/in/franollfantu/" title="LinkedIn">
-        <img src="icons/linkedin.svg" alt="LinkedIn" class="sideicon" />
-      </a>
-      <a href="mailto:ffa28@sfu.ca" title="Email">
-        <img src="icons/email.svg" alt="Email" class="sideicon" />
-      </a>
-    </div>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-      <div class="hero-content">
-        <h1>Hi, I'm <strong>Franoll</strong></h1>
-        <p class="subtitle">
-          <span class="rotating-text" id="typewriter"></span>
-        </p>
-
-        <div class="social-links">
-          <a href="https://github.com/franollf" title="GitHub">
-            <img src="icons/github.svg" alt="GitHub" class="icon" />
-          </a>
-          <a href="https://www.linkedin.com/in/franollfantu/" title="LinkedIn">
-            <img src="icons/linkedin.svg" alt="LinkedIn" class="icon" />
-          </a>
-          <a href="mailto:ffa28@sfu.ca" title="Email">
-            <img src="icons/email.svg" alt="Email" class="icon" />
-          </a>
+    <main id="main">
+      <section id="top" class="hero container" aria-labelledby="hero-name">
+        <div class="hero-name-row">
+          <img
+            src="assets/franoll-piskel-blinking.gif"
+            alt=""
+            class="hero-avatar"
+            width="56"
+            height="56"
+          />
+          <h1 id="hero-name">Franoll Fantu</h1>
         </div>
-      </div>
-
-      <div class="hero-image">
-        <img
-          src="assets/franoll-piskel-blinking.gif"
-          alt="Pixel avatar of Franoll"
-          class="piskel-gif"
-        />
-      </div>
-
-      <div class="scroll-indicator">
-        <span>↓</span>
-      </div>
-    </section>
+        <p class="hero-line">
+          Computer Science student at Simon Fraser University. Currently a
+          Software Developer Co-op at Shared Services Canada.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn--primary" href="assets/franoll-fantu-resume.pdf">Resume</a>
+          <a class="btn" href="mailto:ffa28@sfu.ca">ffa28@sfu.ca</a>
+          <a
+            class="btn btn--ghost"
+            href="https://github.com/franollf"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
+          <a
+            class="btn btn--ghost"
+            href="https://www.linkedin.com/in/franollfantu/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >LinkedIn</a
+          >
+        </div>
+      </section>
 
     <!-- About Section -->
     <section id="about" class="about-section reveal">
@@ -728,37 +740,8 @@
       </div>
     </section>
 
-    <div class="credit">ffa28@sfu.ca</div>
+    </main>
 
     <script src="script.js"></script>
-    <script>
-      // Hamburger menu toggle
-      const hamburger = document.getElementById("hamburger");
-      const mobileNav = document.getElementById("mobileNav");
-      const mobileBreakpoint = window.matchMedia("(max-width: 768px)");
-
-      const closeMobileNav = () => {
-        hamburger.classList.remove("open");
-        mobileNav.classList.remove("open");
-        document.body.classList.remove("mobile-nav-open");
-        hamburger.setAttribute("aria-expanded", "false");
-      };
-
-      hamburger.addEventListener("click", () => {
-        const isOpen = mobileNav.classList.toggle("open");
-        hamburger.classList.toggle("open", isOpen);
-        document.body.classList.toggle("mobile-nav-open", isOpen);
-        hamburger.setAttribute("aria-expanded", String(isOpen));
-      });
-
-      // Close mobile nav when a link is clicked
-      document.querySelectorAll(".mobile-nav-link").forEach((link) => {
-        link.addEventListener("click", closeMobileNav);
-      });
-
-      // Prevent a hidden mobile menu from leaving the page scroll-locked after
-      // a phone rotation or a responsive breakpoint change.
-      mobileBreakpoint.addEventListener("change", closeMobileNav);
-    </script>
   </body>
 </html>
