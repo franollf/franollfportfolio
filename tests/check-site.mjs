@@ -83,6 +83,11 @@ for (const s of ["JavaScfipt", "typewriter", "side-social", "reactnative.svg", "
   check(!html.includes(s) && !js.includes(s), `Should not contain: ${s}`);
 check(!css.includes("overflow-x: hidden"), "styles.css should not use overflow-x: hidden");
 
+// --- Mobile nav must not be inside the header: the header's backdrop-filter
+// becomes the containing block for position:fixed and collapses the menu.
+const headerBlock = (html.match(/<header[\s\S]*?<\/header>/) || [""])[0];
+check(!headerBlock.includes('id="mobileNav"'), "Mobile nav must be outside <header> (backdrop-filter breaks position:fixed)");
+
 // --- Mobile nav behaviour lives in script.js -------------------------------
 check(js.includes('mobileBreakpoint.addEventListener("change", closeMobileNav)'), "script.js should close nav on breakpoint change");
 check(js.includes('mobileNav.classList.remove("open")'), "script.js should have an explicit nav close path");
