@@ -269,339 +269,277 @@
       </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="about-section reveal">
-      <div class="about-container">
-        <div class="about-top">
-          <div class="about-text reveal">
-            <h2>A bit about me!</h2>
+    <section id="experience" class="section container" aria-labelledby="experience-title">
+      <h2 class="section-label" id="experience-title"><span class="num">02</span> Experience</h2>
 
-            <img
-              src="photos/transparentpfp.png"
-              alt="Portrait of Franoll Fantu"
-              class="about-portrait"
-            />
-            <p>Hi there! I'm <span class="name">Franoll Fantu</span></p>
-            <p>
-              I'm an undergraduate student at Simon Fraser University with a
-              passion for building projects to make peoples lives easier.
-              Solving problems and turning ideas into functional projects is
-              what I call fun!
-            </p>
-            <p>
-              Outside of coding, I have a strong passion for physical health and
-              fitness. I love to cook, weightlift, play basketball, hike, but
-              above all I love to run. Currently planning to do my second full
-              marathon! I really enjoy the balance and applying the same
-              consistency and mindset from training to the way I approach
-              development and tech.
-            </p>
+      <h3 class="subsection-title subsection-title--first">Work</h3>
+      <div class="jobs">
+        <article class="job reveal">
+          <img class="job-logo" src="photos/SSC.jpeg" alt="Shared Services Canada logo" width="48" height="48" loading="lazy" />
+          <div class="job-body">
+            <div class="job-head">
+              <h4 class="job-title">Software Developer Co-op</h4>
+              <p class="job-dates">May 2026 – Present</p>
+            </div>
+            <p class="job-org">Shared Services Canada - CanAI Garage <span class="job-loc">· Vancouver, BC</span></p>
+            <ul class="job-points">
+              <li>Collaborated with a cross-Canada team to build a predictive AI fleet management system</li>
+              <li>Developed and tuned regression and classification models for fleet forecasting and integrated them into production workflows</li>
+              <li>Implemented MLflow to track model parameters, metrics, and experiments across ML pipelines</li>
+              <li>Built RESTful APIs with Django/Python and a Redis caching system, reducing average API response time by 50%</li>
+              <li>Containerized application services using Docker and deployed them to Azure VMs through CI/CD pipelines</li>
+              <li>Served as Scrum Master, managing sprints in Jira, coordinating development across shared VM environments, and communicating progress to government stakeholders</li>
+            </ul>
           </div>
-        </div>
+        </article>
+        <article class="job reveal">
+          <img class="job-logo" src="icons/vjds.png" alt="VJDS International logo" width="48" height="42" loading="lazy" />
+          <div class="job-body">
+            <div class="job-head">
+              <h4 class="job-title">Machine Learning Intern</h4>
+              <p class="job-dates">January 2026 – April 2026</p>
+            </div>
+            <p class="job-org">VJDS International Inc. <span class="job-loc">· Calgary, Alberta</span></p>
+            <ul class="job-points">
+              <li>Built ML pipelines for classification, enrichment, and predictive scoring integrated into production services</li>
+              <li>Designed end-to-end data pipelines for ingestion, preprocessing, validation, and feature transformation using Python</li>
+              <li>Developed backend services and RESTful APIs using FastAPI and Python</li>
+              <li>Implemented Redis caching and storage for API requests, reducing response times by 75%</li>
+              <li>Performed spatial analysis to compute density metrics and generate heatmap visualizations for trend analysis</li>
+            </ul>
+          </div>
+        </article>
+      </div>
 
-        <div class="about-gallery">
+      <h3 class="subsection-title">Leadership</h3>
+      <div class="jobs">
+        <article class="job reveal">
+          <img class="job-logo" src="icons/ewb.png" alt="Engineering Without Borders logo" width="48" height="48" loading="lazy" />
+          <div class="job-body">
+            <div class="job-head">
+              <h4 class="job-title">Vice President, Web &amp; Digital Systems</h4>
+              <p class="job-dates">January 2026 – Present</p>
+            </div>
+            <p class="job-org">Engineering Without Borders Canada (SFU Chapter) <span class="job-loc">· Burnaby, BC</span></p>
+            <ul class="job-points">
+              <li>Architected, maintained, and optimized the organization’s public-facing website</li>
+              <li>Developed and deployed frontend features and pages using HTML, CSS, JavaScript, and React</li>
+              <li>Managed site structure, content updates, and deployment workflows to support events, recruitment, and project launches</li>
+              <li>Collaborated with executive leadership to align technical decisions with long-term digital strategy</li>
+            </ul>
+          </div>
+        </article>
+        <article class="job reveal">
+          <img class="job-logo" src="icons/enactusfu.png" alt="Enactus SFU logo" width="48" height="48" loading="lazy" />
+          <div class="job-body">
+            <div class="job-head">
+              <h4 class="job-title">Software Engineer</h4>
+              <p class="job-dates">January 2026 – June 2026</p>
+            </div>
+            <p class="job-org">Enactus SFU <span class="job-loc">· Burnaby, BC</span></p>
+            <ul class="job-points">
+              <li>Led development of a healthcare application using React Native with modular, component-based architecture</li>
+              <li>Integrated cloud authentication, data storage, and deployment workflows using AWS Amplify and AWS Cognito</li>
+              <li>Worked closely with design and strategy leads to translate product requirements into scalable technical solutions</li>
+              <li>Defined frontend architecture, conducted code reviews, and enforced engineering best practices across the team</li>
+              <li>Planned development sprints and decomposed features into clear, well-scoped engineering tasks</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="subsection-title">Education</h3>
+      <div class="education reveal">
+        <div class="job-head">
+          <h4 class="job-title">Simon Fraser University</h4>
+          <p class="job-dates">Graduation: Apr 2028</p>
+        </div>
+        <p class="job-org">Bachelor of Sciences in Computer Science <span class="job-loc">· Burnaby, BC</span></p>
+      </div>
+    </section>
+
+    <section id="about" class="section container" aria-labelledby="about-title">
+      <h2 class="section-label" id="about-title"><span class="num">03</span> About</h2>
+      <div class="about reveal">
+        <img
+          src="photos/transparentpfp.png"
+          srcset="photos/web/transparentpfp.png 640w"
+          sizes="(min-width: 768px) 260px, 180px"
+          alt="Portrait of Franoll Fantu"
+          class="about-portrait"
+          width="640"
+          height="640"
+          loading="lazy"
+        />
+        <div class="about-text">
+          <h3 class="about-title">A bit about me!</h3>
+          <p>Hi there! I'm <span class="name">Franoll Fantu</span></p>
+          <p>
+            I'm an undergraduate student at Simon Fraser University with a
+            passion for building projects to make people's lives easier.
+            Solving problems and turning ideas into functional projects is
+            what I call fun!
+          </p>
+          <p>
+            Outside of coding, I have a strong passion for physical health and
+            fitness. I love to cook, weightlift, play basketball, hike, but
+            above all I love to run. Currently planning to do my second full
+            marathon! I really enjoy the balance and applying the same
+            consistency and mindset from training to the way I approach
+            development and tech.
+          </p>
+        </div>
+      </div>
+
+      <div class="gallery" role="list">
+        <figure class="gallery-item" role="listitem">
           <img
             src="photos/shared services team.jpg"
-            class="feature gallery-bowling"
+            srcset="photos/web/shared-services-team.jpg 1200w"
+            sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 80vw"
+            class="gallery-bowling"
             data-caption="Bowling social with the CanAI Garage Vancouver team!"
             alt="CanAI Garage Vancouver team at a bowling social"
+            width="1200"
+            height="900"
+            loading="lazy"
           />
-
+          <figcaption>Bowling social with the CanAI Garage Vancouver team!</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem">
           <img
             src="photos/fullmarathon.JPG"
+            srcset="photos/web/fullmarathon.jpg 800w"
+            sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 80vw"
             class="gallery-full-marathon"
             data-caption="Running my first full marathon!"
             alt="Franoll running a full marathon with friends"
+            width="800"
+            height="1200"
+            loading="lazy"
           />
-
+          <figcaption>Running my first full marathon!</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem">
           <img
             src="photos/hikephoto.jpeg"
+            srcset="photos/web/hikephoto.jpg 900w"
+            sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 80vw"
+            class="gallery-hike"
             data-caption="Hiking to reset after finals at Stawamus Chief"
             alt="Hike"
+            width="900"
+            height="1200"
+            loading="lazy"
           />
-
+          <figcaption>Hiking to reset after finals at Stawamus Chief</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem">
           <img
             src="photos/church.JPG"
-            class="feature gallery-church"
+            srcset="photos/web/church.jpg 1200w"
+            sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 80vw"
+            class="gallery-church"
             data-caption="Serving at my young adults group at my home church!!"
             alt="Church"
+            width="1200"
+            height="899"
+            loading="lazy"
           />
-
+          <figcaption>Serving at my young adults group at my home church!!</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem">
           <img
             src="photos/halfmarathonphoto.JPG"
-            class="feature gallery-half-marathon"
+            srcset="photos/web/halfmarathonphoto.jpg 1200w"
+            sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 80vw"
+            class="gallery-half-marathon"
             data-caption="My first half marathon ever!"
             alt="Franoll finishing his first half marathon"
+            width="1200"
+            height="800"
+            loading="lazy"
           />
-
+          <figcaption>My first half marathon ever!</figcaption>
+        </figure>
+        <figure class="gallery-item" role="listitem">
           <img
             src="photos/rumble.jpeg"
+            srcset="photos/web/rumble.jpg 1200w"
+            sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 80vw"
+            class="gallery-boxing"
             data-caption="Boxing with family."
             alt="Franoll boxing with family"
+            width="1200"
+            height="900"
+            loading="lazy"
           />
-        </div>
-
-        <!-- SIDE CAPTION PANEL -->
-        <div class="gallery-caption" id="galleryCaption">
-          <p id="captionText">Hover over a photo to learn more.</p>
-        </div>
+          <figcaption>Boxing with family.</figcaption>
+        </figure>
       </div>
     </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="skills-section reveal">
-      <h2 class="skills-title">Technical Skills</h2>
-      <div class="skills-underline"></div>
-
-      <!-- Tabs -->
-      <div class="skills-tabs">
-        <button class="tab active" data-tab="languages">
-          <img src="icons/code.svg" class="tab-icon" alt="" /> Languages
-        </button>
-        <button class="tab" data-tab="frameworks">
-          <img src="icons/frameworks.svg" class="tab-icon" alt="" /> Frameworks
-        </button>
-        <button class="tab" data-tab="tools">
-          <img src="icons/tools.svg" class="tab-icon" alt="" /> Tools
-        </button>
-      </div>
-
-      <!-- Content -->
-      <div class="skills-card reveal active">
-        <!-- Languages -->
-        <div class="skills-grid active" id="languages">
-          <div class="skill">
-            <img src="icons/python.svg" /><span>Python</span>
-          </div>
-          <div class="skill"><img src="icons/java.svg" /><span>Java</span></div>
-          <div class="skill"><img src="icons/cpp.svg" /><span>C++</span></div>
-          <div class="skill"><img src="icons/c.svg" /><span>C</span></div>
-          <div class="skill">
-            <img src="icons/javascript.svg" /><span>JavaScript</span>
-          </div>
-          <div class="skill">
-            <img src="icons/typescript.svg" /><span>TypeScript</span>
-          </div>
-          <div class="skill"><img src="icons/html.svg" /><span>HTML</span></div>
-          <div class="skill"><img src="icons/css.svg" /><span>CSS</span></div>
+    <section id="skills" class="section container" aria-labelledby="skills-title">
+      <h2 class="section-label" id="skills-title"><span class="num">04</span> Technical skills</h2>
+      <dl class="skills reveal">
+        <div class="skill-group">
+          <dt>Programming &amp; Query Languages</dt>
+          <dd><ul class="skill-list"><li>Java</li><li>Python</li><li>C</li><li>C++</li><li>JavaScript</li><li>TypeScript</li><li>Bash</li><li>PHP</li></ul></dd>
         </div>
-
-        <!-- Frameworks -->
-        <div class="skills-grid" id="frameworks">
-          <div class="skill">
-            <img src="icons/react.svg" /><span>React.js</span>
-          </div>
-          <div class="skill">
-            <img src="icons/node.svg" /><span>Node.js</span>
-          </div>
-          <div class="skill">
-            <img src="icons/express.svg" /><span>Express.js</span>
-          </div>
-          <div class="skill">
-            <img src="icons/next.svg" /><span>Next.js</span>
-          </div>
-          <div class="skill">
-            <img src="icons/fastapi.svg" /><span>FastAPI</span>
-          </div>
-          <div class="skill">
-            <img src="icons/tailwind.svg" /><span>Tailwind</span>
-          </div>
+        <div class="skill-group">
+          <dt>Data &amp; Analytics Tools</dt>
+          <dd><ul class="skill-list"><li>Excel</li><li>Power BI</li><li>Tableau</li><li>pandas</li><li>NumPy</li><li>Matplotlib</li></ul></dd>
         </div>
+        <div class="skill-group">
+          <dt>Frameworks &amp; Platforms</dt>
+          <dd><ul class="skill-list"><li>React</li><li>Node.js</li><li>Express.js</li><li>Flask</li><li>FastAPI</li><li>Firebase</li></ul></dd>
+        </div>
+        <div class="skill-group">
+          <dt>DevOps &amp; Collaboration</dt>
+          <dd><ul class="skill-list"><li>Linux</li><li>UNIX</li><li>Docker</li><li>Git</li><li>GitLab</li><li>Jira</li><li>Confluence</li></ul></dd>
+        </div>
+        <div class="skill-group">
+          <dt>Concepts</dt>
+          <dd><ul class="skill-list"><li>Agile Scrum</li><li>QA Testing</li><li>ETL Pipelines</li><li>Data Validation</li><li>Dashboard Development</li><li>Technical Documentation</li></ul></dd>
+        </div>
+      </dl>
+    </section>
 
-        <!-- Tools -->
-        <div class="skills-grid" id="tools">
-          <div class="skill"><img src="icons/git.svg" /><span>Git</span></div>
-          <div class="skill">
-            <img src="icons/github.svg" /><span>GitHub</span>
-          </div>
-          <div class="skill">
-            <img src="icons/vscode.svg" /><span>VS Code</span>
-          </div>
-          <div class="skill"><img src="icons/aws.svg" /><span>AWS</span></div>
-          <div class="skill">
-            <img src="icons/figma.svg" /><span>Figma</span>
-          </div>
-          <div class="skill">
-            <img src="icons/postman.svg" /><span>Postman</span>
-          </div>
-          <div class="skill">
-            <img src="icons/firebase.svg" /><span>Firebase</span>
-          </div>
-          <div class="skill">
-            <img src="icons/mongodb.svg" /><span>MongoDB</span>
-          </div>
-          <div class="skill">
-            <img src="icons/mysql.svg" /><span>MySQL</span>
-          </div>
-          <div class="skill">
-            <img src="icons/postgresql.svg" /><span>PostgreSQL</span>
-          </div>
-          <div class="skill">
-            <img src="icons/docker.svg" /><span>Docker</span>
-          </div>
+    <section id="contact" class="section container contact" aria-labelledby="contact-title">
+      <h2 class="section-label"><span class="num">05</span> Contact</h2>
+      <div class="reveal">
+        <h3 class="contact-title" id="contact-title">Thank you for visiting!</h3>
+        <p class="contact-text">
+          Feel free to reach out — I'll get back to you as soon as I can.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn--primary" href="mailto:ffa28@sfu.ca">Email Me</a>
+          <a class="btn" href="assets/franoll-fantu-resume.pdf">Resume</a>
+          <a
+            class="btn btn--ghost"
+            href="https://www.linkedin.com/in/franollfantu/"
+            target="_blank"
+            rel="noopener noreferrer"
+            >LinkedIn</a
+          >
+          <a
+            class="btn btn--ghost"
+            href="https://github.com/franollf"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
         </div>
       </div>
     </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="experience-section reveal">
-      <h2 class="experience-title">Experience</h2>
-      <div class="experience-underline"></div>
-
-      <div class="timeline">
-        <!-- Experience Item 1 - Right -->
-        <!-- Experience Item 1 - Right -->
-        <div class="timeline-item right">
-          <div class="timeline-dot"></div>
-          <div class="timeline-card">
-            <div class="card-header">
-              <div class="company-logo">
-                <img src="photos/SSC.jpeg" alt="Shared Services Canada" />
-              </div>
-              <div class="company-info">
-                <h3>Shared Services Canada</h3>
-                <span class="job-title">Software Developer Co-op</span>
-              </div>
-              <span class="date">May 2026 - Present</span>
-            </div>
-            <ul class="responsibilities">
-              <li>
-                Collaborated in a cross-Canada team of 8 students to build a
-                predictive AI system for federal government applications
-              </li>
-              <li>
-                Owned backend development for the predictive model, designing
-                and integrating core API services using Django and Python
-              </li>
-              <li>
-                Exposed RESTful endpoints consumed by a React frontend, enabling
-                real-time model inference and results visualization
-              </li>
-              <li>
-                Containerized services using Docker to maintain consistent,
-                reproducible environments across development and deployment
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="timeline-item left">
-          <div class="timeline-dot"></div>
-          <div class="timeline-card">
-            <div class="card-header">
-              <div class="company-logo">
-                <img src="icons/vjds.png" alt="VJDS" />
-              </div>
-              <div class="company-info">
-                <h3>VJDS International Inc.</h3>
-                <span class="job-title">Machine Learning Intern</span>
-              </div>
-              <span class="date">Jan 2026 - Jun 2026</span>
-            </div>
-            <ul class="responsibilities">
-              <li>
-                Deployed scalable ML inference endpoints via secure RESTful APIs
-                with monitoring and error handling
-              </li>
-              <li>
-                Performed spatial analysis to compute density metrics and
-                generate heatmap visualizations for trend analysis
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Experience Item 2 - Left -->
-        <div class="timeline-item right">
-          <div class="timeline-dot"></div>
-          <div class="timeline-card">
-            <div class="card-header">
-              <div class="company-logo">
-                <img src="icons/enactusfu.png" alt="Enactus SFU" />
-              </div>
-              <div class="company-info">
-                <h3>Enactus SFU</h3>
-                <span class="job-title">Software Team Lead</span>
-              </div>
-              <span class="date">Jan 2026 - Jun 2026</span>
-            </div>
-            <ul class="responsibilities">
-              <li>
-                Leading development of a healthcare web application using React
-                with modular, component-based architecture
-              </li>
-              <li>
-                Integrated cloud authentication, data storage, and deployment
-                workflows using AWS Amplify and Cognito
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Experience Item 3 - Right -->
-        <div class="timeline-item left">
-          <div class="timeline-dot"></div>
-          <div class="timeline-card">
-            <div class="card-header">
-              <div class="company-logo">
-                <img src="icons/ewb.png" alt="EWB" />
-              </div>
-              <div class="company-info">
-                <h3>Engineering without Borders (SFU Chapter)</h3>
-                <span class="job-title">VP of Web & Digital Systems</span>
-              </div>
-              <span class="date">Jan 2025 - Present</span>
-            </div>
-            <ul class="responsibilities">
-              <li>
-                Developed and deployed frontend features and pages using modern
-                HTML, CSS, JavaScript, and React-based workflows
-              </li>
-              <li>
-                Managed site structure, content updates, and deployment
-                workflows to support events, recruitment, and project launches
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section reveal">
-      <h2 class="contact-title">Thank you for visiting!</h2>
-      <div class="contact-underline"></div>
-
-      <p class="contact-text">
-        Feel free to reach out — I'll get back to you as soon as I can.
-      </p>
-
-      <div class="contact-links">
-        <a href="mailto:ffa28@sfu.ca" class="contact-btn">
-          <img src="icons/email.svg" alt="Email" />
-          Email Me
-        </a>
-        <a
-          href="https://www.linkedin.com/in/franollfantu/"
-          target="_blank"
-          class="contact-btn"
-        >
-          <img src="icons/linkedin.svg" alt="LinkedIn" />
-          LinkedIn
-        </a>
-        <a
-          href="https://github.com/franollf"
-          target="_blank"
-          class="contact-btn"
-        >
-          <img src="icons/github.svg" alt="GitHub" />
-          GitHub
-        </a>
-      </div>
-    </section>
-
     </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <a href="mailto:ffa28@sfu.ca">ffa28@sfu.ca</a>
+        <p>© <span id="year">2026</span> Franoll Fantu</p>
+      </div>
+    </footer>
 
     <script src="script.js"></script>
   </body>
