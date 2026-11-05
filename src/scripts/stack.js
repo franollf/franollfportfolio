@@ -100,6 +100,9 @@ if (root) {
   let lockedAt = 0;
   let acc = 0;
   let lastWheel = 0;
+  let peak = 0;
+  let trough = 0;
+  let lockedDir = 0;
   let quiet;
   const releaseWhenQuiet = () => {
     clearTimeout(quiet);
@@ -122,12 +125,29 @@ if (root) {
       const now = performance.now();
       if (now - lastWheel > 200) acc = 0;
       lastWheel = now;
+      // Trackpad momentum ramps up, peaks, then only decays. If the delta climbs well above
+      // the low point after it has clearly faded (or flips direction), that's a fresh flick
+      // riding the old tail: unlock for it instead of swallowing it.
+      const mag = Math.abs(dy);
+      const faded = trough < peak * 0.6;
+      const fresh = locked && mag >= 8 && ((faded && mag > trough * 1.5 + 6) || (Math.sign(dy) !== lockedDir && now - lockedAt > 150));
+      if (locked && !fresh) {
+        if (mag > peak) peak = trough = mag;
+        else trough = Math.min(trough, mag);
+      }
+      if (fresh) {
+        locked = false;
+        acc = 0;
+        clearTimeout(quiet);
+      }
       if (locked) return releaseWhenQuiet();
       acc += dy * (e.deltaMode === 1 ? 16 : 1);
       if (Math.abs(acc) < 24) return;
       step(Math.sign(acc));
       locked = true;
       lockedAt = now;
+      lockedDir = Math.sign(acc);
+      peak = trough = Math.abs(dy);
       acc = 0;
       releaseWhenQuiet();
     },
