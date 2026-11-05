@@ -1,6 +1,6 @@
 ---
 import type { TabKey } from "../data/tabs";
-import AboutPanel from "./AboutPanel.astro";
+import RouteAbout from "./RouteAbout.astro";
 import Timeline from "./Timeline.astro";
 import ProjectStack from "./ProjectStack.astro";
 
@@ -11,7 +11,7 @@ const { active } = Astro.props;
 ---
 
 <section id="panel-about" class="panel panel-about" role="tabpanel" aria-labelledby="tab-about" hidden={active !== "about"}>
-  <AboutPanel />
+  <RouteAbout />
 </section>
 <!-- /panel-about -->
 <section id="panel-experience" class="panel panel-experience" role="tabpanel" aria-labelledby="tab-experience" hidden={active !== "experience"}>

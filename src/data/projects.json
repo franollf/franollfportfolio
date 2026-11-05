@@ -73,10 +73,6 @@
         "icon": "icons/python.svg"
       },
       {
-        "name": "FastAPI",
-        "icon": "icons/fastapi.svg"
-      },
-      {
         "name": "PostgreSQL",
         "icon": "icons/postgresql.svg"
       },
@@ -116,16 +112,8 @@
         "icon": null
       },
       {
-        "name": "Node.js",
-        "icon": "icons/node.svg"
-      },
-      {
         "name": "MongoDB",
         "icon": "icons/mongodb.svg"
-      },
-      {
-        "name": "FastAPI",
-        "icon": "icons/fastapi.svg"
       }
     ],
     "githubUrl": "https://github.com/franollf/nutriscan",
@@ -151,10 +139,6 @@
       {
         "name": "React",
         "icon": "icons/react.svg"
-      },
-      {
-        "name": "Node.js",
-        "icon": "icons/node.svg"
       },
       {
         "name": "Tailwind",
@@ -188,10 +172,6 @@
       {
         "name": "React",
         "icon": "icons/react.svg"
-      },
-      {
-        "name": "Node.js",
-        "icon": "icons/node.svg"
       },
       {
         "name": "JavaScript",
@@ -237,10 +217,6 @@
       {
         "name": "PostgreSQL",
         "icon": "icons/postgresql.svg"
-      },
-      {
-        "name": "FastAPI",
-        "icon": "icons/fastapi.svg"
       }
     ],
     "githubUrl": "https://github.com/franollf/vibeify",

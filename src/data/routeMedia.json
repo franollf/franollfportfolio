@@ -1,0 +1,70 @@
+[
+  {
+    "src": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=800&fit=crop",
+    "type": "image",
+    "caption": "Training run in the morning",
+    "aspect": "3/4",
+    "size": "portrait",
+    "left": 80,
+    "top": "10%",
+    "height": "40%",
+    "layer": 7
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=1200&h=675&fit=crop",
+    "type": "image",
+    "caption": "Miles on the pavement",
+    "aspect": "16/9",
+    "size": "landscape",
+    "left": 800,
+    "top": "55%",
+    "height": "30%",
+    "layer": 7
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1541534040908-112ccc7e519a?w=540&h=960&fit=crop",
+    "type": "video",
+    "poster": "https://images.unsplash.com/photo-1541534040908-112ccc7e519a?w=540&h=960&fit=crop",
+    "caption": "Finishing strong",
+    "aspect": "9/16",
+    "size": "vertical",
+    "left": 1600,
+    "top": "8%",
+    "height": "55%",
+    "layer": 7
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=1200&h=675&fit=crop",
+    "type": "image",
+    "caption": "Pushing through the wall",
+    "aspect": "16/9",
+    "size": "landscape",
+    "left": 2500,
+    "top": "60%",
+    "height": "28%",
+    "layer": 7
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=540&h=960&fit=crop",
+    "type": "video",
+    "poster": "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=540&h=960&fit=crop",
+    "caption": "Victory lap",
+    "aspect": "9/16",
+    "size": "vertical",
+    "left": 3400,
+    "top": "10%",
+    "height": "52%",
+    "layer": 7
+  },
+  {
+    "src": "https://images.unsplash.com/photo-1594882645126-56265e759c83?w=1200&h=675&fit=crop",
+    "type": "image",
+    "caption": "Crossing the finish",
+    "aspect": "16/9",
+    "size": "landscape",
+    "left": 4300,
+    "top": "58%",
+    "height": "30%",
+    "layer": 7
+  }
+]

@@ -1,0 +1,774 @@
+---
+import profile from "../data/profile.json";
+import routeMedia from "../data/routeMedia.json";
+
+// Invisible bend points the route passes through after each media item (by index).
+// Path zigzags to avoid photos: alternates between top and bottom
+const waypoints: { left: number; top: string }[][] = [
+  [{ left: 200, top: "84%" }],
+  [{ left: 1050, top: "14%" }],
+  [{ left: 1500, top: "84%" }],
+  [{ left: 2100, top: "14%" }],
+  [{ left: 2900, top: "84%" }],
+  [{ left: 3700, top: "14%" }],
+  [{ left: 4600, top: "50%" }],
+];
+
+const runnerFrameA = `
+<rect x="3" y="1" width="6" height="1" fill="#1D2224"></rect><rect x="3" y="2" width="1" height="2" fill="#1D2224"></rect><rect x="4" y="0" width="4" height="1" fill="#3A4046"></rect>
+<rect x="4" y="2" width="5" height="3" fill="#82573A"></rect><rect x="5" y="2" width="4" height="1" fill="#1D2224"></rect><rect x="7" y="3" width="1" height="1" fill="#1D2224"></rect>
+<rect x="4" y="1" width="1" height="1" fill="#3A4046"></rect><rect x="4" y="2" width="2" height="2" fill="#D04040"></rect><rect x="4" y="2" width="1" height="1" fill="#F08A8A"></rect>
+<rect x="5" y="5" width="2" height="1" fill="#82573A"></rect>
+<rect x="4" y="6" width="4" height="4" fill="#3A64A8"></rect><rect x="4" y="9" width="4" height="1" fill="#2B4E8C"></rect>
+<rect x="3" y="6" width="1" height="1" fill="#3A64A8"></rect><rect x="2" y="7" width="2" height="1" fill="#82573A"></rect>
+<rect x="8" y="6" width="1" height="1" fill="#3A64A8"></rect><rect x="9" y="6" width="1" height="2" fill="#82573A"></rect><rect x="10" y="5" width="1" height="1" fill="#82573A"></rect>
+<rect x="4" y="10" width="4" height="2" fill="#1F2A48"></rect>
+<rect x="6" y="12" width="2" height="1" fill="#82573A"></rect><rect x="8" y="13" width="1" height="1" fill="#82573A"></rect><rect x="8" y="14" width="3" height="1" fill="#D04040"></rect>
+<rect x="4" y="12" width="1" height="1" fill="#82573A"></rect><rect x="3" y="13" width="1" height="1" fill="#82573A"></rect><rect x="1" y="14" width="3" height="1" fill="#D04040"></rect>`;
+
+const runnerFrameB = `
+<rect x="3" y="1" width="6" height="1" fill="#1D2224"></rect><rect x="3" y="2" width="1" height="2" fill="#1D2224"></rect><rect x="4" y="0" width="4" height="1" fill="#3A4046"></rect>
+<rect x="4" y="2" width="5" height="3" fill="#82573A"></rect><rect x="5" y="2" width="4" height="1" fill="#1D2224"></rect><rect x="7" y="3" width="1" height="1" fill="#1D2224"></rect>
+<rect x="4" y="1" width="1" height="1" fill="#3A4046"></rect><rect x="4" y="2" width="2" height="2" fill="#D04040"></rect><rect x="4" y="2" width="1" height="1" fill="#F08A8A"></rect>
+<rect x="5" y="5" width="2" height="1" fill="#82573A"></rect>
+<rect x="4" y="6" width="4" height="4" fill="#3A64A8"></rect><rect x="4" y="9" width="4" height="1" fill="#2B4E8C"></rect>
+<rect x="3" y="6" width="1" height="1" fill="#3A64A8"></rect><rect x="3" y="7" width="1" height="2" fill="#82573A"></rect>
+<rect x="8" y="6" width="1" height="1" fill="#3A64A8"></rect><rect x="8" y="7" width="1" height="2" fill="#82573A"></rect>
+<rect x="4" y="10" width="4" height="2" fill="#1F2A48"></rect>
+<rect x="5" y="12" width="1" height="2" fill="#82573A"></rect><rect x="5" y="14" width="3" height="1" fill="#D04040"></rect>
+<rect x="4" y="12" width="1" height="1" fill="#82573A"></rect><rect x="3" y="12" width="1" height="1" fill="#82573A"></rect><rect x="2" y="11" width="1" height="2" fill="#D04040"></rect>`;
+---
+
+<div class="route-about">
+  <div class="scroller" tabindex="0" role="region" aria-label="Photos and clips of me, scrolls sideways" data-scroller>
+    <div class="track" data-track>
+      <svg class="route-path fade" aria-hidden="true" data-path-svg>
+        <path class="path-bg" data-path-bg></path>
+        <path class="path-fg" data-path-fg></path>
+      </svg>
+
+      <section class="intro" aria-label="Intro">
+        <div class="intro-inner">
+          <div class="intro-text">
+            <p class="intro-greeting">{profile.greeting}</p>
+            <h1 class="intro-name">{profile.name}</h1>
+            <p class="intro-role">Computer Science student at Simon Fraser University.</p>
+            <dl class="intro-info">
+              <dt>Currently</dt>
+              <dd>Software Developer Co-op @ <strong>Shared Services Canada – CanAI Garage</strong></dd>
+              <dt>Previously</dt>
+              <dd>Machine Learning Intern @ <strong>VJDS International Inc.</strong></dd>
+            </dl>
+            <div class="intro-skills">
+              {profile.heroStack.map((skill) => <span class="chip">{skill.name}</span>)}
+            </div>
+            <div class="intro-actions">
+              <a href={profile.resume} class="btn-primary">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6M9 13h6M9 17h6"></path></svg>Resume
+              </a>
+              <a href={profile.links[0].href} aria-label="GitHub" class="btn-icon">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.6c3.1-.3 6.4-1.5 6.4-7A5.4 5.4 0 0 0 20 4.8 5 5 0 0 0 19.9 1S18.7.7 16 2.5a13.4 13.4 0 0 0-7 0C6.3.7 5.1 1 5.1 1A5 5 0 0 0 5 4.8a5.4 5.4 0 0 0-1.5 3.8c0 5.4 3.3 6.6 6.4 7A3.4 3.4 0 0 0 9 18.1V22"></path></svg>
+              </a>
+              <a href={profile.links[1].href} aria-label="LinkedIn" class="btn-icon">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+              </a>
+              <a href={`mailto:${profile.email}`} aria-label="Email" class="btn-icon">
+                <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg>
+              </a>
+            </div>
+          </div>
+          <img class="avatar" src={profile.avatar.src} alt="Pixel-art portrait of Franoll wearing red headphones" width="280" height="310" />
+          <button type="button" class="start-btn" aria-label="Start the run" data-start-btn data-route-pt>START ▶</button>
+          <button type="button" class="back-btn hidden" aria-label="Go back" data-back-btn>← BACK</button>
+        </div>
+      </section>
+
+      <section class="media-section fade" aria-label="Photos and clips" data-reveal>
+        {routeMedia.map((media, idx) => (
+          <>
+            <figure
+              class="media-item"
+              style={`left: ${media.left}px; top: ${media.top}; height: ${media.height}; aspect-ratio: ${media.aspect.replace("/", " / ")}; z-index: ${media.layer}`}
+              data-route-pt
+            >
+              <div class="media">
+                {media.type === "image" ? (
+                  <img src={media.src} alt={media.caption} loading="lazy" />
+                ) : (
+                  <video src={media.src} poster={media.poster} muted loop playsinline data-video></video>
+                )}
+                {media.type === "image" ? (
+                  <span class="badge"><span class="dot"></span>LIVE</span>
+                ) : (
+                  <span class="badge"><span class="play"></span>CLIP</span>
+                )}
+              </div>
+              <figcaption class="cap">{media.caption}</figcaption>
+            </figure>
+            {(waypoints[idx] ?? []).map((wp) => (
+              <div class="wp" aria-hidden="true" style={`left: ${wp.left}px; top: ${wp.top}`} data-route-pt></div>
+            ))}
+          </>
+        ))}
+      </section>
+
+      <section class="finish fade" aria-label="Finish" data-reveal>
+        <div class="finish-flag" data-route-pt>
+          <svg aria-hidden="true" width="48" height="32" viewBox="0 0 6 4" style="display: block; shape-rendering: crispEdges">
+            <rect x="0" y="0" width="6" height="4" fill="#FFFFFF"></rect>
+            <rect x="0" y="0" width="1" height="1" fill="#141C17"></rect><rect x="2" y="0" width="1" height="1" fill="#141C17"></rect><rect x="4" y="0" width="1" height="1" fill="#141C17"></rect>
+            <rect x="1" y="1" width="1" height="1" fill="#141C17"></rect><rect x="3" y="1" width="1" height="1" fill="#141C17"></rect><rect x="5" y="1" width="1" height="1" fill="#141C17"></rect>
+            <rect x="0" y="2" width="1" height="1" fill="#141C17"></rect><rect x="2" y="2" width="1" height="1" fill="#141C17"></rect><rect x="4" y="2" width="1" height="1" fill="#141C17"></rect>
+            <rect x="1" y="3" width="1" height="1" fill="#141C17"></rect><rect x="3" y="3" width="1" height="1" fill="#141C17"></rect><rect x="5" y="3" width="1" height="1" fill="#141C17"></rect>
+          </svg>
+        </div>
+        <p class="finish-label">42.2 KM · FINISHED</p>
+        <h2 class="finish-heading">You just ran<br />a marathon with me.</h2>
+        <p class="finish-text">Want to see what I build when I'm not out here?</p>
+        <div class="finish-actions">
+          <a href="/projects" class="finish-primary">See projects →</a>
+          <a href="/#contact" class="finish-secondary">Say hi</a>
+        </div>
+      </section>
+
+      <div class="km-markers" aria-hidden="true" data-km-markers></div>
+
+      <div class="runner" aria-hidden="true" data-runner>
+        <svg class="runner-frame" viewBox="0 0 12 16" data-runner-frame-a set:html={runnerFrameA} hidden></svg>
+        <svg class="runner-frame" viewBox="0 0 12 16" data-runner-frame-b set:html={runnerFrameB}></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="progress fade" aria-live="polite" data-reveal>
+    <span class="progress-label">scroll →</span>
+    <span class="progress-km" data-km-text>0.0 / 42.2 KM</span>
+    <span class="progress-bar"><span class="progress-fill" data-progress-fill></span></span>
+  </div>
+</div>
+
+<script>
+  import { initRouteAbout } from "../scripts/route-about";
+  initRouteAbout();
+</script>
+
+<style>
+  .route-about {
+    --ra-accent: #d04040;
+    --ra-green: #3f6b4e;
+    --ra-dots: #bdb6a4;
+    --ra-subtle: #3a4540;
+    --ra-media: #e3ded0;
+    position: relative;
+    height: 100%;
+    min-height: 520px;
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-sans);
+    color: var(--ink);
+  }
+
+  :global(:root[data-theme="dark"]) .route-about {
+    --ra-green: #8fd6a2;
+    --ra-dots: #4a574e;
+    --ra-subtle: #c3cdc6;
+    --ra-media: #1d2a22;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .route-about {
+      --ra-green: #8fd6a2;
+      --ra-dots: #4a574e;
+      --ra-subtle: #c3cdc6;
+      --ra-media: #1d2a22;
+    }
+  }
+
+  .fade {
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+
+  .fade.show {
+    opacity: 1;
+  }
+
+  .scroller {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: var(--rule) transparent;
+  }
+
+  .scroller.started {
+    overflow-x: auto;
+  }
+
+  .scroller:focus-visible {
+    outline: 2px solid var(--ra-green);
+    outline-offset: -4px;
+  }
+
+  .track {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+    width: max-content;
+  }
+
+  .route-path {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+  }
+
+  .path-bg {
+    fill: none;
+    stroke: var(--ra-dots);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-dasharray: 1 12;
+  }
+
+  .path-fg {
+    fill: none;
+    stroke: var(--ra-accent);
+    stroke-width: 5;
+    stroke-linecap: round;
+  }
+
+  /* ---------- Intro ---------- */
+  .intro {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
+    width: var(--stage-w, 100vw);
+    padding: 24px max(32px, 5vw) 120px;
+    display: flex;
+    align-items: center;
+  }
+
+  .intro.started {
+    width: min(1120px, calc(100vw - 60px));
+    padding: 24px 48px 120px max(32px, 5vw);
+  }
+
+  .intro-inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    width: 100%;
+    max-width: 1040px;
+    margin-inline: auto;
+  }
+
+  .intro.started .intro-inner {
+    margin-inline: 0;
+  }
+
+  .intro-text {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .intro-greeting {
+    margin: 0;
+    font: 400 20px/1.3 var(--font-sans);
+    color: var(--muted);
+  }
+
+  .intro-name {
+    margin: 0;
+    font: 700 clamp(44px, 6vw, 84px)/1 var(--font-sans);
+    letter-spacing: -0.025em;
+  }
+
+  .intro-role {
+    margin: 4px 0 0;
+    font: 400 22px/1.4 var(--font-sans);
+  }
+
+  .intro-info {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 28px;
+    align-items: baseline;
+  }
+
+  .intro-info dt {
+    font: 400 14px/1.4 "JetBrains Mono", monospace;
+    color: var(--ra-green);
+  }
+
+  .intro-info dd {
+    margin: 0;
+    font: 400 18px/1.4 var(--font-sans);
+    color: var(--ra-subtle);
+  }
+
+  .intro-info strong {
+    color: var(--ink);
+  }
+
+  .intro-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .chip {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--rule);
+    background-color: var(--card-raised);
+    font: 14px/1.4 "JetBrains Mono", monospace;
+  }
+
+  .intro-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 6px;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 52px;
+    padding: 0 24px;
+    border-radius: 999px;
+    background-color: var(--ink);
+    color: var(--card);
+    font: 600 18px/1 var(--font-sans);
+    text-decoration: none;
+  }
+
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+  }
+
+  .btn-primary:hover,
+  .btn-icon:hover,
+  .finish-primary:hover,
+  .finish-secondary:hover {
+    color: var(--ra-green);
+  }
+
+  .avatar {
+    flex: 0 0 auto;
+    width: 280px;
+    height: 310px;
+    object-fit: contain;
+    image-rendering: pixelated;
+  }
+
+  .start-btn {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 24px);
+    min-height: 52px;
+    padding: 0 22px;
+    border: 4px solid var(--ra-accent);
+    border-radius: 0;
+    background-color: var(--card);
+    box-shadow: 4px 4px 0 var(--ink);
+    font: 14px/1 "Press Start 2P", monospace;
+    color: var(--ink);
+    cursor: pointer;
+    animation: nudge 1s steps(2) infinite;
+  }
+
+  .start-btn:hover {
+    background-color: var(--ink);
+    color: var(--card);
+  }
+
+  .start-btn:focus-visible {
+    outline: 3px solid #3a64a8;
+    outline-offset: 3px;
+  }
+
+  /* visibility, not display: the START button anchors the route, so it must keep its box */
+  .start-btn.hidden {
+    visibility: hidden;
+  }
+
+  .back-btn.hidden {
+    display: none;
+  }
+
+  .back-btn {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 24px);
+    min-height: 52px;
+    padding: 0 22px;
+    border: 4px solid var(--ra-green);
+    border-radius: 0;
+    background-color: var(--card);
+    box-shadow: 4px 4px 0 var(--ink);
+    font: 14px/1 "Press Start 2P", monospace;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .back-btn:hover {
+    background-color: var(--ra-green);
+    color: var(--card);
+  }
+
+  .back-btn:focus-visible {
+    outline: 3px solid var(--ra-green);
+    outline-offset: 3px;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  /* ---------- Media ---------- */
+  .media-section {
+    position: relative;
+    flex: 0 0 auto;
+    width: 5040px;
+    height: 100%;
+  }
+
+  .wp {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    pointer-events: none;
+  }
+
+  .media-item {
+    position: absolute;
+    margin: 0;
+  }
+
+  .media {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 14px;
+    overflow: hidden;
+    background-color: var(--ra-media);
+    background-image: repeating-linear-gradient(135deg, rgba(20, 28, 23, 0.045) 0 8px, transparent 8px 16px);
+    box-shadow: 0 10px 24px rgba(20, 28, 23, 0.14);
+  }
+
+  .media img,
+  .media video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background-color: rgba(20, 28, 23, 0.78);
+    color: #ffffff;
+    font: 600 10px/1.4 "JetBrains Mono", monospace;
+    letter-spacing: 0.08em;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #ff6b6b;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+
+  .play {
+    width: 0;
+    height: 0;
+    border-left: 7px solid #ffffff;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid transparent;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.25; }
+  }
+
+  .cap {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 8px);
+    width: 100%;
+    min-width: 150px;
+    font: 400 14px/1.35 var(--font-sans);
+    color: var(--ra-subtle);
+  }
+
+  /* ---------- Finish ---------- */
+  .finish {
+    position: relative;
+    z-index: 1;
+    flex: 0 0 auto;
+    width: 580px;
+    padding: 0 64px 0 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .finish-flag {
+    width: 48px;
+    height: 32px;
+  }
+
+  .finish-label {
+    margin: 0;
+    font: 10px/1.6 "Press Start 2P", monospace;
+    color: var(--ra-green);
+  }
+
+  .finish-heading {
+    margin: 0;
+    font: 700 40px/1.05 var(--font-sans);
+    letter-spacing: -0.02em;
+  }
+
+  .finish-text {
+    margin: 0;
+    max-width: 400px;
+    font: 400 17px/1.55 var(--font-sans);
+    color: var(--muted);
+  }
+
+  .finish-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-top: 4px;
+  }
+
+  .finish-primary,
+  .finish-secondary {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font: 600 16px/1 var(--font-sans);
+    text-decoration: none;
+  }
+
+  .finish-primary {
+    background-color: var(--ink);
+    color: var(--card);
+  }
+
+  .finish-secondary {
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* ---------- KM markers (built in JS, so styles must be global) ---------- */
+  .km-markers :global(.km-marker) {
+    position: absolute;
+    z-index: 9;
+    transform: translate(-50%, -100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.9s ease;
+  }
+
+  .km-markers :global(.km-marker.show) {
+    opacity: 1;
+  }
+
+  .km-markers :global(.km-label) {
+    padding: 5px 7px;
+    background-color: var(--card);
+    color: var(--ink);
+    font: 8px/1 "Press Start 2P", monospace;
+    white-space: nowrap;
+    border: 2px solid var(--ink);
+  }
+
+  .km-markers :global(.km-label.half) {
+    background-color: var(--ink);
+    color: var(--card);
+  }
+
+  .km-markers :global(.km-stick) {
+    width: 2px;
+    height: 14px;
+    background-color: var(--ink);
+  }
+
+  /* near the top edge the sign hangs below the route instead of above it */
+  .km-markers :global(.km-marker.below) {
+    transform: translate(-50%, 0);
+    flex-direction: column-reverse;
+  }
+
+  .km-markers :global(.km-flag) {
+    position: absolute;
+    left: calc(50% - 1px);
+    bottom: 100%;
+    width: 2px;
+    height: 26px;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  .km-markers :global(.km-marker.below .km-flag) {
+    bottom: auto;
+    top: 100%;
+  }
+
+  .km-markers :global(.km-pole) {
+    position: absolute;
+    inset: 0;
+    background-color: var(--ink);
+  }
+
+  .km-markers :global(.km-pennant) {
+    position: absolute;
+    left: 2px;
+    bottom: 0;
+    width: 18px;
+    height: 12px;
+    shape-rendering: crispEdges;
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .km-markers :global(.km-marker.passed .km-flag) {
+    opacity: 1;
+  }
+
+  .km-markers :global(.km-marker.passed .km-pennant) {
+    transform: translateY(-14px);
+  }
+
+  /* ---------- Runner ---------- */
+  .runner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 5;
+    pointer-events: none;
+    width: 48px;
+    height: 64px;
+    filter: drop-shadow(0 3px 0 rgba(20, 28, 23, 0.25));
+    will-change: transform;
+    display: none;
+  }
+
+  .runner.show {
+    display: block;
+  }
+
+  .runner-frame {
+    display: block;
+    width: 100%;
+    height: 100%;
+    shape-rendering: crispEdges;
+  }
+
+  .runner-frame[hidden] {
+    display: none;
+  }
+
+  /* ---------- Progress pill ---------- */
+  .progress {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background-color: #141c17;
+    color: #f2efe5;
+    white-space: nowrap;
+  }
+
+  .progress-label {
+    font: 13px/1 "JetBrains Mono", monospace;
+    color: #c7cec9;
+  }
+
+  .progress-km {
+    font: 9px/1 "Press Start 2P", monospace;
+  }
+
+  .progress-bar {
+    display: block;
+    width: 96px;
+    height: 6px;
+    background-color: #36423a;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: var(--ra-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  @media (max-width: 760px) {
+    .intro-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .avatar {
+      width: 150px;
+      height: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dot,
+    .start-btn {
+      animation: none;
+    }
+  }
+</style>

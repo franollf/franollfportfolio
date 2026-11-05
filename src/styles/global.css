@@ -633,6 +633,7 @@ html[data-intro="play"] .strip > * {
   padding-block: clamp(1.5rem, 1rem + 2vw, 2.75rem);
 }
 
+.panel-about,
 .panel-projects,
 .pj-wrap {
   height: 100%;
