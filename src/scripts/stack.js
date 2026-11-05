@@ -56,9 +56,10 @@ if (root) {
       const pos = at < 0 ? "out" : d < 0 ? "gone" : d > 2 ? "far" : String(d);
       c.dataset.pos = pos;
       const front = pos === "0";
-      c.inert = !front;
+      // Not `inert`: an inert card left under a still cursor swallows the next wheel gesture.
       if (front) c.removeAttribute("aria-hidden");
       else c.setAttribute("aria-hidden", "true");
+      c.querySelectorAll("a, button, video").forEach((el) => (front ? el.removeAttribute("tabindex") : (el.tabIndex = -1)));
       if (at >= 0) c.setAttribute("aria-label", `${c.querySelector(".pj-title").textContent}, ${at + 1} of ${order.length}`);
     });
     dots.forEach((dot, i) => {
@@ -111,10 +112,10 @@ if (root) {
     }, 180);
   };
 
-  panel.addEventListener(
+  window.addEventListener(
     "wheel",
     (e) => {
-      if (dialog.open) return;
+      if (!isProjectsTab() || dialog.open || !(e.target instanceof Node) || !panel.contains(e.target)) return;
       const dy = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       if (canScroll(e.target.closest(".pj-body"), dy) || e.target.closest(".pj-filters")) return;
       e.preventDefault();

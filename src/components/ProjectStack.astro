@@ -43,7 +43,6 @@ const GH =
           aria-roledescription="slide"
           aria-label={`${p.title}, ${i + 1} of ${projects.length}`}
           aria-hidden={i === 0 ? undefined : "true"}
-          inert={i !== 0}
         >
           <div class="pj-inner">
             <div class="pj-media">
@@ -75,6 +74,7 @@ const GH =
               {p.demoUrl && (
                 <a
                   class="pj-play"
+                  tabindex={i === 0 ? undefined : -1}
                   href={p.demoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -96,11 +96,11 @@ const GH =
               <div class="pj-title-row">
                 <h3 class="pj-title">{p.title}</h3>
                 <div class="pj-links">
-                  <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${p.title} on GitHub`}>
+                  <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" tabindex={i === 0 ? undefined : -1} aria-label={`View ${p.title} on GitHub`}>
                     <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d={GH} /></svg>
                   </a>
                   {p.liveUrl && (
-                    <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`Open ${p.title} live`}>
+                    <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" tabindex={i === 0 ? undefined : -1} aria-label={`Open ${p.title} live`}>
                       <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" /></svg>
                     </a>
                   )}
@@ -154,13 +154,15 @@ const GH =
 <style>
   .pj {
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
-    gap: 1rem;
+    align-content: center;
+    justify-items: center;
+    gap: 1.25rem;
     height: 100%;
   }
 
   /* ---------- filters ---------- */
   .pj-filters {
+    max-width: 100%;
     display: flex;
     gap: 0.4rem;
     overflow-x: auto;
@@ -195,14 +197,14 @@ const GH =
   .pj-stage {
     --peek: 16px;
     position: relative;
+    width: min(100%, 820px);
+    height: clamp(300px, calc(100dvh - var(--strip) - 270px), 500px);
     touch-action: none;
   }
 
   .pj-card {
     position: absolute;
     inset: 0 0 calc(var(--peek) * 2);
-    max-width: 1000px;
-    margin-inline: auto;
     overflow: hidden;
     border: 1px solid var(--rule);
     border-radius: 22px;
@@ -217,6 +219,10 @@ const GH =
 
   .pj-card[data-pos="0"] {
     z-index: 10;
+  }
+
+  .pj-card:not([data-pos="0"]) {
+    pointer-events: none;
   }
 
   .pj-card[data-pos="1"] {
@@ -248,7 +254,7 @@ const GH =
 
   .pj-inner {
     display: grid;
-    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
     height: 100%;
     transition: opacity 0.3s ease;
   }
@@ -322,7 +328,7 @@ const GH =
     display: flex;
     flex-direction: column;
     min-height: 0;
-    padding: 1.6rem 1.6rem 1.4rem;
+    padding: 1.35rem 1.4rem 1.25rem;
     overflow-y: auto;
     overscroll-behavior: contain;
     touch-action: pan-y;
@@ -353,7 +359,7 @@ const GH =
   }
 
   .pj-title {
-    font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem);
+    font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.7rem);
     font-weight: 700;
     letter-spacing: -0.02em;
   }
@@ -388,7 +394,8 @@ const GH =
   }
 
   .pj-desc {
-    margin-top: 0.75rem;
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
     color: var(--muted);
   }
 
@@ -555,7 +562,12 @@ const GH =
     }
 
     .pj-filters {
+      justify-self: stretch;
       justify-content: flex-start;
+    }
+
+    .pj-stage {
+      height: clamp(300px, calc(100dvh - var(--strip) - 220px), 520px);
     }
 
     .pj-stage {

@@ -132,12 +132,15 @@ const order = [...projectsPanel.matchAll(/data-project="([^"]+)"/g)].map((m) => 
 check(order.slice(0, 3).join("|") === "pokevault|saferx|nutriscan", `Project order wrong: ${order.slice(0, 3)}`);
 check(/Hackathon/.test(projectsPanel) && !/Hackathon Winner/.test(projectsPanel), 'Polypharmacy badge should be "Hackathon"');
 
+const stackJs = has("src/scripts/stack.js") ? read("src/scripts/stack.js") : "";
 // --- Projects stack --------------------------------------------------------
 for (const p of projects)
   for (const k of ["githubUrl", "demoUrl", "liveUrl", "videoUrl", "icon"]) check(k in p, `projects.json ${p.slug}: missing "${k}"`);
 const cards = [...projectsPanel.matchAll(/<article[^>]*class="pj-card[^"]*"[^>]*>/g)].map((m) => m[0]);
 check(cards.length === projects.length, `Stack should have ${projects.length} cards (found ${cards.length})`);
-check(/data-pos="0"/.test(cards[0] || "") && cards.slice(1).every((c) => /\binert\b/.test(c)), "Only the front card is interactive on load");
+check(/data-pos="0"/.test(cards[0] || "") && cards.slice(1).every((c) => /aria-hidden="true"/.test(c)), "Only the front card is exposed on load");
+check(cards.every((c) => !/\binert\b/.test(c)), "Cards must not use inert (stale wheel targets swallow the next scroll)");
+check(/window\.addEventListener\(\s*"wheel"/.test(stackJs), "Wheel should be handled at window level so card swaps never strand the cursor");
 const dots = projectsPanel.match(/<button[^>]*class="pj-dot[^"]*"[^>]*>/g) || [];
 check(dots.length === projects.length && dots.every((d) => /aria-label="Show [^"]+"/.test(d)), "Pill should have one labelled icon per project");
 check(/class="pj-num"[^>]*>1<[\s\S]{0,80}of[\s\S]{0,40}class="pj-total"[^>]*>7</.test(projectsPanel.replace(/data-astro-cid-\w+/g, "")), 'Pill counter should read "1 of 7"');
@@ -146,7 +149,6 @@ for (const p of projects) {
   if (p.demoUrl) check(new RegExp(`href="${p.demoUrl}"[^>]*data-demo`).test(projectsPanel), `${p.slug}: demo opens in lightbox`);
 }
 check(/<dialog[^>]*class="pj-lightbox/.test(projectsPanel), "Demo lightbox dialog");
-const stackJs = has("src/scripts/stack.js") ? read("src/scripts/stack.js") : "";
 for (const ev of ["wheel", "touchstart", "keydown"]) check(stackJs.includes(`"${ev}"`), `Stack should handle ${ev}`);
 
 // --- Timeline --------------------------------------------------------------
@@ -158,6 +160,7 @@ for (const [k, label] of [["all", "All"], ["work", "Work"], ["leadership", "Lead
   check(new RegExp(`data-type="${k}"[^>]*aria-pressed="${k === "all"}"[^>]*>\\s*${label}`).test(tlFilter), `Timeline filter button: ${label}`);
 for (const e of experiences)
   check(new RegExp(`id="tab-${e.id}"[^>]*data-type="${e.type}"|data-type="${e.type}"[^>]*id="tab-${e.id}"`).test(html), `Timeline tab ${e.id} should carry data-type`);
+check(/data-view="single"/.test(html) && /timeline\.dataset\.view = "list"/.test(read("src/scripts/timeline.js")), "Filter buttons should list every matching role's description");
 check(/branch-leadership/.test(html) && !/branch-clubs/.test(html), "Leadership branch class naming");
 check(/id="themeToggle"/.test(html), "Theme toggle should exist");
 check(/overflow-x: clip/.test(css) && !css.includes("overflow-x: hidden"), "Use overflow-x: clip, never hidden");

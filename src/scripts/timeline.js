@@ -3,12 +3,12 @@ const tablist = document.querySelector('.tl-tabs[role="tablist"]');
 
 if (tablist) {
   const tabs = [...tablist.querySelectorAll('[role="tab"]')];
+  const timeline = tablist.closest(".timeline");
   const segs = new Map([...document.querySelectorAll(".tl-seg")].map((s) => [s.dataset.seg, s]));
   const panels = new Map([...document.querySelectorAll(".tl-panel")].map((p) => [p.id, p]));
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const canHover = window.matchMedia("(hover: hover) and (min-width: 769px)");
 
-  const timeline = tablist.closest(".timeline");
   const filterBtns = [...timeline.querySelectorAll(".tl-filter-btn")];
   const shownTabs = () => tabs.filter((t) => !t.hidden);
   const activeTab = () => tabs.find((t) => t.getAttribute("aria-selected") === "true");
@@ -16,6 +16,8 @@ if (tablist) {
   const defaultFor = (list) => list.find((t) => t.dataset.default === "true") || list[list.length - 1];
 
   const apply = (tab) => {
+    timeline.dataset.view = "single";
+    segs.forEach((s) => s.classList.remove("is-listed"));
     tabs.forEach((t) => {
       const on = t === tab;
       t.setAttribute("aria-selected", String(on));
@@ -29,7 +31,7 @@ if (tablist) {
   const select = (tab, { focus = false } = {}) => {
     if (!tab) return;
     if (focus) tab.focus();
-    if (tab === activeTab()) return;
+    if (tab === activeTab() && timeline.dataset.view === "single") return;
     if (document.startViewTransition && !reduceMotion.matches) {
       document.startViewTransition(() => apply(tab));
     } else {
@@ -54,16 +56,24 @@ if (tablist) {
     });
     tab.addEventListener("mouseenter", () => {
       segs.get(tab.dataset.role)?.classList.add("is-hover");
-      if (canHover.matches) select(tab);
+      if (canHover.matches && timeline.dataset.view !== "list") select(tab);
     });
     tab.addEventListener("mouseleave", () => segs.get(tab.dataset.role)?.classList.remove("is-hover"));
   });
 
+  // Filter buttons switch to a list of every matching role's description (newest first);
+  // picking a single role on the graph goes back to the one-role view.
   const applyFilter = (type) => {
     timeline.dataset.filter = type;
     filterBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.type === type)));
     tabs.forEach((t) => (t.hidden = type !== "all" && t.dataset.type !== type));
     if (activeTab()?.hidden) apply(defaultFor(shownTabs()));
+    timeline.dataset.view = "list";
+    tabs.forEach((t) => {
+      const match = !t.hidden;
+      panels.get(t.getAttribute("aria-controls"))?.classList.toggle("is-listed", match);
+      segs.get(t.dataset.role)?.classList.toggle("is-listed", match);
+    });
   };
 
   filterBtns.forEach((b) =>

@@ -637,3 +637,14 @@ html[data-intro="play"] .strip > * {
 .pj-wrap {
   height: 100%;
 }
+
+/* Experience sits in the middle of the card when it fits; grows (and scrolls) when it doesn't. */
+.panel-experience {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.exp-wrap {
+  max-width: 980px;
+}

@@ -64,10 +64,13 @@ if (lead.length) {
 
 const current = work.find((e) => !e.to) ?? work[work.length - 1];
 const order: Exp[] = [...work, ...lead];
+const recency = [...experiences]
+  .sort((a, b) => (b.to ? idx(b.to) : 1e9) - (a.to ? idx(a.to) : 1e9) || idx(b.from) - idx(a.from))
+  .map((e) => e.id);
 const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
 ---
 
-<div class="timeline" data-filter="all">
+<div class="timeline" data-filter="all" data-view="single">
   <div class="tl-filter" role="group" aria-label="Show roles">
     {
       [
@@ -160,6 +163,8 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
         return (
           <article
             class={`tl-panel${active ? " is-active" : ""}`}
+            data-type={e.type}
+            style={`order: ${recency.indexOf(e.id)}`}
             role="tabpanel"
             id={`panel-${e.id}`}
             aria-labelledby={`tab-${e.id}`}
@@ -455,8 +460,33 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
     view-transition-name: tl-panel;
   }
 
-  :global(.js) .tl-panel:not(.is-active) {
+  .tl-panels {
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(.js) .timeline[data-view="single"] .tl-panel:not(.is-active),
+  :global(.js) .timeline[data-view="list"] .tl-panel:not(.is-listed) {
     display: none;
+  }
+
+  :global(.js) .timeline[data-view="list"] .tl-panel.is-listed ~ .tl-panel.is-listed,
+  :global(.js) .timeline[data-view="list"] .tl-panel.is-listed + .tl-panel.is-listed {
+    margin-top: 0;
+  }
+
+  .timeline[data-view="list"] .tl-panel.is-listed {
+    padding-block: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .timeline[data-view="list"] .tl-panel.is-listed:first-child,
+  .timeline[data-view="list"] .tl-panels {
+    padding-top: 0.25rem;
+  }
+
+  .tl-seg.is-listed {
+    stroke-width: 5;
   }
 
   .tl-panel + .tl-panel {
