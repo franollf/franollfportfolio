@@ -1,0 +1,258 @@
+---
+import profile from "../data/profile.json";
+const { about, photos, education, skills } = profile;
+---
+
+<div class="about reveal">
+  <img
+    src={about.portrait.src}
+    srcset={about.portrait.srcset}
+    sizes="(min-width: 768px) 240px, 160px"
+    alt={about.portrait.alt}
+    class="about-portrait"
+    width={about.portrait.width}
+    height={about.portrait.height}
+    loading="lazy"
+  />
+  <div class="about-text">
+    <h3>{about.heading}</h3>
+    <p>{about.intro} <strong>{profile.name}</strong></p>
+    {about.paragraphs.map((p) => <p>{p}</p>)}
+  </div>
+</div>
+
+<ul class="gallery" aria-label="Photos">
+  {
+    photos.map((ph) => (
+      <li class="gallery-item reveal">
+        <figure>
+          <img
+            src={ph.src}
+            srcset={ph.srcset}
+            sizes="(min-width: 1100px) 340px, (min-width: 640px) 45vw, 78vw"
+            class={ph.class}
+            data-caption={ph.caption}
+            alt={ph.alt}
+            width={ph.width}
+            height={ph.height}
+            loading="lazy"
+          />
+          <figcaption>{ph.caption}</figcaption>
+        </figure>
+      </li>
+    ))
+  }
+</ul>
+
+<div class="facts">
+  <div class="fact reveal">
+    <h3 class="fact-title">Education</h3>
+    <p class="edu-school">{education.school}</p>
+    <p>{education.degree}</p>
+    <p class="mono">{education.dates} · {education.location}</p>
+  </div>
+  <div class="fact reveal">
+    <h3 class="fact-title">Technical skills</h3>
+    <dl class="skills">
+      {
+        skills.map((g) => (
+          <div class="skill-group">
+            <dt>{g.group}</dt>
+            <dd>
+              <ul>
+                {g.items.map((i) => (
+                  <li class="chip">{i}</li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</div>
+
+<style>
+  .about {
+    display: grid;
+    gap: 1.5rem 3rem;
+    align-items: start;
+  }
+
+  @media (min-width: 768px) {
+    .about {
+      grid-template-columns: 240px minmax(0, 1fr);
+    }
+  }
+
+  .about-portrait {
+    width: 160px;
+    height: auto;
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--terracotta) 20%, var(--card-raised));
+  }
+
+  @media (min-width: 768px) {
+    .about-portrait {
+      width: 240px;
+    }
+  }
+
+  .about-text h3 {
+    font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem);
+    margin-bottom: 0.75rem;
+  }
+
+  .about-text p {
+    max-width: 64ch;
+    margin-bottom: 0.9rem;
+    font-size: 1.05rem;
+    color: var(--muted);
+  }
+
+  .about-text strong {
+    color: var(--ink);
+  }
+
+  .gallery {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 78%;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    padding-bottom: 0.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+  }
+
+  @media (min-width: 640px) {
+    .gallery {
+      grid-auto-flow: row;
+      grid-auto-columns: auto;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      overflow: visible;
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .gallery {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .gallery-item {
+    scroll-snap-align: start;
+  }
+
+  .gallery figure {
+    overflow: hidden;
+    border-radius: 16px;
+    border: 1px solid var(--rule);
+    background: var(--card-raised);
+  }
+
+  .gallery img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  .gallery figure:hover img {
+    transform: scale(1.04);
+  }
+
+  .gallery img.gallery-bowling {
+    object-position: center 48%;
+  }
+
+  .gallery img.gallery-full-marathon {
+    object-position: center 42%;
+  }
+
+  .gallery img.gallery-church {
+    object-position: center 46%;
+  }
+
+  .gallery img.gallery-half-marathon {
+    object-position: center 52%;
+  }
+
+  figcaption {
+    padding: 0.65rem 0.85rem 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  .facts {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .facts {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2.2fr);
+    }
+  }
+
+  .fact {
+    padding: 1.25rem 1.35rem;
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    background: var(--card-raised);
+  }
+
+  .fact-title {
+    margin-bottom: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--terracotta-ink);
+  }
+
+  .edu-school {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .fact p {
+    color: var(--muted);
+  }
+
+  .fact .edu-school {
+    color: var(--ink);
+  }
+
+  .mono {
+    margin-top: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+  }
+
+  .skills {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .skill-group dt {
+    margin-bottom: 0.35rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .skill-group dd {
+    margin: 0;
+  }
+
+  .skill-group ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+</style>

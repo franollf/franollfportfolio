@@ -35,7 +35,7 @@ Assert-NotContains $html 'src="photos/dinner.jpg"' "The dinner photo should be r
 }
 Assert-Contains $css 'object-fit: contain;' "Portrait should remain uncropped."
 
-Assert-Contains $html '<h3>PokéVault</h3>' "Projects should include a PokéVault card."
+Assert-Contains $html '>PokéVault</h3>' "Projects should include a PokéVault card."
 Assert-Contains $html 'class="project-preview pokevault-project-preview"' "PokéVault preview should have dedicated centering styles."
 Assert-Contains $html 'src="projects/pokevault.png"' "PokéVault should use the supplied project image."
 @('Java 21', 'Spring Boot', 'PostgreSQL', 'Docker', 'Spring Data JPA', 'Flyway', 'Testcontainers', 'JUnit', 'Mockito') | ForEach-Object {
