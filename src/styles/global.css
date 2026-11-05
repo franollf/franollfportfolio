@@ -31,8 +31,8 @@
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --head: 54px; /* name + actions */
-  --tabs: 50px; /* pill nav row, just above the card */
-  --strip: calc(var(--head) + var(--tabs)); /* everything above the card */
+  --tabs: 64px; /* pill nav row at the top of the card */
+  --strip: calc(var(--head) + var(--tabs)); /* everything above the content */
   --gap: 8px;
   --radius: 24px;
   --content: 1100px;
@@ -112,7 +112,7 @@ html {
 
 body {
   display: grid;
-  grid-template-rows: var(--head) var(--tabs) minmax(0, 1fr);
+  grid-template-rows: var(--head) minmax(0, 1fr);
   height: 100dvh;
   padding: 0 var(--gap) var(--gap);
   background: var(--frame);
@@ -183,7 +183,7 @@ button {
   top: 10px;
 }
 
-/* ---------- Top strip: header + actions; pill tabs on their own row ---------- */
+/* ---------- Top strip: header + actions ---------- */
 .strip {
   display: flex;
   align-items: center;
@@ -193,15 +193,25 @@ button {
   color: var(--frame-ink);
 }
 
-.strip :focus-visible,
-.tabs :focus-visible {
+.strip :focus-visible {
   outline-color: var(--frame-ink);
 }
 
 .tabs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20; /* under the morph cover, so it folds into the square with the content */
   display: flex;
-  align-items: flex-start;
   justify-content: center;
+  height: var(--tabs);
+  padding-top: 16px;
+  pointer-events: none;
+}
+
+.tabs .tablist {
+  pointer-events: auto;
 }
 
 .crumb {
@@ -245,7 +255,8 @@ button {
   gap: 2px;
   padding: 4px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--frame-ink) 9%, transparent);
+  border: 1px solid var(--rule);
+  background: var(--card-raised);
 }
 
 .tab {
@@ -257,15 +268,19 @@ button {
   min-height: 36px;
   padding: 0.35rem 1rem;
   border-radius: 999px;
-  color: var(--frame-ink);
+  color: var(--muted);
   font-weight: 500;
   font-size: 0.95rem;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
-.tab[aria-selected="true"] {
+.tab:hover {
   color: var(--ink);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--card);
 }
 
 .tab:focus-visible {
@@ -275,7 +290,7 @@ button {
 
 /* No-JS: the selected tab gets the pill itself. */
 html:not(.js) .tab[aria-selected="true"] {
-  background: var(--card);
+  background: var(--ink);
 }
 
 .tab-pill {
@@ -286,8 +301,8 @@ html:not(.js) .tab[aria-selected="true"] {
   width: var(--pill-w, 0px);
   transform: translateX(var(--pill-x, 0px));
   border-radius: 999px;
-  background: var(--card);
-  box-shadow: 0 1px 6px rgb(0 0 0 / 0.25);
+  background: var(--ink);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.18);
   opacity: var(--pill-o, 0);
 }
 
@@ -361,7 +376,7 @@ html:not(.js) .tab[aria-selected="true"] {
 
 .card-scroll {
   position: absolute;
-  inset: 0;
+  inset: var(--tabs) 0 0;
   overflow-y: auto;
   overflow-x: clip;
   overscroll-behavior: contain;
@@ -536,7 +551,7 @@ html[data-intro="play"] .intro {
 
 .intro-card {
   position: absolute;
-  top: var(--strip);
+  top: var(--head);
   left: var(--gap);
   right: var(--gap);
   bottom: var(--gap);
@@ -554,8 +569,7 @@ html[data-intro="play"] .intro-letter {
   animation: intro-blink 0.55s ease-in-out 0.05s 2;
 }
 
-html[data-intro="play"] .strip > *,
-html[data-intro="play"] .tabs {
+html[data-intro="play"] .strip > * {
   opacity: 0;
   animation: intro-fade-in 0.6s ease 1.55s forwards;
 }

@@ -53,7 +53,8 @@ check(/role="tablist"[^>]*aria-label="Sections"/.test(html), "Pill tab bar shoul
 check(/class="tab-pill"/.test(html), "Tab bar should have the sliding pill");
 const headerBlock = tag(html, /<header[\s\S]*?<\/header>/);
 const tabsNav = tag(html, /<nav class="tabs"[\s\S]*?<\/nav>/);
-check(tabsNav && !headerBlock.includes('class="tabs"'), "Pill nav should sit below the header, above the card");
+const cardOpen = tag(html, /<main[^>]*class="card"[^>]*>[\s\S]*?<div class="card-scroll"/);
+check(tabsNav && !headerBlock.includes('class="tabs"') && cardOpen.includes('class="tabs"'), "Pill nav should sit inside the card, above the content");
 check(tabsNav && !/class="dot"/.test(tabsNav), "Pill tabs should have no coloured dots");
 check(/html,\s*body\s*{[^}]*overflow:\s*hidden/.test(css), "Page itself must not scroll");
 check(/\.card-scroll\s*{[^}]*overflow-y:\s*auto/.test(css), "Card inner area should scroll");
