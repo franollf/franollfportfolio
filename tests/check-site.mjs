@@ -98,6 +98,22 @@ check(/class="card-letter"[^>]*>F</.test(html), 'Card should carry the "F" for t
 check(/clipPath/.test(tabsJs) && /collapse/.test(tabsJs) && /expand/.test(tabsJs), "Tab switch should collapse/expand the card with clip-path");
 check(/startViewTransition/.test(tabsJs) && /reduceMotion/.test(tabsJs), "Reduced motion should crossfade via View Transitions");
 
+// --- About tab -------------------------------------------------------------
+const aboutPanel = tag(html, /<section[^>]*id="panel-about"[\s\S]*?<!-- \/panel-about -->/);
+const aboutText = textOf(aboutPanel);
+const work = experiences.filter((e) => e.type === "work");
+const now = work.find((e) => !e.to);
+const prev = work.filter((e) => e.to).sort((a, b) => b.to.localeCompare(a.to))[0];
+check(experiences.every((e) => e.type === "work" || e.type === "leadership"), 'experiences.json: type must be "work" | "leadership"');
+check(now && aboutText.includes(`Currently ${now.role} @ ${now.company}`), "About: Currently @ line from experience data");
+check(prev && aboutText.includes(`Previously ${prev.role} @ ${prev.company}`), "About: Previously @ line from experience data");
+check(new RegExp(`class="[^"]*about-hero[\\s\\S]*href="${profile.resume}"`).test(aboutPanel), "About hero: resume button");
+for (const l of profile.links) check(aboutPanel.includes(`href="${l.href}"`), `About hero: ${l.label} link`);
+check(aboutPanel.includes(`href="mailto:${profile.email}"`), "About hero: email link");
+check((aboutPanel.match(/class="chip stack-chip/g) || []).length === profile.heroStack.length, "About hero: one chip per stack item");
+check(!/Currently planning to do my second full marathon/.test(html), "Marathon line should be updated");
+check(aboutText.includes(profile.contact.heading), "About: closing contact line");
+
 // --- Content comes from the JSON data -------------------------------------
 const resumeLinks = html.match(new RegExp(`href="/?${profile.resume}"`, "g")) || [];
 check(resumeLinks.length >= 1, "Resume should be linked");

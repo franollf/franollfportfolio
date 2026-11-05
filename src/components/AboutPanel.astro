@@ -1,0 +1,306 @@
+---
+import profile from "../data/profile.json";
+import experiences from "../data/experiences.json";
+import About from "./About.astro";
+
+const work = experiences.filter((e) => e.type === "work");
+const current = work.find((e) => !e.to);
+const previous = work.filter((e) => e.to).sort((a, b) => b.to!.localeCompare(a.to!))[0];
+const roles = [
+  { label: "Currently", e: current },
+  { label: "Previously", e: previous },
+].filter((r) => r.e);
+
+const github = profile.links.find((l) => l.label === "GitHub");
+const linkedin = profile.links.find((l) => l.label === "LinkedIn");
+const ICON = {
+  github:
+    "M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z",
+  linkedin:
+    "M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z",
+};
+---
+
+<div class="about-hero container">
+  <div class="about-intro">
+    <p class="greeting">{profile.greeting}</p>
+    <h1>{profile.name}</h1>
+    <p class="bio">
+      {
+        profile.bio.map((part: { text: string; href?: string }) =>
+          part.href ? (
+            <a href={part.href} target="_blank" rel="noopener noreferrer">{part.text}</a>
+          ) : (
+            <Fragment>{part.text}</Fragment>
+          )
+        )
+      }
+    </p>
+    <ul class="roles">
+      {
+        roles.map(({ label, e }) => (
+          <li>
+            <span class="role-label">{label}</span> {e!.role} @{" "}
+            {e!.companyUrl ? (
+              <a href={e!.companyUrl} target="_blank" rel="noopener noreferrer">{e!.company}</a>
+            ) : (
+              <span class="role-org">{e!.company}</span>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="stack" aria-label="Tech stack">
+      {
+        profile.heroStack.map((t) => (
+          <li class="chip stack-chip">
+            <img src={t.icon} alt="" width="16" height="16" />
+            {t.name}
+          </li>
+        ))
+      }
+    </ul>
+    <div class="actions">
+      <a class="btn btn--primary" href={profile.resume}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><path d="M14 3v6h6M9 14h6M9 17h4"></path></svg>
+        Resume
+      </a>
+      {
+        github && (
+          <a class="social" href={github.href} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d={ICON.github} /></svg>
+          </a>
+        )
+      }
+      {
+        linkedin && (
+          <a class="social" href={linkedin.href} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d={ICON.linkedin} /></svg>
+          </a>
+        )
+      }
+      <a class="social" href={`mailto:${profile.email}`} aria-label={`Email ${profile.email}`}>
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></svg>
+      </a>
+    </div>
+  </div>
+  <img class="avatar" src={profile.avatar.src} alt="Pixel-art avatar of Franoll" width={profile.avatar.width} height={profile.avatar.height} />
+  <p class="more-hint" aria-hidden="true">More about me ↓</p>
+</div>
+
+<div class="about-more container">
+  <About />
+  <div class="closing">
+    <h2>{profile.contact.heading}</h2>
+    <p>{profile.contact.text} <a href={`mailto:${profile.email}`}>{profile.email}</a></p>
+  </div>
+</div>
+
+<style>
+  .about-hero {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    align-content: center;
+    gap: 1.5rem clamp(2rem, 1rem + 4vw, 5rem);
+    min-height: calc(100dvh - var(--strip) - var(--gap));
+    padding-block: 2rem 3rem;
+  }
+
+  .greeting {
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+
+  h1 {
+    margin-top: 0.25rem;
+    font-size: clamp(2.5rem, 1.8rem + 3.5vw, 4.25rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .bio {
+    max-width: 46ch;
+    margin-top: 1rem;
+    font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.25rem);
+  }
+
+  .roles {
+    display: grid;
+    gap: 0.3rem;
+    margin-top: 0.85rem;
+    color: var(--muted);
+  }
+
+  .role-label {
+    display: inline-block;
+    min-width: 6.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--moss-ink);
+  }
+
+  .roles a {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-decoration-color: var(--moss);
+    text-underline-offset: 4px;
+  }
+
+  .role-org {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 1.25rem;
+  }
+
+  .stack-chip {
+    padding: 0.3rem 0.7rem;
+    cursor: default;
+    transition: transform 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+  }
+
+  .stack-chip img {
+    width: 16px;
+    height: 16px;
+    filter: grayscale(1);
+    opacity: 0.75;
+    transition: filter 0.18s ease, opacity 0.18s ease;
+  }
+
+  .stack-chip:hover {
+    transform: translateY(-2px);
+    border-color: var(--amber);
+    background: color-mix(in srgb, var(--amber) 16%, var(--card-raised));
+  }
+
+  .stack-chip:hover img {
+    filter: none;
+    opacity: 1;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .actions svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .social {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    color: var(--ink);
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  }
+
+  .social:hover {
+    transform: translateY(-2px);
+    background: var(--ink);
+    color: var(--card);
+  }
+
+  .avatar {
+    width: clamp(180px, 10rem + 9vw, 300px);
+    height: auto;
+    image-rendering: pixelated;
+  }
+
+  .more-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+  }
+
+  .about-more {
+    padding-bottom: 3rem;
+  }
+
+  .closing {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .closing h2 {
+    font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem);
+  }
+
+  .closing p {
+    margin-top: 0.5rem;
+    color: var(--muted);
+  }
+
+  .closing a {
+    color: var(--moss-ink);
+    font-weight: 600;
+  }
+
+  @media (max-width: 720px) {
+    .about-hero {
+      grid-template-columns: 1fr;
+      align-content: start;
+      gap: 0;
+      padding-block: 1.25rem 2.5rem;
+    }
+
+    .avatar {
+      grid-row: 1;
+      width: 64px;
+      margin-bottom: 0.75rem;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+    }
+
+    .bio {
+      margin-top: 0.6rem;
+      font-size: 1rem;
+    }
+
+    .roles {
+      font-size: 0.92rem;
+    }
+
+    .role-label {
+      display: block;
+      min-width: 0;
+    }
+
+    .stack {
+      gap: 0.3rem;
+      margin-top: 0.9rem;
+    }
+
+    .stack-chip {
+      padding: 0.2rem 0.55rem;
+    }
+
+    .actions {
+      margin-top: 1rem;
+    }
+  }
+</style>

@@ -5,17 +5,7 @@
   "description": "Franoll Fantu — Computer Science student at Simon Fraser University. Currently a Software Developer Co-op at Shared Services Canada.",
   "bio": [
     {
-      "text": "Computer Science student at Simon Fraser University. Currently a Software Developer Co-op at "
-    },
-    {
-      "text": "Shared Services Canada",
-      "href": "https://www.canada.ca/en/shared-services/services/gc-ai/canai-garage.html"
-    },
-    {
-      "text": ", previously a Machine Learning Intern at "
-    },
-    {
-      "text": "VJDS International Inc."
+      "text": "Computer Science student at Simon Fraser University."
     }
   ],
   "email": "ffa28@sfu.ca",
@@ -70,7 +60,7 @@
     "intro": "Hi there! I'm",
     "paragraphs": [
       "I'm an undergraduate student at Simon Fraser University with a passion for building projects to make people's lives easier. Solving problems and turning ideas into functional projects is what I call fun!",
-      "Outside of coding, I have a strong passion for physical health and fitness. I love to cook, weightlift, play basketball, hike, but above all I love to run. Currently planning to do my second full marathon! I really enjoy the balance and applying the same consistency and mindset from training to the way I approach development and tech."
+      "Outside of coding, I have a strong passion for physical health and fitness. I love to cook, weightlift, play basketball, hike, but above all I love to run. I just ran my second full marathon! I really enjoy the balance and applying the same consistency and mindset from training to the way I approach development and tech."
     ],
     "portrait": {
       "src": "photos/transparentpfp.png",

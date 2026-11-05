@@ -7,7 +7,7 @@
     "location": "Vancouver, BC",
     "from": "2026-05",
     "to": null,
-    "branch": "work",
+    "type": "work",
     "logo": {
       "src": "photos/SSC.jpeg",
       "alt": "Shared Services Canada logo"
@@ -29,7 +29,7 @@
     "location": "Calgary, Alberta",
     "from": "2026-01",
     "to": "2026-04",
-    "branch": "work",
+    "type": "work",
     "logo": {
       "src": "icons/vjds.png",
       "alt": "VJDS International logo"
@@ -50,7 +50,7 @@
     "location": "Burnaby, BC",
     "from": "2026-01",
     "to": null,
-    "branch": "clubs",
+    "type": "leadership",
     "logo": {
       "src": "icons/ewb.png",
       "alt": "Engineering Without Borders logo"
@@ -70,7 +70,7 @@
     "location": "Burnaby, BC",
     "from": "2026-01",
     "to": "2026-06",
-    "branch": "clubs",
+    "type": "leadership",
     "logo": {
       "src": "icons/enactusfu.png",
       "alt": "Enactus SFU logo"

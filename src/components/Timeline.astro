@@ -32,8 +32,8 @@ const H = 150;
 
 // Main branch = work; clubs branch for the longest-running club role;
 // overlapping club roles fork off the clubs branch and merge back.
-const work = experiences.filter((e) => e.branch === "work").sort((a, b) => idx(a.from) - idx(b.from));
-const clubs = experiences.filter((e) => e.branch === "clubs").sort((a, b) => (b.to ? idx(b.to) : 1e9) - (a.to ? idx(a.to) : 1e9));
+const work = experiences.filter((e) => e.type === "work").sort((a, b) => idx(a.from) - idx(b.from));
+const clubs = experiences.filter((e) => e.type === "leadership").sort((a, b) => (b.to ? idx(b.to) : 1e9) - (a.to ? idx(a.to) : 1e9));
 const laneOf = new Map<string, number>();
 work.forEach((e) => laneOf.set(e.id, LANE.work));
 clubs.forEach((e, i) => laneOf.set(e.id, i === 0 ? LANE.clubs : LANE.fork));
@@ -75,7 +75,7 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
       {
         segs.map((s) => (
           <path
-            class={`tl-seg ${s.e.branch === "work" ? "branch-work" : "branch-clubs"}`}
+            class={`tl-seg ${s.e.type === "work" ? "branch-work" : "branch-clubs"}`}
             data-seg={s.e.id}
             d={`M ${s.x1} ${s.y} L ${s.x2} ${s.y}`}
           />
@@ -90,7 +90,7 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
     {
       segs.map((s) => (
         <span
-          class={`tl-dot ${s.e.branch === "work" ? "branch-work" : "branch-clubs"}`}
+          class={`tl-dot ${s.e.type === "work" ? "branch-work" : "branch-clubs"}`}
           data-dot={s.e.id}
           style={`left: ${pct(s.x1)}; top: ${s.y}px`}
           aria-hidden="true"
@@ -108,7 +108,7 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
               type="button"
               role="tab"
               id={`tab-${e.id}`}
-              class={`tl-tab ${e.branch === "work" ? "branch-work" : "branch-clubs"}${active ? " is-active" : ""}`}
+              class={`tl-tab ${e.type === "work" ? "branch-work" : "branch-clubs"}${active ? " is-active" : ""}`}
               data-role={e.id}
               aria-selected={active ? "true" : "false"}
               aria-controls={`panel-${e.id}`}
@@ -120,7 +120,7 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
                 <span class="tl-tab-company">{e.company}</span>
                 <span class="tl-tab-dates">{s.dates}</span>
               </span>
-              <span class="tl-lane">{e.branch === "work" ? "work" : "leadership"}</span>
+              <span class="tl-lane">{e.type === "work" ? "work" : "leadership"}</span>
               <span class="tl-tip" aria-hidden="true">
                 <strong>{e.role}</strong>
                 <span>{s.dates}</span>

@@ -3,7 +3,7 @@ import profile from "../data/profile.json";
 const { about, photos, education, skills } = profile;
 ---
 
-<div class="about reveal">
+<div class="about">
   <img
     src={about.portrait.src}
     srcset={about.portrait.srcset}
@@ -15,7 +15,7 @@ const { about, photos, education, skills } = profile;
     loading="lazy"
   />
   <div class="about-text">
-    <h3>{about.heading}</h3>
+    <h2>{about.heading}</h2>
     <p>{about.intro} <strong>{profile.name}</strong></p>
     {about.paragraphs.map((p) => <p>{p}</p>)}
   </div>
@@ -24,7 +24,7 @@ const { about, photos, education, skills } = profile;
 <ul class="gallery" aria-label="Photos">
   {
     photos.map((ph) => (
-      <li class="gallery-item reveal">
+      <li class="gallery-item">
         <figure>
           <img
             src={ph.src}
@@ -45,13 +45,13 @@ const { about, photos, education, skills } = profile;
 </ul>
 
 <div class="facts">
-  <div class="fact reveal">
+  <div class="fact">
     <h3 class="fact-title">Education</h3>
     <p class="edu-school">{education.school}</p>
     <p>{education.degree}</p>
     <p class="mono">{education.dates} · {education.location}</p>
   </div>
-  <div class="fact reveal">
+  <div class="fact">
     <h3 class="fact-title">Technical skills</h3>
     <dl class="skills">
       {
@@ -74,6 +74,8 @@ const { about, photos, education, skills } = profile;
 
 <style>
   .about {
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--rule);
     display: grid;
     gap: 1.5rem 3rem;
     align-items: start;
@@ -98,7 +100,7 @@ const { about, photos, education, skills } = profile;
     }
   }
 
-  .about-text h3 {
+  .about-text h2 {
     font-size: clamp(1.4rem, 1.1rem + 1vw, 1.9rem);
     margin-bottom: 0.75rem;
   }
