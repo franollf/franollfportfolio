@@ -80,7 +80,7 @@ check(text.includes("Apr 2028") && text.includes("Simon Fraser University"), "Ed
 
 // --- Timeline --------------------------------------------------------------
 const tablist = (html.match(/<[^>]+role="tablist"[\s\S]*?<\/div>\s*<\/div>/) || [""])[0];
-const tabs = html.match(/role="tab"/g) || [];
+const tabs = html.match(/role="tab"[\s>]/g) || [];
 const panels = html.match(/role="tabpanel"/g) || [];
 check(tabs.length === experiences.length, `Timeline should have ${experiences.length} tabs (found ${tabs.length})`);
 check(panels.length === experiences.length, `Timeline should have ${experiences.length} panels (found ${panels.length})`);

@@ -1,8 +1,14 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
+import Section from "../components/Section.astro";
+import Timeline from "../components/Timeline.astro";
+import experiences from "../data/experiences.json";
 ---
 
 <BaseLayout>
   <Hero />
+  <Section id="experience" title="Experience" accent="experience" meta={`${experiences.length} roles`}>
+    <Timeline />
+  </Section>
 </BaseLayout>

@@ -1,0 +1,610 @@
+---
+import experiences from "../data/experiences.json";
+
+type Exp = (typeof experiences)[number];
+
+const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const SHORT = MONTHS.map((m) => m.slice(0, 3));
+const idx = (ym: string) => {
+  const [y, m] = ym.split("-").map(Number);
+  return y * 12 + (m - 1);
+};
+const fmt = (ym: string | null) => {
+  if (!ym) return "Present";
+  const [y, m] = ym.split("-").map(Number);
+  return `${MONTHS[m - 1]} ${y}`;
+};
+
+const now = new Date();
+const nowIdx = now.getFullYear() * 12 + now.getMonth();
+const startIdx = Math.min(...experiences.map((e) => idx(e.from)));
+const endIdx = Math.max(nowIdx + 1, ...experiences.map((e) => (e.to ? idx(e.to) + 1 : nowIdx + 1)));
+const startLabel = `${SHORT[startIdx % 12]} ${Math.floor(startIdx / 12)}`;
+
+// Geometry in a 1000-unit-wide coordinate space; y in px.
+const W = 1000;
+const X_ORIGIN = 16; // origin commit where branches split
+const X_START = 70; // first month
+const X_END = 984; // "Present"
+const x = (monthIdx: number) => X_START + ((monthIdx - startIdx) / (endIdx - startIdx)) * (X_END - X_START);
+const LANE = { work: 28, clubs: 76, fork: 122 } as const;
+const H = 150;
+
+// Main branch = work; clubs branch for the longest-running club role;
+// overlapping club roles fork off the clubs branch and merge back.
+const work = experiences.filter((e) => e.branch === "work").sort((a, b) => idx(a.from) - idx(b.from));
+const clubs = experiences.filter((e) => e.branch === "clubs").sort((a, b) => (b.to ? idx(b.to) : 1e9) - (a.to ? idx(a.to) : 1e9));
+const laneOf = new Map<string, number>();
+work.forEach((e) => laneOf.set(e.id, LANE.work));
+clubs.forEach((e, i) => laneOf.set(e.id, i === 0 ? LANE.clubs : LANE.fork));
+
+const segs = experiences.map((e) => {
+  const x1 = x(idx(e.from));
+  const x2 = x(e.to ? idx(e.to) + 1 : nowIdx + 1);
+  return { e, x1, x2, y: laneOf.get(e.id)!, dates: `${fmt(e.from)} – ${fmt(e.to)}` };
+});
+const seg = (id: string) => segs.find((s) => s.e.id === id)!;
+
+const curve = (xa: number, ya: number, xb: number, yb: number) => {
+  const mid = (xa + xb) / 2;
+  return `M ${xa} ${ya} C ${mid} ${ya}, ${mid} ${yb}, ${xb} ${yb}`;
+};
+const branches: { d: string; cls: string }[] = [];
+const workLineEnd = Math.max(...work.map((e) => seg(e.id).x2));
+branches.push({ d: `M ${X_ORIGIN} ${LANE.work} L ${seg(work[0].id).x1} ${LANE.work}`, cls: "branch-work" });
+if (clubs.length) {
+  const main = seg(clubs[0].id);
+  branches.push({ d: curve(X_ORIGIN, LANE.work, main.x1, LANE.clubs), cls: "branch-clubs" });
+  clubs.slice(1).forEach((c) => {
+    const s = seg(c.id);
+    branches.push({ d: curve(X_ORIGIN, LANE.work, s.x1, LANE.fork), cls: "branch-clubs" });
+    if (c.to) branches.push({ d: curve(s.x2, LANE.fork, Math.min(s.x2 + 40, X_END), LANE.clubs), cls: "branch-clubs merge" });
+  });
+}
+
+const current = work.find((e) => !e.to) ?? work[work.length - 1];
+const order: Exp[] = [...work, ...clubs];
+const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
+---
+
+<div class="timeline">
+
+  <div class="tl-graph" style={`--h: ${H}px`}>
+    <svg class="tl-svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      {branches.map((b) => <path class={`tl-line ${b.cls}`} d={b.d} />)}
+      {
+        segs.map((s) => (
+          <path
+            class={`tl-seg ${s.e.branch === "work" ? "branch-work" : "branch-clubs"}`}
+            data-seg={s.e.id}
+            d={`M ${s.x1} ${s.y} L ${s.x2} ${s.y}`}
+          />
+        ))
+      }
+      <path class="tl-line branch-work" d={`M ${workLineEnd} ${LANE.work} L ${X_END} ${LANE.work}`} />
+    </svg>
+
+    <span class="tl-dot origin" style={`left: ${pct(X_ORIGIN)}; top: ${LANE.work}px`} aria-hidden="true"></span>
+    <span class="tl-label start" style={`left: ${pct(X_ORIGIN)}; top: ${LANE.work}px`} aria-hidden="true">{startLabel}</span>
+    <span class="tl-label end" style={`left: ${pct(X_END)}; top: ${LANE.work}px`} aria-hidden="true">Present</span>
+    {
+      segs.map((s) => (
+        <span
+          class={`tl-dot ${s.e.branch === "work" ? "branch-work" : "branch-clubs"}`}
+          data-dot={s.e.id}
+          style={`left: ${pct(s.x1)}; top: ${s.y}px`}
+          aria-hidden="true"
+        />
+      ))
+    }
+
+    <div class="tl-tabs" role="tablist" aria-label="Experience timeline">
+      {
+        order.map((e) => {
+          const s = seg(e.id);
+          const active = e.id === current.id;
+          return (
+            <button
+              type="button"
+              role="tab"
+              id={`tab-${e.id}`}
+              class={`tl-tab ${e.branch === "work" ? "branch-work" : "branch-clubs"}${active ? " is-active" : ""}`}
+              data-role={e.id}
+              aria-selected={active ? "true" : "false"}
+              aria-controls={`panel-${e.id}`}
+              tabindex={active ? 0 : -1}
+              style={`--l: ${pct(s.x1)}; --w: ${pct(s.x2 - s.x1)}; --y: ${s.y}px`}
+            >
+              <span class="tl-tab-text">
+                <span class="tl-tab-role">{e.role}</span>
+                <span class="tl-tab-company">{e.company}</span>
+                <span class="tl-tab-dates">{s.dates}</span>
+              </span>
+              <span class="tl-lane">{e.branch === "work" ? "work" : "clubs"}</span>
+              <span class="tl-tip" aria-hidden="true">
+                <strong>{e.role}</strong>
+                <span>{s.dates}</span>
+              </span>
+            </button>
+          );
+        })
+      }
+    </div>
+  </div>
+
+  <p class="tl-legend" aria-hidden="true">
+    <span class="tl-key work">main · work</span>
+    <span class="tl-key clubs">branch · clubs &amp; leadership</span>
+  </p>
+
+  <div class="tl-panels">
+    {
+      order.map((e) => {
+        const s = seg(e.id);
+        const active = e.id === current.id;
+        return (
+          <article
+            class={`tl-panel${active ? " is-active" : ""}`}
+            role="tabpanel"
+            id={`panel-${e.id}`}
+            aria-labelledby={`tab-${e.id}`}
+            tabindex="0"
+          >
+            <div class="tl-panel-head">
+              <img class="tl-logo" src={e.logo.src} alt={e.logo.alt} width="56" height="56" loading="lazy" />
+              <div>
+                <h3>
+                  <span>{e.role}</span>
+                  <span class="at"> @ </span>
+                  {e.companyUrl ? (
+                    <a href={e.companyUrl} target="_blank" rel="noopener noreferrer">{e.company}</a>
+                  ) : (
+                    <span>{e.company}</span>
+                  )}
+                </h3>
+                <p class="tl-meta">
+                  <span>{s.dates}</span>
+                  <span aria-hidden="true">·</span>
+                  <span>{e.location}</span>
+                </p>
+              </div>
+            </div>
+            <ul class="tl-bullets">
+              {e.bullets.map((b) => <li>{b}</li>)}
+            </ul>
+          </article>
+        );
+      })
+    }
+  </div>
+</div>
+
+<script>
+  import "../scripts/timeline.js";
+</script>
+
+<style>
+  .timeline {
+    --work: var(--moss);
+    --clubs: var(--amber);
+  }
+
+  .tl-legend {
+    display: flex;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  .tl-key::before {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 3px;
+    margin-right: 0.45rem;
+    vertical-align: middle;
+    border-radius: 2px;
+    background: var(--work);
+  }
+
+  .tl-key.clubs::before {
+    background: var(--clubs);
+  }
+
+  /* ---------- Graph (desktop) ---------- */
+  .tl-graph {
+    position: relative;
+    height: var(--h);
+    margin: 3.25rem 0 0.5rem;
+  }
+
+  .tl-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .tl-line,
+  .tl-seg {
+    fill: none;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+
+  .tl-line {
+    stroke: var(--rule);
+    stroke-width: 2;
+  }
+
+  .tl-line.branch-clubs {
+    stroke: color-mix(in srgb, var(--clubs) 55%, var(--rule));
+  }
+
+  .tl-seg {
+    stroke: color-mix(in srgb, var(--work) 70%, var(--rule));
+    stroke-width: 3;
+    transition: stroke-width 0.25s ease, filter 0.25s ease, stroke 0.25s ease;
+  }
+
+  .tl-seg.branch-clubs {
+    stroke: color-mix(in srgb, var(--clubs) 75%, var(--rule));
+  }
+
+  .tl-seg.is-hover {
+    stroke-width: 5;
+  }
+
+  .tl-seg.is-active {
+    stroke: var(--work);
+    stroke-width: 6;
+    filter: drop-shadow(0 0 5px var(--work));
+  }
+
+  .tl-seg.branch-clubs.is-active {
+    stroke: var(--clubs);
+    filter: drop-shadow(0 0 5px var(--clubs));
+  }
+
+  .tl-dot {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--card);
+    border: 3px solid var(--work);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .tl-dot.branch-clubs {
+    border-color: var(--clubs);
+  }
+
+  .tl-dot.origin {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+
+  .tl-label {
+    position: absolute;
+    transform: translate(-50%, -30px);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .tl-label.start {
+    transform: translate(-8px, -30px);
+  }
+
+  .tl-label.end {
+    transform: translate(-100%, -30px);
+  }
+
+  .tl-tabs {
+    position: absolute;
+    inset: 0;
+  }
+
+  .tl-tab {
+    position: absolute;
+    left: var(--l);
+    width: var(--w);
+    top: calc(var(--y) - 16px);
+    height: 32px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .tl-tab-text,
+  .tl-lane {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .tl-tab:focus-visible {
+    outline-offset: 0;
+  }
+
+  .tl-tip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 10px);
+    transform: translate(-50%, 4px);
+    display: grid;
+    gap: 0.15rem;
+    width: max-content;
+    max-width: 260px;
+    padding: 0.45rem 0.7rem;
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--card);
+    font-size: 0.8rem;
+    line-height: 1.35;
+    text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    z-index: 5;
+  }
+
+  .tl-tip span {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    opacity: 0.85;
+  }
+
+  .tl-tab:hover .tl-tip,
+  .tl-tab:focus-visible .tl-tip {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+
+  /* ---------- Panels ---------- */
+  .tl-panels {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    padding-top: 1.75rem;
+    view-transition-name: tl-panel;
+  }
+
+  :global(.js) .tl-panel:not(.is-active) {
+    display: none;
+  }
+
+  .tl-panel + .tl-panel {
+    margin-top: 2.5rem;
+  }
+
+  :global(.js) .tl-panel + .tl-panel {
+    margin-top: 0;
+  }
+
+  .tl-panel.is-active {
+    animation: tl-fade 0.3s ease;
+  }
+
+  @keyframes tl-fade {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+
+  .tl-panel:focus-visible {
+    outline-offset: 6px;
+  }
+
+  .tl-panel-head {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .tl-logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    padding: 6px;
+    border-radius: 12px;
+    border: 1px solid var(--rule);
+    background: #fff;
+    flex: none;
+  }
+
+  .tl-panel h3 {
+    font-size: clamp(1.15rem, 1rem + 0.6vw, 1.45rem);
+    font-weight: 700;
+  }
+
+  .tl-panel h3 .at {
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .tl-panel h3 a {
+    color: var(--moss-ink);
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 4px;
+  }
+
+  .tl-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.3rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  .tl-bullets {
+    display: grid;
+    gap: 0.55rem;
+    margin-top: 1.25rem;
+    max-width: 78ch;
+  }
+
+  .tl-bullets li {
+    position: relative;
+    padding-left: 1.2rem;
+    color: var(--muted);
+  }
+
+  .tl-bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+
+  /* ---------- Mobile: vertical, tappable timeline ---------- */
+  @media (max-width: 768px) {
+    .tl-graph {
+      height: auto;
+      margin-top: 1.5rem;
+    }
+
+    .tl-svg,
+    .tl-dot,
+    .tl-label {
+      display: none;
+    }
+
+    .tl-tabs {
+      position: relative;
+      display: grid;
+      gap: 0.25rem;
+      padding-left: 22px;
+    }
+
+    .tl-tabs::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background: var(--rule);
+      border-radius: 2px;
+    }
+
+    .tl-tab {
+      position: relative;
+      left: auto;
+      top: auto;
+      width: 100%;
+      height: auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 0.85rem;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      text-align: left;
+    }
+
+    .tl-tab::before {
+      content: "";
+      position: absolute;
+      left: -22px;
+      top: 1.15rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 3px solid var(--work);
+    }
+
+    .tl-tab.branch-clubs::before {
+      border-color: var(--clubs);
+    }
+
+    .tl-tab.is-active {
+      border-color: var(--rule);
+      background: var(--card-raised);
+    }
+
+    .tl-tab.is-active::before {
+      background: var(--work);
+      box-shadow: 0 0 8px var(--work);
+    }
+
+    .tl-tab.branch-clubs.is-active::before {
+      background: var(--clubs);
+      box-shadow: 0 0 8px var(--clubs);
+    }
+
+    .tl-tab-text,
+    .tl-lane {
+      position: static;
+      width: auto;
+      height: auto;
+      overflow: visible;
+      clip-path: none;
+      white-space: normal;
+    }
+
+    .tl-tab-text {
+      display: grid;
+      gap: 0.1rem;
+    }
+
+    .tl-tab-role {
+      font-weight: 700;
+    }
+
+    .tl-tab-company {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .tl-tab-dates {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .tl-lane {
+      flex: none;
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--moss-ink);
+      border: 1px solid color-mix(in srgb, var(--work) 50%, transparent);
+    }
+
+    .tl-tab.branch-clubs .tl-lane {
+      color: var(--amber-ink);
+      border-color: color-mix(in srgb, var(--clubs) 50%, transparent);
+    }
+
+    .tl-tip {
+      display: none;
+    }
+  }
+</style>
