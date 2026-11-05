@@ -485,6 +485,24 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
     padding-top: 0.25rem;
   }
 
+  /* Hover picks the role on desktop. Stack every panel in one cell so the details area is always
+     as tall as the longest role: swapping roles then never changes the page height, so the
+     scroll position (and the graph under the cursor) can't jump. */
+  @media (hover: hover) and (min-width: 769px) {
+    :global(.js) .timeline[data-view="single"] .tl-panels {
+      display: grid;
+    }
+
+    :global(.js) .timeline[data-view="single"] .tl-panel {
+      grid-area: 1 / 1;
+    }
+
+    :global(.js) .timeline[data-view="single"] .tl-panels .tl-panel:not(.is-active) {
+      display: block;
+      visibility: hidden;
+    }
+  }
+
   .tl-seg.is-listed {
     stroke-width: 5;
   }

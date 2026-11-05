@@ -642,7 +642,7 @@ html[data-intro="play"] .strip > * {
 .panel-experience {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* not centred: role details vary in height, centring made the timeline jump under the cursor */
 }
 
 .exp-wrap {
