@@ -15,10 +15,12 @@ const { active } = Astro.props;
 </section>
 <!-- /panel-about -->
 <section id="panel-experience" class="panel panel-experience" role="tabpanel" aria-labelledby="tab-experience" hidden={active !== "experience"}>
+  <h2 class="visually-hidden">Experience</h2>
   <div class="container panel-pad"><Timeline /></div>
 </section>
 <!-- /panel-experience -->
 <section id="panel-projects" class="panel panel-projects" role="tabpanel" aria-labelledby="tab-projects" hidden={active !== "projects"}>
+  <h2 class="visually-hidden">Projects</h2>
   <div class="container panel-pad pj-wrap"><ProjectStack /></div>
 </section>
 <!-- /panel-projects -->

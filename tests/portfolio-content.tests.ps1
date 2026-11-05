@@ -3,7 +3,7 @@ $ErrorActionPreference = "Stop"
 
 $html = Get-Content -Raw (Join-Path $PSScriptRoot "..\dist\index.html")
 $css = Get-Content -Raw (Join-Path $PSScriptRoot "..\src\styles\global.css")
-$js = Get-Content -Raw (Join-Path $PSScriptRoot "..\src\scripts\nav.js")
+$js = Get-Content -Raw (Join-Path $PSScriptRoot "..\src\scripts\tabs.js")
 $pokevaultCard = [regex]::Match($html, 'data-project="pokevault"(.*?)data-project="saferx"', 'Singleline').Groups[1].Value
 $failures = [System.Collections.Generic.List[string]]::new()
 
@@ -52,11 +52,11 @@ Assert-NotContains $pokevaultCard '<span>Demo</span>' "PokéVault demo link shou
 Assert-NotContains $css '.pokevault-preview' "Unused generated PokéVault preview styles should be removed."
 Assert-Contains $css '.pokevault-project-preview' "PokéVault preview should define dedicated centering styles."
 
-# The mobile menu must never leave a stale inline overflow lock on the page.
-Assert-NotContains ($html + $js) 'document.body.style.overflow' "Mobile navigation should not lock scrolling with an inline body style."
-Assert-Contains $js 'mobileNav.classList.remove("open")' "Mobile navigation should have an explicit close path."
-Assert-Contains $js 'mobileBreakpoint.addEventListener("change", closeMobileNav)' "Crossing the mobile breakpoint should clear an open menu and its scroll lock."
-Assert-Contains $css 'body.mobile-nav-open' "The mobile navigation scroll lock should be represented by a removable class."
+# Tab navigation (replaced the mobile menu): no inline scroll locks, real history entries.
+Assert-NotContains ($html + $js) 'document.body.style.overflow' "Navigation should not lock scrolling with an inline body style."
+Assert-Contains $js 'history.pushState' "Switching tabs should push a history entry."
+Assert-Contains $js 'addEventListener("popstate"' "The back button should switch tabs."
+Assert-Contains $html 'role="tablist"' "Sections should be reachable from a tab bar."
 Assert-NotContains $css 'overflow-x: hidden;' "Horizontal clipping must not create nested vertical scroll containers on mobile."
 Assert-Contains $css 'overflow-x: clip;' "Wide content should be clipped without capturing vertical touch scrolling."
 
