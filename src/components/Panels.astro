@@ -1,0 +1,26 @@
+---
+import type { TabKey } from "../data/tabs";
+import Hero from "./Hero.astro";
+import About from "./About.astro";
+import Timeline from "./Timeline.astro";
+import Projects from "./Projects.astro";
+
+interface Props {
+  active: TabKey;
+}
+const { active } = Astro.props;
+---
+
+<section id="panel-about" class="panel panel-about" role="tabpanel" aria-labelledby="tab-about" hidden={active !== "about"}>
+  <Hero />
+  <About />
+</section>
+<!-- /panel-about -->
+<section id="panel-experience" class="panel panel-experience" role="tabpanel" aria-labelledby="tab-experience" hidden={active !== "experience"}>
+  <div class="container panel-pad"><Timeline /></div>
+</section>
+<!-- /panel-experience -->
+<section id="panel-projects" class="panel panel-projects" role="tabpanel" aria-labelledby="tab-projects" hidden={active !== "projects"}>
+  <div class="container panel-pad"><Projects /></div>
+</section>
+<!-- /panel-projects -->
