@@ -745,3 +745,24 @@ html[data-intro="play"] .strip-inner {
     transform: none;
   }
 }
+
+#projects.section {
+  padding-top: clamp(1.25rem, 0.5rem + 1.5vw, 2rem);
+}
+
+/* ---------- Project screenshots (shared) ---------- */
+.project-preview {
+  object-fit: cover;
+  object-position: top center;
+}
+
+.pokevault-project-preview {
+  object-fit: contain;
+  object-position: center;
+  background: #fff;
+}
+
+/* ---------- About portrait ---------- */
+.about-portrait {
+  object-fit: contain;
+}
