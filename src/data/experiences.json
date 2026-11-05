@@ -1,0 +1,86 @@
+[
+  {
+    "id": "ssc",
+    "role": "Software Developer Co-op",
+    "company": "Shared Services Canada - CanAI Garage",
+    "companyUrl": "https://www.canada.ca/en/shared-services/services/gc-ai/canai-garage.html",
+    "location": "Vancouver, BC",
+    "from": "2026-05",
+    "to": null,
+    "branch": "work",
+    "logo": {
+      "src": "photos/SSC.jpeg",
+      "alt": "Shared Services Canada logo"
+    },
+    "bullets": [
+      "Collaborated with a cross-Canada team to build a predictive AI fleet management system",
+      "Developed and tuned regression and classification models for fleet forecasting and integrated them into production workflows",
+      "Implemented MLflow to track model parameters, metrics, and experiments across ML pipelines",
+      "Built RESTful APIs with Django/Python and a Redis caching system, reducing average API response time by 50%",
+      "Containerized application services using Docker and deployed them to Azure VMs through CI/CD pipelines",
+      "Served as Scrum Master, managing sprints in Jira, coordinating development across shared VM environments, and communicating progress to government stakeholders"
+    ]
+  },
+  {
+    "id": "vjds",
+    "role": "Machine Learning Intern",
+    "company": "VJDS International Inc.",
+    "companyUrl": null,
+    "location": "Calgary, Alberta",
+    "from": "2026-01",
+    "to": "2026-04",
+    "branch": "work",
+    "logo": {
+      "src": "icons/vjds.png",
+      "alt": "VJDS International logo"
+    },
+    "bullets": [
+      "Built ML pipelines for classification, enrichment, and predictive scoring integrated into production services",
+      "Designed end-to-end data pipelines for ingestion, preprocessing, validation, and feature transformation using Python",
+      "Developed backend services and RESTful APIs using FastAPI and Python",
+      "Implemented Redis caching and storage for API requests, reducing response times by 75%",
+      "Performed spatial analysis to compute density metrics and generate heatmap visualizations for trend analysis"
+    ]
+  },
+  {
+    "id": "ewb",
+    "role": "Vice President, Web & Digital Systems",
+    "company": "Engineering Without Borders Canada (SFU Chapter)",
+    "companyUrl": "https://go.sfss.ca/clubs/927/info",
+    "location": "Burnaby, BC",
+    "from": "2026-01",
+    "to": null,
+    "branch": "clubs",
+    "logo": {
+      "src": "icons/ewb.png",
+      "alt": "Engineering Without Borders logo"
+    },
+    "bullets": [
+      "Architected, maintained, and optimized the organization’s public-facing website",
+      "Developed and deployed frontend features and pages using HTML, CSS, JavaScript, and React",
+      "Managed site structure, content updates, and deployment workflows to support events, recruitment, and project launches",
+      "Collaborated with executive leadership to align technical decisions with long-term digital strategy"
+    ]
+  },
+  {
+    "id": "enactus",
+    "role": "Software Engineer",
+    "company": "Enactus SFU",
+    "companyUrl": "https://go.sfss.ca/clubs/98/info",
+    "location": "Burnaby, BC",
+    "from": "2026-01",
+    "to": "2026-06",
+    "branch": "clubs",
+    "logo": {
+      "src": "icons/enactusfu.png",
+      "alt": "Enactus SFU logo"
+    },
+    "bullets": [
+      "Led development of a healthcare application using React Native with modular, component-based architecture",
+      "Integrated cloud authentication, data storage, and deployment workflows using AWS Amplify and AWS Cognito",
+      "Worked closely with design and strategy leads to translate product requirements into scalable technical solutions",
+      "Defined frontend architecture, conducted code reviews, and enforced engineering best practices across the team",
+      "Planned development sprints and decomposed features into clear, well-scoped engineering tasks"
+    ]
+  }
+]

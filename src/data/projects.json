@@ -1,0 +1,272 @@
+[
+  {
+    "slug": "pokevault",
+    "title": "PokéVault",
+    "meta": null,
+    "description": "A Java 21 Spring Boot REST API for storing and retrieving Pokémon TCG collections, with versioned PostgreSQL migrations, containerized development, and automated integration testing.",
+    "tags": [
+      {
+        "name": "Java",
+        "icon": "icons/java.svg"
+      },
+      {
+        "name": "Spring Boot",
+        "icon": "icons/spring.svg"
+      },
+      {
+        "name": "PostgreSQL",
+        "icon": "icons/postgresql.svg"
+      },
+      {
+        "name": "Docker",
+        "icon": "icons/docker.svg"
+      },
+      {
+        "name": "Spring Data JPA",
+        "icon": "icons/spring.svg"
+      },
+      {
+        "name": "Flyway",
+        "icon": "icons/flyway.svg"
+      },
+      {
+        "name": "Testcontainers",
+        "icon": "icons/testcontainers.svg"
+      },
+      {
+        "name": "JUnit",
+        "icon": "icons/junit.svg"
+      },
+      {
+        "name": "Mockito",
+        "icon": "icons/mockito.png"
+      }
+    ],
+    "github": "https://github.com/franollf/pokevault",
+    "demo": "https://youtu.be/MLe6hXhtoc8",
+    "badges": [],
+    "featured": true,
+    "image": {
+      "src": "projects/pokevault.png",
+      "srcset": "projects/web/pokevault.jpg 1400w",
+      "class": "project-preview pokevault-project-preview",
+      "alt": "PokéVault screenshot",
+      "width": 1400,
+      "height": 1102
+    }
+  },
+  {
+    "slug": "saferx",
+    "title": "AI Polypharmacy Agent",
+    "meta": "TechNation × TELUS Hackathon",
+    "description": "A Flask RAG pipeline using ChromaDB vector search over 10,000+ FDA drug interaction records, grounding Gemini responses in verified clinical data. PaddleOCR and spaCy NER extract medications from prescription images while filtering sensitive information, and citation-backed PDF reports are generated in 5 seconds.",
+    "tags": [
+      {
+        "name": "React",
+        "icon": "icons/react.svg"
+      },
+      {
+        "name": "Python",
+        "icon": "icons/python.svg"
+      },
+      {
+        "name": "FastAPI",
+        "icon": "icons/fastapi.svg"
+      },
+      {
+        "name": "PostgreSQL",
+        "icon": "icons/postgresql.svg"
+      },
+      {
+        "name": "OCR",
+        "icon": null
+      }
+    ],
+    "github": "https://github.com/p-north/Polypharmacy_Safety-Agent",
+    "demo": "https://youtu.be/l_QJ0asThlM",
+    "badges": [
+      "Hackathon"
+    ],
+    "featured": true,
+    "image": {
+      "src": "projects/web/saferx.jpg",
+      "alt": "AI Polypharmacy Agent screenshot",
+      "width": 1400,
+      "height": 1213
+    }
+  },
+  {
+    "slug": "nutriscan",
+    "title": "NutriScan",
+    "meta": null,
+    "description": "Barcode-based nutrition tracker inspired by MyFitnessPal, built as a full-stack project.",
+    "tags": [
+      {
+        "name": "React",
+        "icon": "icons/react.svg"
+      },
+      {
+        "name": "React Native",
+        "icon": null
+      },
+      {
+        "name": "Node.js",
+        "icon": "icons/node.svg"
+      },
+      {
+        "name": "MongoDB",
+        "icon": "icons/mongodb.svg"
+      },
+      {
+        "name": "FastAPI",
+        "icon": "icons/fastapi.svg"
+      }
+    ],
+    "github": "https://github.com/franollf/nutriscan",
+    "demo": null,
+    "badges": [],
+    "featured": true,
+    "image": {
+      "src": "projects/web/nutriscan.jpg",
+      "alt": "NutriScan screenshot",
+      "width": 1400,
+      "height": 1038
+    }
+  },
+  {
+    "slug": "elevate",
+    "title": "Elevate",
+    "meta": null,
+    "description": "A full-stack running app that generates optimal low-elevation routes in real time.",
+    "tags": [
+      {
+        "name": "React",
+        "icon": "icons/react.svg"
+      },
+      {
+        "name": "Node.js",
+        "icon": "icons/node.svg"
+      },
+      {
+        "name": "Tailwind",
+        "icon": "icons/tailwind.svg"
+      },
+      {
+        "name": "Google Maps API",
+        "icon": "icons/google.svg"
+      }
+    ],
+    "github": "https://github.com/franollf/Elevate",
+    "demo": null,
+    "badges": [],
+    "featured": false,
+    "image": {
+      "src": "projects/web/elevate.jpg",
+      "alt": "Elevate screenshot",
+      "width": 1400,
+      "height": 699
+    }
+  },
+  {
+    "slug": "quizling",
+    "title": "QuizLing",
+    "meta": null,
+    "description": "An AI language learning web app featuring translation, quizzes, flashcards, and progress tracking.",
+    "tags": [
+      {
+        "name": "React",
+        "icon": "icons/react.svg"
+      },
+      {
+        "name": "Node.js",
+        "icon": "icons/node.svg"
+      },
+      {
+        "name": "JavaScript",
+        "icon": "icons/javascript.svg"
+      },
+      {
+        "name": "GeminiAI",
+        "icon": "icons/gemini.png"
+      },
+      {
+        "name": "Firebase",
+        "icon": "icons/firebase.svg"
+      },
+      {
+        "name": "Figma",
+        "icon": "icons/figma.svg"
+      }
+    ],
+    "github": "https://github.com/gunmack/QuizLing",
+    "demo": "https://youtu.be/x05i0RJBUkU",
+    "badges": [],
+    "featured": false,
+    "image": {
+      "src": "projects/web/quizling.jpg",
+      "alt": "QuizLing screenshot",
+      "width": 1400,
+      "height": 784
+    }
+  },
+  {
+    "slug": "vibeify",
+    "title": "Vibeify",
+    "meta": null,
+    "description": "Backend service that generates personalized Spotify playlists from user-inputted mood data, leveraging the Spotify Web API.",
+    "tags": [
+      {
+        "name": "Python",
+        "icon": "icons/python.svg"
+      },
+      {
+        "name": "PostgreSQL",
+        "icon": "icons/postgresql.svg"
+      },
+      {
+        "name": "FastAPI",
+        "icon": "icons/fastapi.svg"
+      }
+    ],
+    "github": "https://github.com/franollf/vibeify",
+    "demo": null,
+    "badges": [],
+    "featured": false,
+    "image": {
+      "src": "projects/web/vibeify.jpg",
+      "alt": "Vibeify screenshot",
+      "width": 1400,
+      "height": 933
+    }
+  },
+  {
+    "slug": "capturethestar",
+    "title": "Capture the Star",
+    "meta": null,
+    "description": "Real-time multiplayer game using a hybrid TCP/UDP client–server architecture for low-latency gameplay.",
+    "tags": [
+      {
+        "name": "Python",
+        "icon": "icons/python.svg"
+      },
+      {
+        "name": "Pygame",
+        "icon": "icons/pygame.svg"
+      },
+      {
+        "name": "TCP/UDP",
+        "icon": null
+      }
+    ],
+    "github": "https://github.com/p-north/TCP_Networking_Game",
+    "demo": null,
+    "badges": [],
+    "featured": false,
+    "image": {
+      "src": "projects/web/capturethestar.jpg",
+      "alt": "Capture the Star screenshot",
+      "width": 1400,
+      "height": 1173
+    }
+  }
+]

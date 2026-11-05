@@ -1,0 +1,192 @@
+{
+  "name": "Franoll Fantu",
+  "greeting": "Hi, this is",
+  "title": "Franoll Fantu — Software Developer",
+  "description": "Franoll Fantu — Computer Science student at Simon Fraser University. Currently a Software Developer Co-op at Shared Services Canada.",
+  "bio": [
+    {
+      "text": "Computer Science student at Simon Fraser University. Currently a Software Developer Co-op at "
+    },
+    {
+      "text": "Shared Services Canada",
+      "href": "https://www.canada.ca/en/shared-services/services/gc-ai/canai-garage.html"
+    },
+    {
+      "text": ", previously a Machine Learning Intern at "
+    },
+    {
+      "text": "VJDS International Inc."
+    },
+    {
+      "text": "."
+    }
+  ],
+  "email": "ffa28@sfu.ca",
+  "resume": "assets/franoll-fantu-resume.pdf",
+  "avatar": {
+    "src": "assets/franoll-piskel-blinking.gif",
+    "width": 56,
+    "height": 56
+  },
+  "links": [
+    {
+      "label": "GitHub",
+      "href": "https://github.com/franollf"
+    },
+    {
+      "label": "LinkedIn",
+      "href": "https://www.linkedin.com/in/franollfantu/"
+    }
+  ],
+  "heroStack": [
+    "Java",
+    "Python",
+    "TypeScript",
+    "React",
+    "Node.js",
+    "FastAPI",
+    "PostgreSQL",
+    "Docker"
+  ],
+  "about": {
+    "heading": "A bit about me!",
+    "intro": "Hi there! I'm",
+    "paragraphs": [
+      "I'm an undergraduate student at Simon Fraser University with a passion for building projects to make people's lives easier. Solving problems and turning ideas into functional projects is what I call fun!",
+      "Outside of coding, I have a strong passion for physical health and fitness. I love to cook, weightlift, play basketball, hike, but above all I love to run. Currently planning to do my second full marathon! I really enjoy the balance and applying the same consistency and mindset from training to the way I approach development and tech."
+    ],
+    "portrait": {
+      "src": "photos/transparentpfp.png",
+      "srcset": "photos/web/transparentpfp.png 640w",
+      "alt": "Portrait of Franoll Fantu",
+      "width": 640,
+      "height": 640
+    }
+  },
+  "photos": [
+    {
+      "src": "photos/shared services team.jpg",
+      "srcset": "photos/web/shared-services-team.jpg 1200w",
+      "class": "gallery-bowling",
+      "caption": "Bowling social with the CanAI Garage Vancouver team!",
+      "alt": "CanAI Garage Vancouver team at a bowling social",
+      "width": 1200,
+      "height": 900
+    },
+    {
+      "src": "photos/fullmarathon.JPG",
+      "srcset": "photos/web/fullmarathon.jpg 800w",
+      "class": "gallery-full-marathon",
+      "caption": "Running my first full marathon!",
+      "alt": "Franoll running a full marathon with friends",
+      "width": 800,
+      "height": 1200
+    },
+    {
+      "src": "photos/hikephoto.jpeg",
+      "srcset": "photos/web/hikephoto.jpg 900w",
+      "class": "gallery-hike",
+      "caption": "Hiking to reset after finals at Stawamus Chief",
+      "alt": "Hike",
+      "width": 900,
+      "height": 1200
+    },
+    {
+      "src": "photos/church.JPG",
+      "srcset": "photos/web/church.jpg 1200w",
+      "class": "gallery-church",
+      "caption": "Serving at my young adults group at my home church!!",
+      "alt": "Church",
+      "width": 1200,
+      "height": 899
+    },
+    {
+      "src": "photos/halfmarathonphoto.JPG",
+      "srcset": "photos/web/halfmarathonphoto.jpg 1200w",
+      "class": "gallery-half-marathon",
+      "caption": "My first half marathon ever!",
+      "alt": "Franoll finishing his first half marathon",
+      "width": 1200,
+      "height": 800
+    },
+    {
+      "src": "photos/rumble.jpeg",
+      "srcset": "photos/web/rumble.jpg 1200w",
+      "class": "gallery-boxing",
+      "caption": "Boxing with family.",
+      "alt": "Franoll boxing with family",
+      "width": 1200,
+      "height": 900
+    }
+  ],
+  "education": {
+    "school": "Simon Fraser University",
+    "degree": "Bachelor of Sciences in Computer Science",
+    "location": "Burnaby, BC",
+    "dates": "Graduation: Apr 2028"
+  },
+  "skills": [
+    {
+      "group": "Programming & Query Languages",
+      "items": [
+        "Java",
+        "Python",
+        "C",
+        "C++",
+        "JavaScript",
+        "TypeScript",
+        "Bash",
+        "PHP"
+      ]
+    },
+    {
+      "group": "Data & Analytics Tools",
+      "items": [
+        "Excel",
+        "Power BI",
+        "Tableau",
+        "pandas",
+        "NumPy",
+        "Matplotlib"
+      ]
+    },
+    {
+      "group": "Frameworks & Platforms",
+      "items": [
+        "React",
+        "Node.js",
+        "Express.js",
+        "Flask",
+        "FastAPI",
+        "Firebase"
+      ]
+    },
+    {
+      "group": "DevOps & Collaboration",
+      "items": [
+        "Linux",
+        "UNIX",
+        "Docker",
+        "Git",
+        "GitLab",
+        "Jira",
+        "Confluence"
+      ]
+    },
+    {
+      "group": "Concepts",
+      "items": [
+        "Agile Scrum",
+        "QA Testing",
+        "ETL Pipelines",
+        "Data Validation",
+        "Dashboard Development",
+        "Technical Documentation"
+      ]
+    }
+  ],
+  "contact": {
+    "heading": "Thank you for visiting!",
+    "text": "Feel free to reach out — I'll get back to you as soon as I can."
+  }
+}

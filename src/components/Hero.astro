@@ -1,0 +1,125 @@
+---
+import profile from "../data/profile.json";
+---
+
+<section id="top" class="hero container" aria-labelledby="hero-name">
+  <p class="hero-greeting">{profile.greeting}</p>
+  <div class="hero-name-row">
+    <h1 id="hero-name">{profile.name}</h1>
+    <img
+      src={profile.avatar.src}
+      alt=""
+      class="hero-avatar"
+      width={profile.avatar.width}
+      height={profile.avatar.height}
+    />
+  </div>
+  <p class="hero-bio">
+    {
+      profile.bio.map((part) =>
+        part.href ? (
+          <a href={part.href} target="_blank" rel="noopener noreferrer">{part.text}</a>
+        ) : (
+          <Fragment>{part.text}</Fragment>
+        )
+      )
+    }
+  </p>
+  <div class="hero-actions">
+    <a class="btn btn--primary" href={profile.resume}>Resume</a>
+    <a class="btn" href="#projects">See projects</a>
+    <a class="btn" href={`mailto:${profile.email}`}>{profile.email}</a>
+  </div>
+  <ul class="hero-stack" aria-label="Tech stack">
+    {
+      profile.heroStack.map((tech) => (
+        <li>
+          <button class="chip stack-chip" type="button" data-tech={tech} aria-pressed="false">
+            {tech}
+          </button>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .hero {
+    padding-top: clamp(2.5rem, 1.5rem + 4vw, 5rem);
+  }
+
+  .hero-greeting {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    color: var(--moss-ink);
+  }
+
+  .hero-name-row {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 0.5rem + 1vw, 1.25rem);
+    margin-top: 0.25rem;
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 1.6rem + 5vw, 5.25rem);
+    font-weight: 700;
+    letter-spacing: -0.035em;
+    line-height: 1;
+  }
+
+  .hero-avatar {
+    width: clamp(40px, 32px + 2.5vw, 64px);
+    height: auto;
+    image-rendering: pixelated;
+  }
+
+  .hero-bio {
+    max-width: 44ch;
+    margin-top: 1.25rem;
+    font-size: clamp(1.15rem, 1rem + 0.7vw, 1.5rem);
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  .hero-bio a {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-style: dashed;
+    text-decoration-color: var(--moss);
+    text-underline-offset: 4px;
+  }
+
+  .hero-bio a:hover {
+    color: var(--moss-ink);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.75rem;
+  }
+
+  .hero-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 1.75rem;
+  }
+
+  .stack-chip {
+    min-height: 32px;
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .stack-chip:hover,
+  .stack-chip:focus-visible,
+  .stack-chip[aria-pressed="true"] {
+    transform: translateY(-2px);
+    border-color: var(--amber);
+    background: color-mix(in srgb, var(--amber) 22%, var(--card-raised));
+  }
+</style>

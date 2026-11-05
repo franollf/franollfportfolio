@@ -31,28 +31,3 @@ document.addEventListener("keydown", (event) => {
 // Prevent a hidden mobile menu from leaving the page scroll-locked after
 // a phone rotation or a responsive breakpoint change.
 mobileBreakpoint.addEventListener("change", closeMobileNav);
-
-// Reveal sections on scroll (skipped when the user prefers reduced motion)
-const reveals = document.querySelectorAll(".reveal");
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-if (reduceMotion || !("IntersectionObserver" in window)) {
-  reveals.forEach((el) => el.classList.add("show"));
-} else {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
-  );
-  reveals.forEach((el) => observer.observe(el));
-}
-
-// Footer year
-const year = document.getElementById("year");
-if (year) year.textContent = new Date().getFullYear();

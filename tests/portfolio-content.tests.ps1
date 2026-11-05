@@ -1,9 +1,10 @@
 $ErrorActionPreference = "Stop"
+# Run `npm run build` first: these checks read the built dist/index.html.
 
-$html = Get-Content -Raw (Join-Path $PSScriptRoot "..\index.html")
-$css = Get-Content -Raw (Join-Path $PSScriptRoot "..\styles.css")
-$js = Get-Content -Raw (Join-Path $PSScriptRoot "..\script.js")
-$pokevaultCard = [regex]::Match($html, '<!-- PokéVault -->(.*?)<!-- Safe Rx -->', 'Singleline').Groups[1].Value
+$html = Get-Content -Raw (Join-Path $PSScriptRoot "..\dist\index.html")
+$css = Get-Content -Raw (Join-Path $PSScriptRoot "..\src\styles\global.css")
+$js = Get-Content -Raw (Join-Path $PSScriptRoot "..\src\scripts\nav.js")
+$pokevaultCard = [regex]::Match($html, 'data-project="pokevault"(.*?)data-project="saferx"', 'Singleline').Groups[1].Value
 $failures = [System.Collections.Generic.List[string]]::new()
 
 function Assert-Contains([string]$Content, [string]$Needle, [string]$Message) {
