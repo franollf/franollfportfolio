@@ -1,0 +1,593 @@
+---
+import projects from "../data/projects.json";
+
+const slug = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+const counts = new Map<string, number>();
+projects.forEach((p) => p.tags.forEach((t) => counts.set(t.name, (counts.get(t.name) ?? 0) + 1)));
+const filters = [...counts.entries()]
+  .filter(([, n]) => n >= 2)
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .map(([name]) => ({ name, key: slug(name) }));
+
+const youtubeId = (url: string | null) => {
+  if (!url) return null;
+  const m = url.match(/(?:youtu\.be\/|[?&]v=)([\w-]{6,})/);
+  return m ? m[1] : null;
+};
+const posOf = (i: number) => (i > 2 ? "far" : String(i));
+const GH =
+  "M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z";
+---
+
+<div class="pj">
+  <div class="pj-filters" role="group" aria-label="Filter projects by technology">
+    <button type="button" class="pj-filter" data-filter="all" aria-pressed="true">All</button>
+    {
+      filters.map((f) => (
+        <button type="button" class="pj-filter" data-filter={f.key} aria-pressed="false">
+          {f.name}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="pj-stage" aria-roledescription="carousel" aria-label="Projects. Scroll, swipe or use the arrow keys to move through them.">
+    {
+      projects.map((p, i) => (
+        <article
+          class="pj-card"
+          data-project={p.slug}
+          data-index={i}
+          data-pos={posOf(i)}
+          data-tags={p.tags.map((t) => slug(t.name)).join(" ")}
+          aria-roledescription="slide"
+          aria-label={`${p.title}, ${i + 1} of ${projects.length}`}
+          aria-hidden={i === 0 ? undefined : "true"}
+          inert={i !== 0}
+        >
+          <div class="pj-inner">
+            <div class="pj-media">
+              {p.videoUrl ? (
+                <video
+                  class="pj-video"
+                  muted
+                  loop
+                  playsinline
+                  preload="none"
+                  poster={p.image.src}
+                  data-src={p.videoUrl}
+                  data-title={p.title}
+                  aria-label={`${p.title} demo preview, muted. Select to watch with sound.`}
+                />
+              ) : (
+                <img
+                  class={p.image.class ?? "project-preview"}
+                  src={p.image.src}
+                  srcset={p.image.srcset}
+                  sizes={p.image.srcset ? "(min-width: 720px) 560px, 92vw" : undefined}
+                  alt={p.image.alt}
+                  width={p.image.width}
+                  height={p.image.height}
+                  loading={i < 3 ? "eager" : "lazy"}
+                  fetchpriority={i === 0 ? "high" : undefined}
+                />
+              )}
+              {p.demoUrl && (
+                <a
+                  class="pj-play"
+                  href={p.demoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-demo={youtubeId(p.demoUrl)}
+                  data-title={p.title}
+                  aria-label={`Watch the ${p.title} demo`}
+                >
+                  <span class="pj-play-icon" aria-hidden="true">▶</span>
+                  <span aria-hidden="true">Watch demo</span>
+                </a>
+              )}
+            </div>
+            <div class="pj-body">
+              {p.badges.length > 0 && (
+                <ul class="pj-badges" aria-label="Badges">
+                  {p.badges.map((b) => <li class="pj-badge">{b}</li>)}
+                </ul>
+              )}
+              <div class="pj-title-row">
+                <h3 class="pj-title">{p.title}</h3>
+                <div class="pj-links">
+                  <a href={p.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${p.title} on GitHub`}>
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path fill="currentColor" d={GH} /></svg>
+                  </a>
+                  {p.liveUrl && (
+                    <a href={p.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`Open ${p.title} live`}>
+                      <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" /></svg>
+                    </a>
+                  )}
+                </div>
+              </div>
+              {p.meta && <p class="pj-meta">{p.meta}</p>}
+              <p class="pj-desc">{p.description}</p>
+              <ul class="pj-tags" aria-label="Tech stack">
+                {p.tags.map((t) => (
+                  <li class="chip">
+                    {t.icon && <img src={t.icon} alt="" width="14" height="14" loading="lazy" />}
+                    {t.name}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+
+  <div class="pj-pill">
+    <p class="pj-count" aria-live="polite">
+      <span class="pj-num-wrap"><span class="pj-num">1</span></span>
+      <span>of</span>
+      <span class="pj-total">{projects.length}</span>
+    </p>
+    <div class="pj-dots">
+      {
+        projects.map((p, i) => (
+          <button type="button" class="pj-dot" data-index={i} aria-label={`Show ${p.title}`} aria-current={i === 0 ? "true" : "false"}>
+            <img src={p.icon} alt="" width="30" height="30" />
+            <span class="pj-tip" aria-hidden="true">{p.title}</span>
+          </button>
+        ))
+      }
+    </div>
+  </div>
+
+  <dialog class="pj-lightbox" aria-label="Project demo">
+    <button type="button" class="pj-close" aria-label="Close demo">✕</button>
+    <div class="pj-frame"></div>
+  </dialog>
+</div>
+
+<script>
+  import "../scripts/stack.js";
+</script>
+
+<style>
+  .pj {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: 1rem;
+    height: 100%;
+  }
+
+  /* ---------- filters ---------- */
+  .pj-filters {
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    justify-content: center;
+  }
+
+  .pj-filter {
+    flex: none;
+    min-height: 34px;
+    padding: 0.25rem 0.85rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--card-raised);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+
+  .pj-filter:hover {
+    border-color: var(--amber);
+  }
+
+  .pj-filter[aria-pressed="true"] {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--card);
+  }
+
+  /* ---------- the stack ---------- */
+  .pj-stage {
+    --peek: 16px;
+    position: relative;
+    touch-action: none;
+  }
+
+  .pj-card {
+    position: absolute;
+    inset: 0 0 calc(var(--peek) * 2);
+    max-width: 1000px;
+    margin-inline: auto;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    border-radius: 22px;
+    background: var(--card-raised);
+    box-shadow: 0 18px 40px -24px rgb(15 26 20 / 0.55);
+    transform-origin: 50% 100%;
+    transition:
+      transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+      opacity 0.45s ease,
+      background-color 0.45s ease;
+  }
+
+  .pj-card[data-pos="0"] {
+    z-index: 10;
+  }
+
+  .pj-card[data-pos="1"] {
+    z-index: 9;
+    transform: translateY(var(--peek)) scale(0.94);
+    background: color-mix(in srgb, var(--frame) 22%, var(--card));
+  }
+
+  .pj-card[data-pos="2"] {
+    z-index: 8;
+    transform: translateY(calc(var(--peek) * 2)) scale(0.88);
+    background: color-mix(in srgb, var(--frame) 88%, var(--card));
+  }
+
+  .pj-card[data-pos="far"],
+  .pj-card[data-pos="out"] {
+    z-index: 7;
+    transform: translateY(calc(var(--peek) * 2)) scale(0.85);
+    opacity: 0;
+  }
+
+  /* Cards already passed lift up and away. */
+  .pj-card[data-pos="gone"] {
+    z-index: 11;
+    transform: translateY(-45%) rotate(-4deg) scale(0.97);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .pj-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    height: 100%;
+    transition: opacity 0.3s ease;
+  }
+
+  .pj-card:not([data-pos="0"]) .pj-inner {
+    opacity: 0;
+  }
+
+  .pj-media {
+    position: relative;
+    margin: 12px 0 12px 12px;
+    overflow: hidden;
+    border-radius: 14px;
+    background: var(--card);
+  }
+
+  .pj-media img,
+  .pj-media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .pj-media .pokevault-project-preview {
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .pj-video {
+    cursor: zoom-in;
+  }
+
+  .pj-play {
+    position: absolute;
+    left: 14px;
+    bottom: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 40px;
+    padding: 0.4rem 0.95rem 0.4rem 0.5rem;
+    border-radius: 999px;
+    background: rgb(15 26 20 / 0.82);
+    color: #f3efe4;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-decoration: none;
+    backdrop-filter: blur(6px);
+    transition: transform 0.15s ease, background-color 0.15s ease;
+  }
+
+  .pj-play:hover {
+    transform: translateY(-2px);
+    background: rgb(15 26 20 / 0.95);
+  }
+
+  .pj-play-icon {
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--amber);
+    color: #1a1206;
+    font-size: 0.7rem;
+    padding-left: 2px;
+  }
+
+  .pj-body {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding: 1.6rem 1.6rem 1.4rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+    scrollbar-width: thin;
+  }
+
+  .pj-badges {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .pj-badge {
+    padding: 0.15rem 0.55rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--amber) 22%, transparent);
+    color: var(--amber-ink);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+  }
+
+  .pj-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .pj-title {
+    font-size: clamp(1.4rem, 1.1rem + 1vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .pj-links {
+    display: flex;
+    gap: 0.35rem;
+    flex: none;
+  }
+
+  .pj-links a {
+    display: inline-grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    color: var(--ink);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  .pj-links a:hover {
+    background: var(--ink);
+    color: var(--card);
+  }
+
+  .pj-meta {
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--amber-ink);
+  }
+
+  .pj-desc {
+    margin-top: 0.75rem;
+    color: var(--muted);
+  }
+
+  .pj-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: auto;
+    padding-top: 1.1rem;
+  }
+
+  /* ---------- counter pill ---------- */
+  .pj-pill {
+    justify-self: center;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 0.4rem 0.55rem 0.4rem 1.05rem;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--card-raised);
+    box-shadow: 0 8px 22px -16px rgb(15 26 20 / 0.6);
+  }
+
+  .pj-count {
+    display: flex;
+    gap: 0.3em;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  .pj-num-wrap {
+    display: inline-grid;
+    overflow: hidden;
+    min-width: 0.7em;
+    color: var(--ink);
+  }
+
+  .pj-dots {
+    display: flex;
+  }
+
+  .pj-dot {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    margin-left: -11px;
+    padding: 0;
+    border: 2px solid var(--card-raised);
+    border-radius: 50%;
+    background: var(--card);
+    opacity: 0.55;
+    cursor: pointer;
+    transition: margin 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .pj-dot:first-child {
+    margin-left: 0;
+  }
+
+  .pj-dots:hover .pj-dot:not(:first-child),
+  .pj-dots:focus-within .pj-dot:not(:first-child) {
+    margin-left: 5px;
+  }
+
+  .pj-dot[hidden] {
+    display: none;
+  }
+
+  .pj-dot:hover,
+  .pj-dot:focus-visible {
+    opacity: 1;
+    transform: translateY(-2px);
+    z-index: 3;
+  }
+
+  .pj-dot[aria-current="true"] {
+    opacity: 1;
+    z-index: 2;
+    box-shadow: 0 0 0 2px var(--amber);
+  }
+
+  .pj-dot img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .pj-tip {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 9px);
+    transform: translate(-50%, 4px);
+    padding: 0.25rem 0.55rem;
+    border-radius: 6px;
+    background: var(--ink);
+    color: var(--card);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+
+  .pj-dot:hover .pj-tip,
+  .pj-dot:focus-visible .pj-tip {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+
+  /* ---------- lightbox ---------- */
+  .pj-lightbox {
+    margin: auto;
+    width: min(92vw, 1100px);
+    max-width: none;
+    padding: 0;
+    border: 0;
+    border-radius: 18px;
+    background: #000;
+    overflow: visible;
+  }
+
+  .pj-lightbox::backdrop {
+    background: rgb(5 9 6 / 0.82);
+    backdrop-filter: blur(4px);
+  }
+
+  .pj-frame {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 18px;
+  }
+
+  .pj-frame :global(iframe),
+  .pj-frame :global(video) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .pj-close {
+    position: absolute;
+    top: -52px;
+    right: 0;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgb(255 255 255 / 0.3);
+    border-radius: 50%;
+    background: rgb(15 26 20 / 0.6);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  /* ---------- small screens: media on top ---------- */
+  @media (max-width: 720px) {
+    .pj {
+      gap: 0.75rem;
+    }
+
+    .pj-filters {
+      justify-content: flex-start;
+    }
+
+    .pj-stage {
+      --peek: 12px;
+    }
+
+    .pj-inner {
+      grid-template-columns: 1fr;
+      grid-template-rows: minmax(120px, 38%) minmax(0, 1fr);
+    }
+
+    .pj-media {
+      margin: 10px 10px 0;
+    }
+
+    .pj-body {
+      padding: 1rem 1.1rem 1.1rem;
+    }
+
+    .pj-desc {
+      margin-top: 0.5rem;
+      font-size: 0.92rem;
+    }
+
+    .pj-pill {
+      gap: 0.6rem;
+      padding-left: 0.85rem;
+    }
+
+    .pj-dot {
+      width: 30px;
+      height: 30px;
+    }
+  }
+</style>

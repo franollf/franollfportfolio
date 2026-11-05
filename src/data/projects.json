@@ -42,8 +42,11 @@
         "icon": "icons/mockito.png"
       }
     ],
-    "github": "https://github.com/franollf/pokevault",
-    "demo": "https://youtu.be/MLe6hXhtoc8",
+    "githubUrl": "https://github.com/franollf/pokevault",
+    "demoUrl": "https://youtu.be/MLe6hXhtoc8",
+    "liveUrl": null,
+    "videoUrl": null,
+    "icon": "projects/web/pokevault.jpg",
     "badges": [],
     "featured": true,
     "image": {
@@ -82,8 +85,11 @@
         "icon": null
       }
     ],
-    "github": "https://github.com/p-north/Polypharmacy_Safety-Agent",
-    "demo": "https://youtu.be/l_QJ0asThlM",
+    "githubUrl": "https://github.com/p-north/Polypharmacy_Safety-Agent",
+    "demoUrl": "https://youtu.be/l_QJ0asThlM",
+    "liveUrl": null,
+    "videoUrl": null,
+    "icon": "projects/web/saferx.jpg",
     "badges": [
       "Hackathon"
     ],
@@ -122,8 +128,11 @@
         "icon": "icons/fastapi.svg"
       }
     ],
-    "github": "https://github.com/franollf/nutriscan",
-    "demo": null,
+    "githubUrl": "https://github.com/franollf/nutriscan",
+    "demoUrl": null,
+    "liveUrl": null,
+    "videoUrl": null,
+    "icon": "projects/web/nutriscan.jpg",
     "badges": [],
     "featured": true,
     "image": {
@@ -156,8 +165,11 @@
         "icon": "icons/google.svg"
       }
     ],
-    "github": "https://github.com/franollf/Elevate",
-    "demo": null,
+    "githubUrl": "https://github.com/franollf/Elevate",
+    "demoUrl": null,
+    "liveUrl": null,
+    "videoUrl": null,
+    "icon": "projects/web/elevate.jpg",
     "badges": [],
     "featured": false,
     "image": {
@@ -198,8 +210,11 @@
         "icon": "icons/figma.svg"
       }
     ],
-    "github": "https://github.com/gunmack/QuizLing",
-    "demo": "https://youtu.be/x05i0RJBUkU",
+    "githubUrl": "https://github.com/gunmack/QuizLing",
+    "demoUrl": "https://youtu.be/x05i0RJBUkU",
+    "liveUrl": null,
+    "videoUrl": null,
+    "icon": "projects/web/quizling.jpg",
     "badges": [],
     "featured": false,
     "image": {
@@ -228,8 +243,11 @@
         "icon": "icons/fastapi.svg"
       }
     ],
-    "github": "https://github.com/franollf/vibeify",
-    "demo": null,
+    "githubUrl": "https://github.com/franollf/vibeify",
+    "demoUrl": null,
+    "liveUrl": null,
+    "videoUrl": null,
+    "icon": "projects/web/vibeify.jpg",
     "badges": [],
     "featured": false,
     "image": {
@@ -258,8 +276,11 @@
         "icon": null
       }
     ],
-    "github": "https://github.com/p-north/TCP_Networking_Game",
-    "demo": null,
+    "githubUrl": "https://github.com/p-north/TCP_Networking_Game",
+    "demoUrl": null,
+    "liveUrl": null,
+    "videoUrl": null,
+    "icon": "projects/web/capturethestar.jpg",
     "badges": [],
     "featured": false,
     "image": {

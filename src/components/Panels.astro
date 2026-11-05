@@ -2,7 +2,7 @@
 import type { TabKey } from "../data/tabs";
 import AboutPanel from "./AboutPanel.astro";
 import Timeline from "./Timeline.astro";
-import Projects from "./Projects.astro";
+import ProjectStack from "./ProjectStack.astro";
 
 interface Props {
   active: TabKey;
@@ -19,6 +19,6 @@ const { active } = Astro.props;
 </section>
 <!-- /panel-experience -->
 <section id="panel-projects" class="panel panel-projects" role="tabpanel" aria-labelledby="tab-projects" hidden={active !== "projects"}>
-  <div class="container panel-pad"><Projects /></div>
+  <div class="container panel-pad pj-wrap"><ProjectStack /></div>
 </section>
 <!-- /panel-projects -->
