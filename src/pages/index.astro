@@ -5,17 +5,15 @@ import Section from "../components/Section.astro";
 import Projects from "../components/Projects.astro";
 import Timeline from "../components/Timeline.astro";
 import About from "../components/About.astro";
-import experiences from "../data/experiences.json";
-import projects from "../data/projects.json";
 ---
 
 <BaseLayout>
   <Hero />
-  <Section id="projects" title="Projects" accent="projects" meta={`${projects.length} projects`}>
-    <Projects />
-  </Section>
-  <Section id="experience" title="Experience" accent="experience" meta={`${experiences.length} roles`}>
+  <Section id="experience" title="Experience" accent="experience">
     <Timeline />
+  </Section>
+  <Section id="projects" title="Projects" accent="projects">
+    <Projects />
   </Section>
   <Section id="about" title="About" accent="about">
     <About />

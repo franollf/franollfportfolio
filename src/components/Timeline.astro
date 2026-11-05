@@ -120,7 +120,7 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
                 <span class="tl-tab-company">{e.company}</span>
                 <span class="tl-tab-dates">{s.dates}</span>
               </span>
-              <span class="tl-lane">{e.branch === "work" ? "work" : "clubs"}</span>
+              <span class="tl-lane">{e.branch === "work" ? "work" : "leadership"}</span>
               <span class="tl-tip" aria-hidden="true">
                 <strong>{e.role}</strong>
                 <span>{s.dates}</span>
@@ -134,7 +134,7 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
 
   <p class="tl-legend" aria-hidden="true">
     <span class="tl-key work">main · work</span>
-    <span class="tl-key clubs">branch · clubs &amp; leadership</span>
+    <span class="tl-key clubs">branch · leadership</span>
   </p>
 
   <div class="tl-panels">

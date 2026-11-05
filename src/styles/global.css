@@ -427,12 +427,6 @@ button {
   font-weight: 700;
 }
 
-.section-header .count {
-  margin-left: auto;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--muted);
-}
 
 .accent-projects {
   --accent: var(--amber);
@@ -630,13 +624,15 @@ html[data-intro="play"] .intro-card {
 }
 
 .intro-letter {
+  /* small, tucked into the top-right corner of the 48px square */
   position: absolute;
-  left: 50%;
-  top: calc(50% - var(--dy));
-  transform: translate(-50%, -50%);
+  left: calc(50% + 24px - 7px);
+  top: calc(50% - var(--dy) - 24px + 5px);
+  transform: translateX(-100%);
   font-family: var(--font-mono);
   font-weight: 500;
-  font-size: 1.5rem;
+  font-size: 0.75rem;
+  line-height: 1;
   color: var(--ink);
   opacity: 0;
 }
@@ -706,9 +702,6 @@ html[data-intro="play"] .strip-inner {
     padding-inline: 12px;
   }
 
-  .brand-name {
-    display: none;
-  }
 
   .mobile-nav.open {
     display: flex;
@@ -746,9 +739,6 @@ html[data-intro="play"] .strip-inner {
   }
 }
 
-#projects.section {
-  padding-top: clamp(1.25rem, 0.5rem + 1.5vw, 2rem);
-}
 
 /* ---------- Project screenshots (shared) ---------- */
 .project-preview {

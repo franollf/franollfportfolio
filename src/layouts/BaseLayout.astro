@@ -6,8 +6,8 @@ import "../styles/global.css";
 import profile from "../data/profile.json";
 
 const navs = [
-  { href: "#projects", label: "Projects", dot: "var(--amber)" },
   { href: "#experience", label: "Experience", dot: "var(--moss)" },
+  { href: "#projects", label: "Projects", dot: "var(--amber)" },
   { href: "#about", label: "About", dot: "var(--terracotta)" },
   { href: "#contact", label: "Contact", dot: "var(--plum)" },
 ];
@@ -58,7 +58,6 @@ const ogImage = new URL(profile.about.portrait.src, Astro.site).href;
       <div class="strip-inner">
         <a class="brand" href="#top" aria-label="Franoll Fantu, back to top">
           <span class="brand-mark" aria-hidden="true">F</span>
-          <span class="brand-name">{profile.name}</span>
         </a>
         <nav class="nav-links" aria-label="Primary">
           {

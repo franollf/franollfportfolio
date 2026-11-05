@@ -36,14 +36,34 @@
     }
   ],
   "heroStack": [
-    "Java",
-    "Python",
-    "TypeScript",
-    "React",
-    "Node.js",
-    "FastAPI",
-    "PostgreSQL",
-    "Docker"
+    {
+      "name": "Java",
+      "icon": "icons/java.svg"
+    },
+    {
+      "name": "Python",
+      "icon": "icons/python.svg"
+    },
+    {
+      "name": "React",
+      "icon": "icons/react.svg"
+    },
+    {
+      "name": "Node.js",
+      "icon": "icons/node.svg"
+    },
+    {
+      "name": "FastAPI",
+      "icon": "icons/fastapi.svg"
+    },
+    {
+      "name": "PostgreSQL",
+      "icon": "icons/postgresql.svg"
+    },
+    {
+      "name": "Docker",
+      "icon": "icons/docker.svg"
+    }
   ],
   "about": {
     "heading": "A bit about me!",

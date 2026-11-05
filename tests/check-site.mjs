@@ -88,6 +88,17 @@ check(/data-role="ssc"[^>]*aria-selected="true"|aria-selected="true"[^>]*data-ro
 check(/class="[^"]*\bbranch-clubs\b/.test(html), "Timeline should draw a clubs branch");
 check(html.includes(">Present<"), 'Timeline should end with "Present"');
 
+// --- Minimal hero & flow ---------------------------------------------------
+const heroBlock = (html.match(/<section[^>]*id="top"[\s\S]*?<\/section>/) || [""])[0];
+check(!/class="btn/.test(heroBlock), "Hero should have no button row (minimal)");
+check((heroBlock.match(/class="[^"]*\bstack-icon\b/g) || []).length === profile.heroStack.length, "Hero should show one icon per stack item");
+check(!/TypeScript/.test(heroBlock), "Hero should not list TypeScript (no project uses it)");
+const pos = (id) => html.indexOf(`id="${id}"`);
+check(pos("experience") > 0 && pos("experience") < pos("projects"), "Experience should come before Projects");
+check(/class="tl-lane"[^>]*>leadership</.test(html) && !/class="tl-lane"[^>]*>clubs</.test(html), 'Clubs branch should be labelled "leadership"');
+check(!/class="count"/.test(html), "Section headers should not show counts (minimal)");
+check(/\.intro-letter\s*{[^}]*font-size:\s*0\.75rem/.test(css), "Intro F should be small");
+
 // --- Filters & theme -------------------------------------------------------
 check(/data-filter="all"[^>]*aria-pressed="true"|aria-pressed="true"[^>]*data-filter="all"/.test(html), 'Project filter should default to "All"');
 check(/id="themeToggle"/.test(html), "Theme toggle should exist");

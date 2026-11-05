@@ -3,15 +3,13 @@ interface Props {
   id: string;
   title: string;
   accent: "projects" | "experience" | "about" | "contact";
-  meta?: string;
 }
-const { id, title, accent, meta } = Astro.props;
+const { id, title, accent } = Astro.props;
 ---
 
 <section id={id} class={`section container accent-${accent}`} aria-labelledby={`${id}-title`}>
   <div class="section-header">
     <h2 id={`${id}-title`}>{title}</h2>
-    {meta && <span class="count">{meta}</span>}
   </div>
   <slot />
 </section>
