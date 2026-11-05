@@ -92,6 +92,12 @@ check(/class="intro-letter"[^>]*>F</.test(html), 'Intro square should show the l
 check(!/<html[^>]*data-intro/.test(html), "Static HTML must not start with data-intro");
 check(/sessionStorage/.test(html) && /prefers-reduced-motion/.test(html), "Intro gate should use sessionStorage and reduced motion");
 
+// --- Tab-switch morph ------------------------------------------------------
+const tabsJs = read("src/scripts/tabs.js");
+check(/class="card-letter"[^>]*>F</.test(html), 'Card should carry the "F" for the tab-switch square');
+check(/clipPath/.test(tabsJs) && /collapse/.test(tabsJs) && /expand/.test(tabsJs), "Tab switch should collapse/expand the card with clip-path");
+check(/startViewTransition/.test(tabsJs) && /reduceMotion/.test(tabsJs), "Reduced motion should crossfade via View Transitions");
+
 // --- Content comes from the JSON data -------------------------------------
 const resumeLinks = html.match(new RegExp(`href="/?${profile.resume}"`, "g")) || [];
 check(resumeLinks.length >= 1, "Resume should be linked");

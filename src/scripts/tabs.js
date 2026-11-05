@@ -63,11 +63,81 @@ const showPanel = (key) => {
   document.dispatchEvent(new CustomEvent("tab:shown", { detail: key }));
 };
 
+// ---------- the morph: card -> "F" square -> card ----------
+const card = document.querySelector(".card");
+const cover = card.querySelector(".card-cover");
+const letter = card.querySelector(".card-letter");
+let running = false;
+
+const squareClip = () => {
+  const { width, height } = card.getBoundingClientRect();
+  const sq = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--sq")) || 48;
+  const y = (height - sq) / 2;
+  const x = (width - sq) / 2;
+  return `inset(${y}px ${x}px ${y}px ${x}px round 10px)`;
+};
+const fullClip = () => `inset(0px 0px 0px 0px round ${getComputedStyle(card).borderTopLeftRadius})`;
+const play = (el, frames, opts) => el.animate(frames, { fill: "both", ...opts });
+const settle = (anims) => Promise.all(anims.map((a) => a.finished));
+
+// ~300ms: shrink into the square while a blank cover fades over the content.
+const collapse = async () => {
+  const anims = [
+    play(card, [{ clipPath: fullClip() }, { clipPath: squareClip() }], { duration: 300, easing: "cubic-bezier(0.7, 0, 0.84, 0)" }),
+    play(cover, [{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: "ease-in" }),
+    play(letter, [{ opacity: 0 }, { opacity: 1 }], { duration: 110, delay: 220 }),
+  ];
+  await settle(anims);
+  return anims;
+};
+
+// ~400ms: brief hold on the "F", then open back up onto the new panel.
+const expand = async (held) => {
+  const anims = [
+    play(card, [{ clipPath: squareClip() }, { clipPath: fullClip() }], { duration: 340, delay: 60, easing: "cubic-bezier(0.16, 1, 0.3, 1)" }),
+    play(letter, [{ opacity: 1 }, { opacity: 0 }], { duration: 110, delay: 50 }),
+    play(cover, [{ opacity: 1 }, { opacity: 0 }], { duration: 200, delay: 190 }),
+  ];
+  held.forEach((a) => a.cancel()); // new animations already hold the same values
+  await settle(anims);
+  anims.forEach((a) => a.cancel());
+};
+
+const resetMorph = () => [card, cover, letter].forEach((el) => el.getAnimations().forEach((a) => a.cancel()));
+
+// One morph at a time. Clicks during a morph only change `selected`;
+// the swap reads it at the last moment, so rapid clicks land on the final tab.
+const morphTo = async () => {
+  if (running) return;
+  running = true;
+  try {
+    while (shown !== selected) {
+      if (reduceMotion.matches || !card.animate) {
+        const key = selected;
+        if (document.startViewTransition) {
+          await document.startViewTransition(() => showPanel(key)).finished.catch(() => {});
+        } else {
+          showPanel(key);
+        }
+        continue;
+      }
+      const held = await collapse();
+      showPanel(selected);
+      await expand(held);
+    }
+  } catch {
+    resetMorph();
+    if (shown !== selected) showPanel(selected);
+  } finally {
+    running = false;
+  }
+};
+
 const go = (key, { push = true } = {}) => {
   if (!byKey.has(key)) return;
   if (push && key !== selected) history.pushState({ tab: key }, "", byKey.get(key).getAttribute("href"));
   selectTab(key);
-  if (shown !== key) showPanel(key);
+  morphTo();
 };
 
 // ---------- wiring ----------
