@@ -27,16 +27,16 @@ const X_ORIGIN = 16; // origin commit where branches split
 const X_START = 70; // first month
 const X_END = 984; // "Present"
 const x = (monthIdx: number) => X_START + ((monthIdx - startIdx) / (endIdx - startIdx)) * (X_END - X_START);
-const LANE = { work: 28, clubs: 76, fork: 122 } as const;
+const LANE = { work: 28, lead: 76, fork: 122 } as const;
 const H = 150;
 
-// Main branch = work; clubs branch for the longest-running club role;
-// overlapping club roles fork off the clubs branch and merge back.
+// Main branch = work; leadership branch for the longest-running leadership role;
+// overlapping leadership roles fork off the leadership branch and merge back.
 const work = experiences.filter((e) => e.type === "work").sort((a, b) => idx(a.from) - idx(b.from));
-const clubs = experiences.filter((e) => e.type === "leadership").sort((a, b) => (b.to ? idx(b.to) : 1e9) - (a.to ? idx(a.to) : 1e9));
+const lead = experiences.filter((e) => e.type === "leadership").sort((a, b) => (b.to ? idx(b.to) : 1e9) - (a.to ? idx(a.to) : 1e9));
 const laneOf = new Map<string, number>();
 work.forEach((e) => laneOf.set(e.id, LANE.work));
-clubs.forEach((e, i) => laneOf.set(e.id, i === 0 ? LANE.clubs : LANE.fork));
+lead.forEach((e, i) => laneOf.set(e.id, i === 0 ? LANE.lead : LANE.fork));
 
 const segs = experiences.map((e) => {
   const x1 = x(idx(e.from));
@@ -52,22 +52,35 @@ const curve = (xa: number, ya: number, xb: number, yb: number) => {
 const branches: { d: string; cls: string }[] = [];
 const workLineEnd = Math.max(...work.map((e) => seg(e.id).x2));
 branches.push({ d: `M ${X_ORIGIN} ${LANE.work} L ${seg(work[0].id).x1} ${LANE.work}`, cls: "branch-work" });
-if (clubs.length) {
-  const main = seg(clubs[0].id);
-  branches.push({ d: curve(X_ORIGIN, LANE.work, main.x1, LANE.clubs), cls: "branch-clubs" });
-  clubs.slice(1).forEach((c) => {
+if (lead.length) {
+  const main = seg(lead[0].id);
+  branches.push({ d: curve(X_ORIGIN, LANE.work, main.x1, LANE.lead), cls: "branch-leadership" });
+  lead.slice(1).forEach((c) => {
     const s = seg(c.id);
-    branches.push({ d: curve(X_ORIGIN, LANE.work, s.x1, LANE.fork), cls: "branch-clubs" });
-    if (c.to) branches.push({ d: curve(s.x2, LANE.fork, Math.min(s.x2 + 40, X_END), LANE.clubs), cls: "branch-clubs merge" });
+    branches.push({ d: curve(X_ORIGIN, LANE.work, s.x1, LANE.fork), cls: "branch-leadership" });
+    if (c.to) branches.push({ d: curve(s.x2, LANE.fork, Math.min(s.x2 + 40, X_END), LANE.lead), cls: "branch-leadership merge" });
   });
 }
 
 const current = work.find((e) => !e.to) ?? work[work.length - 1];
-const order: Exp[] = [...work, ...clubs];
+const order: Exp[] = [...work, ...lead];
 const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
 ---
 
-<div class="timeline">
+<div class="timeline" data-filter="all">
+  <div class="tl-filter" role="group" aria-label="Show roles">
+    {
+      [
+        ["all", "All", experiences.length],
+        ["work", "Work", experiences.filter((e) => e.type === "work").length],
+        ["leadership", "Leadership", experiences.filter((e) => e.type === "leadership").length],
+      ].map(([key, label, n]) => (
+        <button type="button" class="tl-filter-btn" data-type={key} aria-pressed={key === "all" ? "true" : "false"}>
+          {label} <span class="n">{n}</span>
+        </button>
+      ))
+    }
+  </div>
 
   <div class="tl-graph" style={`--h: ${H}px`}>
     <svg class="tl-svg" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true" focusable="false">
@@ -75,7 +88,7 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
       {
         segs.map((s) => (
           <path
-            class={`tl-seg ${s.e.type === "work" ? "branch-work" : "branch-clubs"}`}
+            class={`tl-seg ${s.e.type === "work" ? "branch-work" : "branch-leadership"}`}
             data-seg={s.e.id}
             d={`M ${s.x1} ${s.y} L ${s.x2} ${s.y}`}
           />
@@ -90,7 +103,7 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
     {
       segs.map((s) => (
         <span
-          class={`tl-dot ${s.e.type === "work" ? "branch-work" : "branch-clubs"}`}
+          class={`tl-dot ${s.e.type === "work" ? "branch-work" : "branch-leadership"}`}
           data-dot={s.e.id}
           style={`left: ${pct(s.x1)}; top: ${s.y}px`}
           aria-hidden="true"
@@ -108,8 +121,10 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
               type="button"
               role="tab"
               id={`tab-${e.id}`}
-              class={`tl-tab ${e.type === "work" ? "branch-work" : "branch-clubs"}${active ? " is-active" : ""}`}
+              class={`tl-tab ${e.type === "work" ? "branch-work" : "branch-leadership"}${active ? " is-active" : ""}`}
               data-role={e.id}
+              data-type={e.type}
+              data-default={!e.to ? "true" : "false"}
               aria-selected={active ? "true" : "false"}
               aria-controls={`panel-${e.id}`}
               tabindex={active ? 0 : -1}
@@ -134,7 +149,7 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
 
   <p class="tl-legend" aria-hidden="true">
     <span class="tl-key work">main · work</span>
-    <span class="tl-key clubs">branch · leadership</span>
+    <span class="tl-key lead">branch · leadership</span>
   </p>
 
   <div class="tl-panels">
@@ -185,8 +200,9 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
 
 <style>
   .timeline {
+    --accent: var(--moss);
     --work: var(--moss);
-    --clubs: var(--amber);
+    --lead: var(--amber);
   }
 
   .tl-legend {
@@ -210,15 +226,69 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
     background: var(--work);
   }
 
-  .tl-key.clubs::before {
-    background: var(--clubs);
+  .tl-key.lead::before {
+    background: var(--lead);
+  }
+
+  .tl-filter {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    background: var(--card-raised);
+  }
+
+  .tl-filter-btn {
+    min-height: 34px;
+    padding: 0.25rem 0.9rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .tl-filter-btn .n {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--muted);
+  }
+
+  .tl-filter-btn[aria-pressed="true"] {
+    background: var(--ink);
+    color: var(--card);
+  }
+
+  .tl-filter-btn[aria-pressed="true"] .n {
+    color: inherit;
+    opacity: 0.75;
+  }
+
+  /* Filtered-out lanes fade back; their tabs leave the tab order (hidden). */
+  .tl-line,
+  .tl-seg,
+  .tl-dot {
+    transition: opacity 0.3s ease;
+  }
+
+  .timeline[data-filter="work"] .branch-leadership,
+  .timeline[data-filter="leadership"] .tl-seg.branch-work,
+  .timeline[data-filter="leadership"] .tl-dot.branch-work {
+    opacity: 0.18;
+  }
+
+  .tl-tab[hidden] {
+    display: none;
   }
 
   /* ---------- Graph (desktop) ---------- */
   .tl-graph {
     position: relative;
     height: var(--h);
-    margin: 3.25rem 0 0.5rem;
+    margin: 3.75rem 0 0.5rem;
   }
 
   .tl-svg {
@@ -241,8 +311,8 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
     stroke-width: 2;
   }
 
-  .tl-line.branch-clubs {
-    stroke: color-mix(in srgb, var(--clubs) 55%, var(--rule));
+  .tl-line.branch-leadership {
+    stroke: color-mix(in srgb, var(--lead) 55%, var(--rule));
   }
 
   .tl-seg {
@@ -251,8 +321,8 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
     transition: stroke-width 0.25s ease, filter 0.25s ease, stroke 0.25s ease;
   }
 
-  .tl-seg.branch-clubs {
-    stroke: color-mix(in srgb, var(--clubs) 75%, var(--rule));
+  .tl-seg.branch-leadership {
+    stroke: color-mix(in srgb, var(--lead) 75%, var(--rule));
   }
 
   .tl-seg.is-hover {
@@ -265,9 +335,9 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
     filter: drop-shadow(0 0 5px var(--work));
   }
 
-  .tl-seg.branch-clubs.is-active {
-    stroke: var(--clubs);
-    filter: drop-shadow(0 0 5px var(--clubs));
+  .tl-seg.branch-leadership.is-active {
+    stroke: var(--lead);
+    filter: drop-shadow(0 0 5px var(--lead));
   }
 
   .tl-dot {
@@ -282,8 +352,8 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
     z-index: 1;
   }
 
-  .tl-dot.branch-clubs {
-    border-color: var(--clubs);
+  .tl-dot.branch-leadership {
+    border-color: var(--lead);
   }
 
   .tl-dot.origin {
@@ -539,8 +609,8 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
       border: 3px solid var(--work);
     }
 
-    .tl-tab.branch-clubs::before {
-      border-color: var(--clubs);
+    .tl-tab.branch-leadership::before {
+      border-color: var(--lead);
     }
 
     .tl-tab.is-active {
@@ -553,9 +623,9 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
       box-shadow: 0 0 8px var(--work);
     }
 
-    .tl-tab.branch-clubs.is-active::before {
-      background: var(--clubs);
-      box-shadow: 0 0 8px var(--clubs);
+    .tl-tab.branch-leadership.is-active::before {
+      background: var(--lead);
+      box-shadow: 0 0 8px var(--lead);
     }
 
     .tl-tab-text,
@@ -598,9 +668,9 @@ const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
       border: 1px solid color-mix(in srgb, var(--work) 50%, transparent);
     }
 
-    .tl-tab.branch-clubs .tl-lane {
+    .tl-tab.branch-leadership .tl-lane {
       color: var(--amber-ink);
-      border-color: color-mix(in srgb, var(--clubs) 50%, transparent);
+      border-color: color-mix(in srgb, var(--lead) 50%, transparent);
     }
 
     .tl-tip {

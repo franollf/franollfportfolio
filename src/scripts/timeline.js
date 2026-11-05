@@ -8,7 +8,12 @@ if (tablist) {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const canHover = window.matchMedia("(hover: hover) and (min-width: 769px)");
 
+  const timeline = tablist.closest(".timeline");
+  const filterBtns = [...timeline.querySelectorAll(".tl-filter-btn")];
+  const shownTabs = () => tabs.filter((t) => !t.hidden);
   const activeTab = () => tabs.find((t) => t.getAttribute("aria-selected") === "true");
+  // Default role for a view: the ongoing one, else the most recent (DOM order is oldest → newest per lane).
+  const defaultFor = (list) => list.find((t) => t.dataset.default === "true") || list[list.length - 1];
 
   const apply = (tab) => {
     tabs.forEach((t) => {
@@ -54,16 +59,31 @@ if (tablist) {
     tab.addEventListener("mouseleave", () => segs.get(tab.dataset.role)?.classList.remove("is-hover"));
   });
 
+  const applyFilter = (type) => {
+    timeline.dataset.filter = type;
+    filterBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.type === type)));
+    tabs.forEach((t) => (t.hidden = type !== "all" && t.dataset.type !== type));
+    if (activeTab()?.hidden) apply(defaultFor(shownTabs()));
+  };
+
+  filterBtns.forEach((b) =>
+    b.addEventListener("click", () => {
+      if (document.startViewTransition && !reduceMotion.matches) document.startViewTransition(() => applyFilter(b.dataset.type));
+      else applyFilter(b.dataset.type);
+    })
+  );
+
   tablist.addEventListener("keydown", (event) => {
-    const i = tabs.indexOf(document.activeElement);
+    const list = shownTabs();
+    const i = list.indexOf(document.activeElement);
     if (i < 0) return;
     const next = {
-      ArrowRight: tabs[(i + 1) % tabs.length],
-      ArrowDown: tabs[(i + 1) % tabs.length],
-      ArrowLeft: tabs[(i - 1 + tabs.length) % tabs.length],
-      ArrowUp: tabs[(i - 1 + tabs.length) % tabs.length],
-      Home: tabs[0],
-      End: tabs[tabs.length - 1],
+      ArrowRight: list[(i + 1) % list.length],
+      ArrowDown: list[(i + 1) % list.length],
+      ArrowLeft: list[(i - 1 + list.length) % list.length],
+      ArrowUp: list[(i - 1 + list.length) % list.length],
+      Home: list[0],
+      End: list[list.length - 1],
     }[event.key];
     if (next) {
       event.preventDefault();

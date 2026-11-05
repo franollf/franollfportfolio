@@ -136,6 +136,12 @@ check(/Hackathon/.test(projectsPanel) && !/Hackathon Winner/.test(projectsPanel)
 check((html.match(/class="tl-tab[^"]*"[^>]*role="tab"|role="tab"[^>]*class="tl-tab/g) || []).length === experiences.length, "Timeline should have one tab per role");
 check(/data-role="ssc"[^>]*aria-selected="true"|aria-selected="true"[^>]*data-role="ssc"/.test(html), "Timeline should default to SSC");
 check(html.includes(">Present<"), 'Timeline should end with "Present"');
+const tlFilter = tag(html, /<div[^>]*class="tl-filter"[\s\S]*?<\/div>/);
+for (const [k, label] of [["all", "All"], ["work", "Work"], ["leadership", "Leadership"]])
+  check(new RegExp(`data-type="${k}"[^>]*aria-pressed="${k === "all"}"[^>]*>\\s*${label}`).test(tlFilter), `Timeline filter button: ${label}`);
+for (const e of experiences)
+  check(new RegExp(`id="tab-${e.id}"[^>]*data-type="${e.type}"|data-type="${e.type}"[^>]*id="tab-${e.id}"`).test(html), `Timeline tab ${e.id} should carry data-type`);
+check(/branch-leadership/.test(html) && !/branch-clubs/.test(html), "Leadership branch class naming");
 check(/id="themeToggle"/.test(html), "Theme toggle should exist");
 check(/overflow-x: clip/.test(css) && !css.includes("overflow-x: hidden"), "Use overflow-x: clip, never hidden");
 
