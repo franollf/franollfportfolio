@@ -30,7 +30,9 @@
   --font-sans: "Space Grotesk Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
-  --strip: 58px;
+  --head: 54px; /* name + actions */
+  --tabs: 50px; /* pill nav row, just above the card */
+  --strip: calc(var(--head) + var(--tabs)); /* everything above the card */
   --gap: 8px;
   --radius: 24px;
   --content: 1100px;
@@ -110,7 +112,7 @@ html {
 
 body {
   display: grid;
-  grid-template-rows: var(--strip) minmax(0, 1fr);
+  grid-template-rows: var(--head) var(--tabs) minmax(0, 1fr);
   height: 100dvh;
   padding: 0 var(--gap) var(--gap);
   background: var(--frame);
@@ -181,18 +183,25 @@ button {
   top: 10px;
 }
 
-/* ---------- Top strip: header, pill tabs, actions ---------- */
+/* ---------- Top strip: header + actions; pill tabs on their own row ---------- */
 .strip {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   padding-inline: 12px;
   color: var(--frame-ink);
 }
 
-.strip :focus-visible {
+.strip :focus-visible,
+.tabs :focus-visible {
   outline-color: var(--frame-ink);
+}
+
+.tabs {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .crumb {
@@ -286,15 +295,6 @@ html:not(.js) .tab[aria-selected="true"] {
   transition: transform 0.45s cubic-bezier(0.3, 1.3, 0.5, 1), width 0.45s cubic-bezier(0.3, 1.3, 0.5, 1);
 }
 
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--dot, var(--moss));
-  box-shadow: 0 0 6px var(--dot, var(--moss));
-  flex: none;
-}
-
 .strip-actions {
   display: flex;
   align-items: center;
@@ -316,15 +316,11 @@ html:not(.js) .tab[aria-selected="true"] {
 
 @media (max-width: 720px) {
   :root {
-    --strip: 104px;
+    --head: 50px;
   }
 
   .strip {
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-rows: 48px 48px;
-    row-gap: 0;
     padding-inline: 8px;
-    padding-bottom: 6px;
   }
 
   .crumb {
@@ -343,17 +339,6 @@ html:not(.js) .tab[aria-selected="true"] {
 
   .strip .strip-resume {
     padding-inline: 0.75rem;
-  }
-
-  .tabs {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-self: center;
-  }
-
-  .strip-actions {
-    grid-column: 2;
-    grid-row: 1;
   }
 
   .tab {
@@ -569,7 +554,8 @@ html[data-intro="play"] .intro-letter {
   animation: intro-blink 0.55s ease-in-out 0.05s 2;
 }
 
-html[data-intro="play"] .strip > * {
+html[data-intro="play"] .strip > *,
+html[data-intro="play"] .tabs {
   opacity: 0;
   animation: intro-fade-in 0.6s ease 1.55s forwards;
 }

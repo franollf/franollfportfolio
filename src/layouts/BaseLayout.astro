@@ -63,30 +63,6 @@ const ogImage = new URL(profile.about.portrait.src, Astro.site).href;
         <span class="crumb-section"><span class="crumb-word">{current.label}</span></span>
       </p>
 
-      <nav class="tabs" aria-label="Primary">
-        <div class="tablist" role="tablist" aria-label="Sections">
-          <span class="tab-pill" aria-hidden="true"></span>
-          {
-            TABS.map((t) => (
-              <a
-                class="tab"
-                role="tab"
-                id={`tab-${t.key}`}
-                href={t.path}
-                data-tab={t.key}
-                data-label={t.label}
-                data-title={titleFor(t)}
-                aria-controls={`panel-${t.key}`}
-                aria-selected={t.key === active ? "true" : "false"}
-                tabindex={t.key === active ? 0 : -1}
-              >
-                <span class="dot" style={`--dot: ${t.dot}`} aria-hidden="true" />
-                <span>{t.label}</span>
-              </a>
-            ))
-          }
-        </div>
-      </nav>
 
       <div class="strip-actions">
         <button class="icon-btn theme-toggle" id="themeToggle" type="button" aria-pressed="false" aria-label="Switch theme">
@@ -96,6 +72,30 @@ const ogImage = new URL(profile.about.portrait.src, Astro.site).href;
         <a class="btn btn--small strip-resume" href={profile.resume}>Resume</a>
       </div>
     </header>
+
+    <nav class="tabs" aria-label="Primary">
+      <div class="tablist" role="tablist" aria-label="Sections">
+        <span class="tab-pill" aria-hidden="true"></span>
+        {
+          TABS.map((t) => (
+            <a
+              class="tab"
+              role="tab"
+              id={`tab-${t.key}`}
+              href={t.path}
+              data-tab={t.key}
+              data-label={t.label}
+              data-title={titleFor(t)}
+              aria-controls={`panel-${t.key}`}
+              aria-selected={t.key === active ? "true" : "false"}
+              tabindex={t.key === active ? 0 : -1}
+            >
+              <span>{t.label}</span>
+            </a>
+          ))
+        }
+      </div>
+    </nav>
 
     <main id="main" class="card" tabindex="-1">
       <div class="card-scroll">

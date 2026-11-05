@@ -51,6 +51,10 @@ for (const pg of PAGES) {
 }
 check(/role="tablist"[^>]*aria-label="Sections"/.test(html), "Pill tab bar should be a labelled tablist");
 check(/class="tab-pill"/.test(html), "Tab bar should have the sliding pill");
+const headerBlock = tag(html, /<header[\s\S]*?<\/header>/);
+const tabsNav = tag(html, /<nav class="tabs"[\s\S]*?<\/nav>/);
+check(tabsNav && !headerBlock.includes('class="tabs"'), "Pill nav should sit below the header, above the card");
+check(tabsNav && !/class="dot"/.test(tabsNav), "Pill tabs should have no coloured dots");
 check(/html,\s*body\s*{[^}]*overflow:\s*hidden/.test(css), "Page itself must not scroll");
 check(/\.card-scroll\s*{[^}]*overflow-y:\s*auto/.test(css), "Card inner area should scroll");
 check(JSON.parse(read("vercel.json")).cleanUrls === true, "vercel.json needs cleanUrls for /experience and /projects");
