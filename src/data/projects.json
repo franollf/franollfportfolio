@@ -56,7 +56,8 @@
       "alt": "PokéVault screenshot",
       "width": 1400,
       "height": 1102
-    }
+    },
+    "accent": "terracotta"
   },
   {
     "slug": "saferx",
@@ -95,40 +96,8 @@
       "alt": "AI Polypharmacy Agent screenshot",
       "width": 1400,
       "height": 1213
-    }
-  },
-  {
-    "slug": "nutriscan",
-    "title": "NutriScan",
-    "meta": null,
-    "description": "Barcode-based nutrition tracker inspired by MyFitnessPal, built as a full-stack project.",
-    "tags": [
-      {
-        "name": "React",
-        "icon": "icons/react.svg"
-      },
-      {
-        "name": "React Native",
-        "icon": null
-      },
-      {
-        "name": "MongoDB",
-        "icon": "icons/mongodb.svg"
-      }
-    ],
-    "githubUrl": "https://github.com/franollf/nutriscan",
-    "demoUrl": null,
-    "liveUrl": null,
-    "videoUrl": null,
-    "icon": "projects/web/nutriscan.jpg",
-    "badges": [],
-    "featured": true,
-    "image": {
-      "src": "projects/web/nutriscan.jpg",
-      "alt": "NutriScan screenshot",
-      "width": 1400,
-      "height": 1038
-    }
+    },
+    "accent": "plum"
   },
   {
     "slug": "elevate",
@@ -161,7 +130,8 @@
       "alt": "Elevate screenshot",
       "width": 1400,
       "height": 699
-    }
+    },
+    "accent": "moss"
   },
   {
     "slug": "quizling",
@@ -202,36 +172,8 @@
       "alt": "QuizLing screenshot",
       "width": 1400,
       "height": 784
-    }
-  },
-  {
-    "slug": "vibeify",
-    "title": "Vibeify",
-    "meta": null,
-    "description": "Backend service that generates personalized Spotify playlists from user-inputted mood data, leveraging the Spotify Web API.",
-    "tags": [
-      {
-        "name": "Python",
-        "icon": "icons/python.svg"
-      },
-      {
-        "name": "PostgreSQL",
-        "icon": "icons/postgresql.svg"
-      }
-    ],
-    "githubUrl": "https://github.com/franollf/vibeify",
-    "demoUrl": null,
-    "liveUrl": null,
-    "videoUrl": null,
-    "icon": "projects/web/vibeify.jpg",
-    "badges": [],
-    "featured": false,
-    "image": {
-      "src": "projects/web/vibeify.jpg",
-      "alt": "Vibeify screenshot",
-      "width": 1400,
-      "height": 933
-    }
+    },
+    "accent": "amber"
   },
   {
     "slug": "capturethestar",
@@ -264,6 +206,7 @@
       "alt": "Capture the Star screenshot",
       "width": 1400,
       "height": 1173
-    }
+    },
+    "accent": "terracotta"
   }
 ]

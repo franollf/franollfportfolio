@@ -139,7 +139,7 @@ for (const s of ["JavaScfipt", "ShareTea", "Outlier AI", "RogueU", "lorem", "Lor
 
 const projectsPanel = tag(html, /<section[^>]*id="panel-projects"[\s\S]*?<\/section>\s*<!-- \/panel-projects -->/) || html;
 const order = [...projectsPanel.matchAll(/data-project="([^"]+)"/g)].map((m) => m[1]);
-check(order.slice(0, 3).join("|") === "pokevault|saferx|nutriscan", `Project order wrong: ${order.slice(0, 3)}`);
+check(order.slice(0, 3).join("|") === "pokevault|saferx|elevate", `Project order wrong: ${order.slice(0, 3)}`);
 check(/Hackathon/.test(projectsPanel) && !/Hackathon Winner/.test(projectsPanel), 'Polypharmacy badge should be "Hackathon"');
 
 const stackJs = has("src/scripts/stack.js") ? read("src/scripts/stack.js") : "";
@@ -153,7 +153,7 @@ check(cards.every((c) => !/\binert\b/.test(c)), "Cards must not use inert (stale
 check(/window\.addEventListener\(\s*"wheel"/.test(stackJs), "Wheel should be handled at window level so card swaps never strand the cursor");
 const dots = projectsPanel.match(/<button[^>]*class="pj-dot[^"]*"[^>]*>/g) || [];
 check(dots.length === projects.length && dots.every((d) => /aria-label="Show [^"]+"/.test(d)), "Pill should have one labelled icon per project");
-check(/class="pj-num"[^>]*>1<[\s\S]{0,80}of[\s\S]{0,40}class="pj-total"[^>]*>7</.test(projectsPanel.replace(/data-astro-cid-\w+/g, "")), 'Pill counter should read "1 of 7"');
+check(new RegExp(String.raw`class="pj-num"[^>]*>1<[\s\S]{0,80}of[\s\S]{0,40}class="pj-total"[^>]*>${projects.length}<`).test(projectsPanel.replace(/data-astro-cid-\w+/g, "")), `Pill counter should read "1 of ${projects.length}"`);
 for (const p of projects) {
   check(projectsPanel.includes(`href="${p.githubUrl}"`), `${p.slug}: GitHub link`);
   if (p.demoUrl) check(new RegExp(`href="${p.demoUrl}"[^>]*data-demo`).test(projectsPanel), `${p.slug}: demo opens in lightbox`);

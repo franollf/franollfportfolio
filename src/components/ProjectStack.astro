@@ -45,7 +45,20 @@ const GH =
           aria-hidden={i === 0 ? undefined : "true"}
         >
           <div class="pj-inner">
-            <div class="pj-media">
+            <div class:list={["pj-media", `pj-accent-${p.accent ?? "moss"}`, p.image.kind === "art" ? "pj-media-art" : "pj-media-shot"]}>
+              {p.image.kind === "art" ? (
+                <img
+                  class="pj-art"
+                  src={p.image.src}
+                  alt={p.image.alt}
+                  width={p.image.width}
+                  height={p.image.height}
+                  loading={i < 3 ? "eager" : "lazy"}
+                  fetchpriority={i === 0 ? "high" : undefined}
+                />
+              ) : (
+              <div class="pj-shot">
+              <div class="pj-shot-bar" aria-hidden="true"><span /><span /><span /></div>
               {p.videoUrl ? (
                 <video
                   class="pj-video"
@@ -70,6 +83,8 @@ const GH =
                   loading={i < 3 ? "eager" : "lazy"}
                   fetchpriority={i === 0 ? "high" : undefined}
                 />
+              )}
+              </div>
               )}
             </div>
             <div class="pj-body">
@@ -263,24 +278,110 @@ const GH =
     opacity: 0;
   }
 
+  /* Each card's media sits on a solid accent panel with a little grain, so
+     screenshots of very different apps still read as one set. */
   .pj-media {
+    --accent: var(--moss);
     position: relative;
     margin: 12px 0 12px 12px;
     overflow: hidden;
     border-radius: 14px;
-    background: var(--card);
+    background: var(--accent);
+    isolation: isolate;
   }
 
-  .pj-media img,
-  .pj-media video {
+  .pj-accent-moss { --accent: var(--moss); }
+  .pj-accent-amber { --accent: var(--amber); }
+  .pj-accent-terracotta { --accent: var(--terracotta); }
+  .pj-accent-plum { --accent: var(--plum); }
+
+  .pj-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+  }
+
+  /* Screenshot in a browser window that runs off the bottom-right edge. */
+  .pj-shot {
+    position: absolute;
+    top: 13%;
+    left: 9%;
+    width: 112%;
+    border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    background: #17201a;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.08) inset,
+      0 24px 50px -18px rgb(15 26 20 / 0.6);
+    transform: rotate(-2.5deg);
+    transform-origin: 0 0;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .pj-card[data-pos="0"]:hover .pj-shot {
+    transform: rotate(-1deg) translate(-1.5%, -2%);
+  }
+
+  .pj-shot-bar {
+    display: flex;
+    gap: 6px;
+    padding: 9px 12px;
+    background: #17201a;
+  }
+
+  .pj-shot-bar span {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #3a4a3f;
+  }
+
+  .pj-shot-bar span:nth-child(1) { background: #ea8a69; }
+  .pj-shot-bar span:nth-child(2) { background: #f0b04a; }
+  .pj-shot-bar span:nth-child(3) { background: #6fc184; }
+
+  .pj-shot img,
+  .pj-shot video {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .pj-art {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: top left;
+    /* Art has a transparent background, so letterboxing just shows more panel. */
+    object-fit: contain;
+    object-position: center;
+    padding: 4%;
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  .pj-media .pokevault-project-preview {
-    object-position: center;
+  @media (max-width: 720px) {
+    .pj-art {
+      object-fit: cover;
+      padding: 0;
+    }
+  }
+
+  .pj-card[data-pos="0"]:hover .pj-art {
+    transform: scale(1.03);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pj-card[data-pos="0"]:hover .pj-shot {
+      transform: rotate(-2.5deg);
+    }
+    .pj-card[data-pos="0"]:hover .pj-art {
+      transform: none;
+    }
   }
 
   .pj-video {
