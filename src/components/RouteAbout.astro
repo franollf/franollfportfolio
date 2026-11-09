@@ -2,17 +2,10 @@
 import profile from "../data/profile.json";
 import routeMedia from "../data/routeMedia.json";
 
-// Invisible bend points the route passes through after each media item (by index).
-// Path zigzags to avoid photos: alternates between top and bottom
-const waypoints: { left: number; top: string }[][] = [
-  [{ left: 200, top: "84%" }],
-  [{ left: 1050, top: "14%" }],
-  [{ left: 1500, top: "84%" }],
-  [{ left: 2100, top: "14%" }],
-  [{ left: 2900, top: "84%" }],
-  [{ left: 3700, top: "14%" }],
-  [{ left: 4600, top: "50%" }],
-];
+// Invisible bend points between items: the route threads the middle band, between each photo and its note.
+const waypoints: { left: number; top: string }[][] = routeMedia.map((m, i) => [
+  { left: i === routeMedia.length - 1 ? m.left + 520 : m.left + 460, top: "50%" },
+]);
 
 const runnerFrameA = `
 <rect x="3" y="1" width="6" height="1" fill="#1D2224"></rect><rect x="3" y="2" width="1" height="2" fill="#1D2224"></rect><rect x="4" y="0" width="4" height="1" fill="#3A4046"></rect>
@@ -47,7 +40,7 @@ const runnerFrameB = `
         <path class="path-fg" data-path-fg></path>
       </svg>
 
-      <section class="intro" aria-label="Intro">
+      <section class="ra-intro" aria-label="Intro">
         <div class="intro-inner">
           <div class="intro-text">
             <p class="intro-greeting">{profile.greeting}</p>
@@ -93,18 +86,18 @@ const runnerFrameB = `
             >
               <div class="media">
                 {media.type === "image" ? (
-                  <img src={media.src} alt={media.caption} loading="lazy" />
+                  <img src={media.src} alt={media.caption} width={media.w} height={media.h} loading="lazy" decoding="async" />
                 ) : (
-                  <video src={media.src} poster={media.poster} muted loop playsinline data-video></video>
+                  <video src={media.src} poster={media.poster} width={media.w} height={media.h} muted loop playsinline preload="none" data-video></video>
                 )}
-                {media.type === "image" ? (
-                  <span class="badge"><span class="dot"></span>LIVE</span>
-                ) : (
-                  <span class="badge"><span class="play"></span>CLIP</span>
-                )}
+                {media.type === "video" && <span class="badge"><span class="play"></span>CLIP</span>}
               </div>
               <figcaption class="cap">{media.caption}</figcaption>
             </figure>
+            {media.leg && <div class:list={["route-note", idx % 2 === 0 ? "below" : "above"]} style={idx % 2 === 0 ? `left: ${media.left}px; top: calc(${media.top} + ${media.height} + 48px)` : `left: ${media.left}px`}>
+              <p class="leg"><span class="leg-num">LEG {media.leg.n}</span>{media.leg.title}</p>
+              <p class="note-text">{media.note}</p>
+            </div>}
             {(waypoints[idx] ?? []).map((wp) => (
               <div class="wp" aria-hidden="true" style={`left: ${wp.left}px; top: ${wp.top}`} data-route-pt></div>
             ))}
@@ -127,7 +120,6 @@ const runnerFrameB = `
         <p class="finish-text">Want to see what I build when I'm not out here?</p>
         <div class="finish-actions">
           <a href="/projects" class="finish-primary">See projects →</a>
-          <a href="/#contact" class="finish-secondary">Say hi</a>
         </div>
       </section>
 
@@ -140,10 +132,13 @@ const runnerFrameB = `
     </div>
   </div>
 
-  <div class="progress fade" aria-live="polite" data-reveal>
+  <div class="progress fade" data-reveal>
     <span class="progress-label">scroll →</span>
-    <span class="progress-km" data-km-text>0.0 / 42.2 KM</span>
+    <span class="progress-km" aria-live="polite" data-km-text>0.0 / 42.2 KM</span>
     <span class="progress-bar"><span class="progress-fill" data-progress-fill></span></span>
+    <button type="button" class="restart-btn" aria-label="Back to the start" title="Back to the start" data-restart-btn>
+      <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"></path><path d="M3 4v5h5"></path></svg>
+    </button>
   </div>
 </div>
 
@@ -245,7 +240,7 @@ const runnerFrameB = `
   }
 
   /* ---------- Intro ---------- */
-  .intro {
+  .ra-intro {
     position: relative;
     z-index: 1;
     flex: 0 0 auto;
@@ -255,7 +250,7 @@ const runnerFrameB = `
     align-items: center;
   }
 
-  .intro.started {
+  .ra-intro.started {
     width: min(1120px, calc(100vw - 60px));
     padding: 24px 48px 120px max(32px, 5vw);
   }
@@ -270,7 +265,7 @@ const runnerFrameB = `
     margin-inline: auto;
   }
 
-  .intro.started .intro-inner {
+  .ra-intro.started .intro-inner {
     margin-inline: 0;
   }
 
@@ -369,8 +364,7 @@ const runnerFrameB = `
 
   .btn-primary:hover,
   .btn-icon:hover,
-  .finish-primary:hover,
-  .finish-secondary:hover {
+  .finish-primary:hover {
     color: var(--ra-green);
   }
 
@@ -451,7 +445,7 @@ const runnerFrameB = `
   .media-section {
     position: relative;
     flex: 0 0 auto;
-    width: 5040px;
+    width: 4320px;
     height: 100%;
   }
 
@@ -501,25 +495,12 @@ const runnerFrameB = `
     letter-spacing: 0.08em;
   }
 
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #ff6b6b;
-    animation: pulse 1.4s ease-in-out infinite;
-  }
-
   .play {
     width: 0;
     height: 0;
     border-left: 7px solid #ffffff;
     border-top: 4px solid transparent;
     border-bottom: 4px solid transparent;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.25; }
   }
 
   .cap {
@@ -530,6 +511,46 @@ const runnerFrameB = `
     min-width: 150px;
     font: 400 14px/1.35 var(--font-sans);
     color: var(--ra-subtle);
+  }
+
+  /* ---------- Leg text (the "about me" copy, opposite the photo that starts each leg) ---------- */
+  .route-note {
+    position: absolute;
+    z-index: 6;
+    width: 400px;
+  }
+
+  .route-note.above {
+    top: 6%;
+  }
+
+  .leg {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0 0 14px;
+    font: 700 36px/1.05 var(--font-sans);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .leg-num {
+    font: 11px/1 "Press Start 2P", monospace;
+    letter-spacing: 0.04em;
+    color: var(--ra-green);
+  }
+
+  .note-text {
+    margin: 0;
+    font: 400 18px/1.5 var(--font-sans);
+    color: var(--ra-subtle);
+    text-wrap: pretty;
+  }
+
+  @media (max-height: 720px) {
+    .route-note { width: 380px; }
+    .leg { font-size: 28px; gap: 8px; margin-bottom: 10px; }
+    .note-text { font-size: 16px; line-height: 1.45; }
   }
 
   /* ---------- Finish ---------- */
@@ -576,8 +597,7 @@ const runnerFrameB = `
     padding-top: 4px;
   }
 
-  .finish-primary,
-  .finish-secondary {
+  .finish-primary {
     display: inline-flex;
     align-items: center;
     min-height: 48px;
@@ -590,12 +610,6 @@ const runnerFrameB = `
   .finish-primary {
     background-color: var(--ink);
     color: var(--card);
-  }
-
-  .finish-secondary {
-    border: 1px solid var(--rule);
-    color: var(--ink);
-    font-weight: 500;
   }
 
   /* ---------- KM markers (built in JS, so styles must be global) ---------- */
@@ -726,6 +740,41 @@ const runnerFrameB = `
     white-space: nowrap;
   }
 
+  /* hidden (not just transparent) before the run, so the restart button can't be clicked or tabbed to */
+  .progress.fade {
+    visibility: hidden;
+    transition: opacity 0.9s ease, visibility 0s linear 0.9s;
+  }
+
+  .progress.fade.show {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .restart-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin: -6px -8px -6px 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background-color: #36423a;
+    color: #f2efe5;
+    cursor: pointer;
+  }
+
+  .restart-btn:hover {
+    background-color: var(--ra-accent);
+  }
+
+  .restart-btn:focus-visible {
+    outline: 2px solid #f2efe5;
+    outline-offset: 2px;
+  }
+
   .progress-label {
     font: 13px/1 "JetBrains Mono", monospace;
     color: #c7cec9;
@@ -766,7 +815,6 @@ const runnerFrameB = `
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .dot,
     .start-btn {
       animation: none;
     }

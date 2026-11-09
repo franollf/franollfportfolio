@@ -66,7 +66,7 @@ class RouteAbout {
   constructor(root: HTMLElement) {
     this.scroller = $(root, "[data-scroller]");
     this.track = $(root, "[data-track]");
-    this.introEl = $(root, ".intro");
+    this.introEl = $(root, ".ra-intro");
     this.introInner = $(root, ".intro-inner");
     this.startBtn = $(root, "[data-start-btn]");
     this.backBtn = $(root, "[data-back-btn]");
@@ -84,6 +84,7 @@ class RouteAbout {
 
     this.startBtn.addEventListener("click", () => this.start());
     this.backBtn.addEventListener("click", () => this.back());
+    $(root, "[data-restart-btn]").addEventListener("click", () => this.back());
     this.scroller.addEventListener("scroll", () => this.handleScroll(), { passive: true });
     this.scroller.addEventListener("wheel", (e) => this.handleWheel(e), { passive: false });
     window.addEventListener("resize", () => this.measure());
@@ -205,7 +206,7 @@ class RouteAbout {
     this.started = true;
     this.running = false;
     this.frame = 0;
-    this.backBtn.classList.add("hidden");
+    // BACK stays up for the whole run so the page can always return to how it first loads.
     this.startBtn.classList.remove("hidden");
     this.moveRunner(a.x, a.y, false);
     this.renderFrame();
@@ -234,12 +235,15 @@ class RouteAbout {
     this.introEl.style.setProperty("--stage-w", `${this.scroller.clientWidth}px`);
     const tb = t.getBoundingClientRect();
     const scale = tb.width / t.offsetWidth || 1;
-    const pts = this.routePts.map((el) => {
+    // Photos are entered and left through their sides (at mid-height), so the line
+    // never crosses the caption sitting under or the text sitting opposite a photo.
+    const pts = this.routePts.flatMap((el) => {
       const b = el.getBoundingClientRect();
-      return {
-        x: (b.left - tb.left + b.width / 2) / scale,
-        y: (b.top - tb.top + b.height / 2) / scale,
-      };
+      const x = (b.left - tb.left + b.width / 2) / scale;
+      const y = (b.top - tb.top + b.height / 2) / scale;
+      if (!el.classList.contains("media-item")) return [{ x, y }];
+      const half = b.width / 2 / scale;
+      return [{ x: x - half - 28, y }, { x, y }, { x: x + half + 28, y }];
     });
     if (pts.length < 2) return;
 
@@ -302,12 +306,57 @@ class RouteAbout {
     return { x: 0, y: 0 };
   }
 
+  /** Boxes (track coords) a km sign must not cover: each photo/clip plus its caption. */
+  private obstacles(): { l: number; t: number; r: number; b: number }[] {
+    const tb = this.track.getBoundingClientRect();
+    const scale = tb.width / this.track.offsetWidth || 1;
+    const pad = 10;
+    return [...this.track.querySelectorAll<HTMLElement>(".media-item, .media-item .cap, .route-note, .finish-flag")].map((el) => {
+      const b = el.getBoundingClientRect();
+      return {
+        l: (b.left - tb.left) / scale - pad,
+        t: (b.top - tb.top) / scale - pad,
+        r: (b.right - tb.left) / scale + pad,
+        b: (b.bottom - tb.top) / scale + pad,
+      };
+    });
+  }
+
   private placeKms() {
     this.passed = KM_MARKS.map(() => false);
+    const blocked = this.obstacles();
+    const h = this.track.offsetHeight;
+    // Sign footprint: label (~22px) + stick (14px), plus the raised flag (26px) once passed.
+    const W = 56;
+    const H = 66;
+    const boxFor = (p: Point, below: boolean) =>
+      below ? { l: p.x - W / 2, r: p.x + W / 2, t: p.y + 6, b: p.y + 6 + H } : { l: p.x - W / 2, r: p.x + W / 2, t: p.y - 6 - H, b: p.y - 6 };
+    const hits = (a: { l: number; t: number; r: number; b: number }) =>
+      a.t < 0 || a.b > h || blocked.some((o) => a.l < o.r && a.r > o.l && a.t < o.b && a.b > o.t);
+    const step = 6;
+    const maxShift = this.numTotal * 0.1;
+
     this.kmMarkers = KM_MARKS.map((k) => {
-      const p = this.pointAtDist((k / TOTAL_KM) * this.numTotal);
+      const ideal = (k / TOTAL_KM) * this.numTotal;
+      let p = this.pointAtDist(ideal);
+      let below = p.y < 80;
+      // Slide along the route (nearest first) until the sign sits clear of photos and other signs.
+      search: for (let off = 0; off <= maxShift; off += step) {
+        for (const d of off ? [ideal - off, ideal + off] : [ideal]) {
+          if (d < 0 || d > this.numTotal) continue;
+          const q = this.pointAtDist(d);
+          // Signs always stand upright on top of the path.
+          const bl = false;
+          const box = boxFor(q, bl);
+          if (!hits(box)) {
+            p = q;
+            below = bl;
+            blocked.push({ l: box.l - 8, t: box.t, r: box.r + 8, b: box.b });
+            break search;
+          }
+        }
+      }
       const half = k === 21.1;
-      const below = p.y < 80;
       const marker = document.createElement("div");
       marker.className = "km-marker";
       marker.classList.toggle("show", this.started);

@@ -1,70 +1,132 @@
 [
   {
-    "src": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=800&fit=crop",
+    "src": "/photos/web/img_8369-2.jpg",
     "type": "image",
-    "caption": "Training run in the morning",
-    "aspect": "3/4",
-    "size": "portrait",
+    "caption": "RVM Half Marathon",
+    "aspect": "3/2",
+    "w": 1500,
+    "h": 1000,
+    "size": "landscape",
     "left": 80,
-    "top": "10%",
-    "height": "40%",
-    "layer": 7
-  },
-  {
-    "src": "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=1200&h=675&fit=crop",
-    "type": "image",
-    "caption": "Miles on the pavement",
-    "aspect": "16/9",
-    "size": "landscape",
-    "left": 800,
-    "top": "55%",
-    "height": "30%",
-    "layer": 7
-  },
-  {
-    "src": "https://images.unsplash.com/photo-1541534040908-112ccc7e519a?w=540&h=960&fit=crop",
-    "type": "video",
-    "poster": "https://images.unsplash.com/photo-1541534040908-112ccc7e519a?w=540&h=960&fit=crop",
-    "caption": "Finishing strong",
-    "aspect": "9/16",
-    "size": "vertical",
-    "left": 1600,
-    "top": "8%",
-    "height": "55%",
-    "layer": 7
-  },
-  {
-    "src": "https://images.unsplash.com/photo-1495521821757-a1efb6729352?w=1200&h=675&fit=crop",
-    "type": "image",
-    "caption": "Pushing through the wall",
-    "aspect": "16/9",
-    "size": "landscape",
-    "left": 2500,
-    "top": "60%",
+    "top": "6%",
     "height": "28%",
-    "layer": 7
+    "layer": 7,
+    "leg": {
+      "n": 1,
+      "title": "Who I am"
+    },
+    "note": "CS Student @ SFU who loves to experience new things and push my limits in whatever I choose to do! Off the track, solving problems and turning ideas into real projects is what I call fun."
   },
   {
-    "src": "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=540&h=960&fit=crop",
-    "type": "video",
-    "poster": "https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=540&h=960&fit=crop",
-    "caption": "Victory lap",
-    "aspect": "9/16",
-    "size": "vertical",
-    "left": 3400,
-    "top": "10%",
-    "height": "52%",
-    "layer": 7
-  },
-  {
-    "src": "https://images.unsplash.com/photo-1594882645126-56265e759c83?w=1200&h=675&fit=crop",
+    "src": "/photos/web/img_1722.jpg",
     "type": "image",
-    "caption": "Crossing the finish",
-    "aspect": "16/9",
+    "caption": "Photo shoot with SensMS",
+    "aspect": "3/4",
+    "w": 1200,
+    "h": 1600,
+    "size": "portrait",
+    "left": 600,
+    "top": "46%",
+    "height": "36%",
+    "layer": 7,
+    "leg": {
+      "n": 2,
+      "title": "What I build"
+    },
+    "note": "I love creating projects that make things more efficient, especially in backend and AI automation. Using what I’ve learned to make life easier for me and the people around me is what I love to build."
+  },
+  {
+    "src": "/photos/web/img_4545.jpg",
+    "type": "image",
+    "caption": "Mount Baker Skyline Loop Trail",
+    "aspect": "3/4",
+    "w": 1200,
+    "h": 1600,
+    "size": "portrait",
+    "left": 1120,
+    "top": "6%",
+    "height": "36%",
+    "layer": 7,
+    "leg": {
+      "n": 3,
+      "title": "What keeps me going"
+    },
+    "note": "When I’m not coding, I’m running, lifting, cooking or hiking. I just ran my first full marathon, and what I love most about training is the consistency and the mental work. I bring that into the rest of my life, software included."
+  },
+  {
+    "src": "/photos/web/img_0931.jpg",
+    "type": "image",
+    "caption": "Rumble with my fam",
+    "aspect": "3/4",
+    "w": 1200,
+    "h": 1600,
+    "size": "portrait",
+    "left": 1640,
+    "top": "46%",
+    "height": "36%",
+    "layer": 7
+  },
+  {
+    "src": "/photos/web/img_6887.mp4",
+    "type": "video",
+    "caption": "Mid Marathon Views",
+    "aspect": "9/16",
+    "w": 540,
+    "h": 960,
+    "size": "vertical",
+    "left": 2160,
+    "top": "6%",
+    "height": "46%",
+    "layer": 7,
+    "poster": "/photos/web/img_6887-poster.jpg"
+  },
+  {
+    "src": "/photos/web/img_8760-2.jpg",
+    "type": "image",
+    "caption": "3v3 basketball charity event",
+    "aspect": "4/3",
+    "w": 1600,
+    "h": 1200,
     "size": "landscape",
-    "left": 4300,
-    "top": "58%",
+    "left": 2680,
+    "top": "52%",
+    "height": "30%",
+    "layer": 7,
+    "leg": {
+      "n": 4,
+      "title": "Where I show up"
+    },
+    "note": "I love taking part in hackathons, and I volunteer with Engineers Without Borders, running ventures that teach elementary students about engineering!"
+  },
+  {
+    "src": "/photos/web/img_7789.jpg",
+    "type": "image",
+    "caption": "Bigway Social with EWB Exec team",
+    "aspect": "4/3",
+    "w": 1600,
+    "h": 1200,
+    "size": "landscape",
+    "left": 3200,
+    "top": "6%",
     "height": "30%",
     "layer": 7
+  },
+  {
+    "src": "/photos/web/img_7001.jpg",
+    "type": "image",
+    "caption": "Before the ferry with friends",
+    "aspect": "3/2",
+    "w": 1600,
+    "h": 1061,
+    "size": "landscape",
+    "left": 3720,
+    "top": "54%",
+    "height": "28%",
+    "layer": 7,
+    "leg": {
+      "n": 5,
+      "title": "Where I’m headed"
+    },
+    "note": "Next on the route: finishing my bachelor’s, landing another internship, running my second full marathon, and hiking Panorama Ridge."
   }
 ]
