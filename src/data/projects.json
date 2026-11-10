@@ -3,7 +3,7 @@
     "slug": "pokevault",
     "title": "PokéVault",
     "meta": null,
-    "description": "A Java 21 Spring Boot REST API for storing and retrieving Pokémon TCG collections, with versioned PostgreSQL migrations, containerized development, and automated integration testing.",
+    "description": "A full-stack Pokémon TCG collection tracker: a Java 21 Spring Boot API on PostgreSQL with a React and TypeScript dashboard for portfolio value over time, set-completion checklists, and market prices refreshed daily from TCGdex. Flyway migrations and Testcontainers integration tests.",
     "tags": [
       {
         "name": "Java",
@@ -18,12 +18,16 @@
         "icon": "icons/postgresql.svg"
       },
       {
-        "name": "Docker",
-        "icon": "icons/docker.svg"
+        "name": "React",
+        "icon": "icons/react.svg"
       },
       {
-        "name": "Spring Data JPA",
-        "icon": "icons/spring.svg"
+        "name": "TypeScript",
+        "icon": null
+      },
+      {
+        "name": "Docker",
+        "icon": "icons/docker.svg"
       },
       {
         "name": "Flyway",
@@ -45,7 +49,7 @@
     "githubUrl": "https://github.com/franollf/pokevault",
     "demoUrl": "https://youtu.be/MLe6hXhtoc8",
     "liveUrl": null,
-    "videoUrl": null,
+    "videoUrl": "projects/web/pokevault-demo.mp4",
     "icon": "projects/web/pokevault.jpg",
     "badges": [],
     "featured": true,
@@ -53,11 +57,19 @@
       "src": "projects/pokevault.png",
       "srcset": "projects/web/pokevault.jpg 1400w",
       "class": "project-preview pokevault-project-preview",
-      "alt": "PokéVault screenshot",
+      "alt": "PokéVault demo",
       "width": 1400,
       "height": 1102
     },
-    "accent": "terracotta"
+    "accent": "terracotta",
+    "videoPoster": "projects/web/pokevault-demo-poster.jpg",
+    "videoSize": [
+      1080,
+      832
+    ],
+    "videoBg": "#f4f3ee",
+    "videoFade": "84%",
+    "videoAmbient": false
   },
   {
     "slug": "saferx",
@@ -85,7 +97,7 @@
     "githubUrl": "https://github.com/p-north/Polypharmacy_Safety-Agent",
     "demoUrl": "https://youtu.be/l_QJ0asThlM",
     "liveUrl": null,
-    "videoUrl": null,
+    "videoUrl": "projects/web/saferx-demo.mp4",
     "icon": "projects/web/saferx.jpg",
     "badges": [
       "Hackathon"
@@ -97,14 +109,24 @@
       "width": 1400,
       "height": 1213
     },
-    "accent": "plum"
+    "accent": "plum",
+    "videoPoster": "projects/web/saferx-demo-poster.jpg",
+    "videoSize": [
+      1280,
+      948
+    ],
+    "videoBg": "#131727"
   },
   {
     "slug": "elevate",
     "title": "Elevate",
     "meta": null,
-    "description": "A full-stack running app that generates optimal low-elevation routes in real time.",
+    "description": "A Next.js running app that builds flat loop and out-and-back routes from any start point, routing over OpenStreetMap with Valhalla to avoid hills and stairs. Shows each route on Google Maps with a live elevation profile and exports courses to Garmin (FIT) or GPX.",
     "tags": [
+      {
+        "name": "Next.js",
+        "icon": null
+      },
       {
         "name": "React",
         "icon": "icons/react.svg"
@@ -116,22 +138,35 @@
       {
         "name": "Google Maps API",
         "icon": "icons/google.svg"
+      },
+      {
+        "name": "OpenStreetMap",
+        "icon": null
       }
     ],
     "githubUrl": "https://github.com/franollf/Elevate",
     "demoUrl": null,
-    "liveUrl": null,
-    "videoUrl": null,
+    "liveUrl": "https://elevate-lovat.vercel.app/",
+    "videoUrl": "projects/web/elevate-demo.mp4",
     "icon": "projects/web/elevate.jpg",
     "badges": [],
     "featured": false,
     "image": {
       "src": "projects/web/elevate.jpg",
-      "alt": "Elevate screenshot",
+      "alt": "Elevate demo",
       "width": 1400,
       "height": 699
     },
-    "accent": "moss"
+    "accent": "moss",
+    "videoPoster": "projects/web/elevate-demo-poster.jpg",
+    "videoSize": [
+      1600,
+      894
+    ],
+    "videoBg": "#edf0ee",
+    "videoAmbient": false,
+    "videoEdgeBlur": false,
+    "videoFill": true
   },
   {
     "slug": "quizling",
@@ -163,7 +198,7 @@
     "githubUrl": "https://github.com/gunmack/QuizLing",
     "demoUrl": "https://youtu.be/x05i0RJBUkU",
     "liveUrl": null,
-    "videoUrl": null,
+    "videoUrl": "projects/web/quizling-demo.mp4",
     "icon": "projects/web/quizling.jpg",
     "badges": [],
     "featured": false,
@@ -173,7 +208,13 @@
       "width": 1400,
       "height": 784
     },
-    "accent": "amber"
+    "accent": "amber",
+    "videoPoster": "projects/web/quizling-demo-poster.jpg",
+    "videoSize": [
+      1280,
+      720
+    ],
+    "videoBg": "linear-gradient(135deg, #4381a8 0%, #5f9fb6 55%, #78bab7 100%)"
   },
   {
     "slug": "capturethestar",
@@ -197,7 +238,7 @@
     "githubUrl": "https://github.com/p-north/TCP_Networking_Game",
     "demoUrl": null,
     "liveUrl": null,
-    "videoUrl": null,
+    "videoUrl": "projects/web/capturethestar-demo.mp4",
     "icon": "projects/web/capturethestar.jpg",
     "badges": [],
     "featured": false,
@@ -207,6 +248,12 @@
       "width": 1400,
       "height": 1173
     },
-    "accent": "terracotta"
+    "accent": "terracotta",
+    "videoPoster": "projects/web/capturethestar-demo-poster.jpg",
+    "videoSize": [
+      712,
+      816
+    ],
+    "videoBg": "#2b2b2b"
   }
 ]

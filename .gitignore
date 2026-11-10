@@ -22,3 +22,8 @@ dist/
 !/public/assets/franoll-fantu-resume.pdf
 !/public/assets/franoll-piskel-blinking.gif
 node_modules
+
+# Raw source videos; compressed copies live in public/
+/photos/*.mp4
+/photos/*.MOV
+/photos/*.mov

@@ -18,16 +18,16 @@
     "note": "CS Student @ SFU who loves to experience new things and push my limits in whatever I choose to do! Off the track, solving problems and turning ideas into real projects is what I call fun."
   },
   {
-    "src": "/photos/web/img_1722.jpg",
+    "src": "/photos/web/sensms-team.jpg",
     "type": "image",
     "caption": "Photo shoot with SensMS",
-    "aspect": "3/4",
-    "w": 1200,
-    "h": 1600,
-    "size": "portrait",
+    "aspect": "3/2",
+    "w": 1600,
+    "h": 1067,
+    "size": "landscape",
     "left": 600,
-    "top": "46%",
-    "height": "36%",
+    "top": "50%",
+    "height": "28%",
     "layer": 7,
     "leg": {
       "n": 2,
@@ -36,12 +36,12 @@
     "note": "I love creating projects that make things more efficient, especially in backend and AI automation. Using what I’ve learned to make life easier for me and the people around me is what I love to build."
   },
   {
-    "src": "/photos/web/img_4545.jpg",
-    "type": "image",
+    "src": "/photos/web/baker-trail.mp4",
+    "type": "video",
     "caption": "Mount Baker Skyline Loop Trail",
     "aspect": "3/4",
-    "w": 1200,
-    "h": 1600,
+    "w": 720,
+    "h": 960,
     "size": "portrait",
     "left": 1120,
     "top": "6%",
@@ -51,7 +51,8 @@
       "n": 3,
       "title": "What keeps me going"
     },
-    "note": "When I’m not coding, I’m running, lifting, cooking or hiking. I just ran my first full marathon, and what I love most about training is the consistency and the mental work. I bring that into the rest of my life, software included."
+    "note": "When I’m not coding, I’m running, lifting, cooking or hiking. I just ran my first full marathon, and what I love most about training is the consistency and the mental work. I bring that into the rest of my life, software included.",
+    "poster": "/photos/web/baker-trail-poster.jpg"
   },
   {
     "src": "/photos/web/img_0931.jpg",

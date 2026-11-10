@@ -90,7 +90,6 @@ const runnerFrameB = `
                 ) : (
                   <video src={media.src} poster={media.poster} width={media.w} height={media.h} muted loop playsinline preload="none" data-video></video>
                 )}
-                {media.type === "video" && <span class="badge"><span class="play"></span>CLIP</span>}
               </div>
               <figcaption class="cap">{media.caption}</figcaption>
             </figure>
@@ -119,7 +118,7 @@ const runnerFrameB = `
         <h2 class="finish-heading">You just ran<br />a marathon with me.</h2>
         <p class="finish-text">Want to see what I build when I'm not out here?</p>
         <div class="finish-actions">
-          <a href="/projects" class="finish-primary">See projects →</a>
+          <a href="/projects" class="finish-primary" data-tab-link="projects">See projects →</a>
         </div>
       </section>
 
@@ -480,28 +479,6 @@ const runnerFrameB = `
     object-fit: cover;
   }
 
-  .badge {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 3px 8px;
-    border-radius: 999px;
-    background-color: rgba(20, 28, 23, 0.78);
-    color: #ffffff;
-    font: 600 10px/1.4 "JetBrains Mono", monospace;
-    letter-spacing: 0.08em;
-  }
-
-  .play {
-    width: 0;
-    height: 0;
-    border-left: 7px solid #ffffff;
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid transparent;
-  }
 
   .cap {
     position: absolute;

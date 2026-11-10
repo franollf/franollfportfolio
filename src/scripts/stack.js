@@ -234,6 +234,8 @@ if (root) {
       iframe.title = `${link.dataset.title} demo video`;
       iframe.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
       iframe.allowFullscreen = true;
+      dialog.style.removeProperty("--lb-ratio");
+      dialog.style.removeProperty("--lb-bg");
       openDemo(iframe, `${link.dataset.title} demo`);
       return;
     }
@@ -245,7 +247,113 @@ if (root) {
       full.autoplay = true;
       full.playsInline = true;
       full.setAttribute("aria-label", `${video.dataset.title} demo video`);
+      const w = Number(video.getAttribute("width"));
+      const h = Number(video.getAttribute("height"));
+      if (w && h) dialog.style.setProperty("--lb-ratio", String(w / h));
+      else dialog.style.removeProperty("--lb-ratio");
+      dialog.style.setProperty("--lb-bg", getComputedStyle(video.closest(".pj-media")).getPropertyValue("--demo-bg") || "#000");
       openDemo(full, `${video.dataset.title} demo`);
+    }
+  });
+
+  // ---------- ambient panel colour behind each demo video ----------
+  // Each frame is shrunk to a tiny canvas and the colours along its outer edge are
+  // averaged in a few segments per side. Those averages become a 5x5 colour field that
+  // CSS scales up and blurs behind the video, so the panel always matches the video's
+  // edges, and small objects touching an edge get averaged away instead of smeared.
+  const SEG = 3; // segments per side
+  const work = document.createElement("canvas");
+  work.width = 24;
+  work.height = 18;
+  const wctx = work.getContext("2d", { willReadFrequently: true });
+
+  const edgeField = (src) => {
+    const sw = src.videoWidth || src.naturalWidth;
+    const sh = src.videoHeight || src.naturalHeight;
+    if (!sw || !sh || !wctx) return null;
+    wctx.imageSmoothingQuality = "high";
+    wctx.drawImage(src, 0, 0, work.width, work.height);
+    const { data } = wctx.getImageData(0, 0, work.width, work.height);
+    const W = work.width;
+    const H = work.height;
+    const avg = (x0, y0, x1, y1) => {
+      let r = 0, g = 0, b = 0, n = 0;
+      for (let y = y0; y < y1; y++)
+        for (let x = x0; x < x1; x++) {
+          const i = (y * W + x) * 4;
+          r += data[i];
+          g += data[i + 1];
+          b += data[i + 2];
+          n++;
+        }
+      return [r / n, g / n, b / n];
+    };
+    const d = 2; // edge strip depth in work pixels
+    const seg = (len, k) => [Math.round((len * k) / SEG), Math.round((len * (k + 1)) / SEG)];
+    const top = [], bottom = [], left = [], right = [];
+    for (let k = 0; k < SEG; k++) {
+      const [x0, x1] = seg(W, k);
+      const [y0, y1] = seg(H, k);
+      top.push(avg(x0, 0, x1, d));
+      bottom.push(avg(x0, H - d, x1, H));
+      left.push(avg(0, y0, d, y1));
+      right.push(avg(W - d, y0, W, y1));
+    }
+    const mix = (...cs) => cs.reduce((a, c) => a.map((v, i) => v + c[i] / cs.length), [0, 0, 0]);
+    const N = SEG + 2;
+    const field = new ImageData(N, N);
+    const put = (x, y, c) => {
+      const i = (y * N + x) * 4;
+      field.data.set([c[0], c[1], c[2], 255], i);
+    };
+    const all = mix(...top, ...bottom, ...left, ...right);
+    for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) put(x, y, all);
+    for (let k = 0; k < SEG; k++) {
+      put(k + 1, 0, top[k]);
+      put(k + 1, N - 1, bottom[k]);
+      put(0, k + 1, left[k]);
+      put(N - 1, k + 1, right[k]);
+    }
+    put(0, 0, mix(top[0], left[0]));
+    put(N - 1, 0, mix(top[SEG - 1], right[0]));
+    put(0, N - 1, mix(bottom[0], left[SEG - 1]));
+    put(N - 1, N - 1, mix(bottom[SEG - 1], right[SEG - 1]));
+    return field;
+  };
+
+  cards.forEach((c) => {
+    const v = c.querySelector("video.pj-video");
+    const cv = c.querySelector(".pj-ambient");
+    if (!v || !cv) return;
+    const ctx = cv.getContext("2d", { alpha: false });
+    if (!ctx) return;
+    cv.width = cv.height = SEG + 2;
+    const paint = (src) => {
+      try {
+        const field = edgeField(src);
+        if (!field) return;
+        ctx.putImageData(field, 0, 0);
+        cv.classList.add("is-ready");
+      } catch {}
+    };
+    let raf = 0;
+    let last = 0;
+    const loop = (t) => {
+      if (v.readyState >= 2 && t - last > 66) {
+        paint(v);
+        last = t;
+      }
+      raf = v.paused ? 0 : requestAnimationFrame(loop);
+    };
+    v.addEventListener("play", () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(loop);
+    });
+    v.addEventListener("loadeddata", () => paint(v));
+    if (v.poster) {
+      const img = new Image();
+      img.onload = () => v.readyState < 2 && paint(img);
+      img.src = v.poster;
     }
   });
 
