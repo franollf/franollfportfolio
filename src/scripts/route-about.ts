@@ -246,6 +246,11 @@ class RouteAbout {
       return [{ x: x - half - 28, y }, { x, y }, { x: x + half + 28, y }];
     });
     if (pts.length < 2) return;
+    // Phones: leave START sideways and climb in the gap past the intro, not up through its text.
+    if (this.scroller.clientWidth <= 760) {
+      const ib = this.introEl.getBoundingClientRect();
+      pts.splice(1, 0, { x: (ib.right - tb.left) / scale + 14, y: pts[0].y });
+    }
 
     const segs: Segment[] = [];
     let d = `M ${pts[0].x.toFixed(1)} ${pts[0].y.toFixed(1)}`;
@@ -311,7 +316,7 @@ class RouteAbout {
     const tb = this.track.getBoundingClientRect();
     const scale = tb.width / this.track.offsetWidth || 1;
     const pad = 10;
-    return [...this.track.querySelectorAll<HTMLElement>(".media-item, .media-item .cap, .route-note, .finish-flag")].map((el) => {
+    return [...this.track.querySelectorAll<HTMLElement>(".media-item, .media-item .cap, .route-note, .finish-flag, .intro-text, .avatar, .start-btn, .back-btn")].map((el) => {
       const b = el.getBoundingClientRect();
       return {
         l: (b.left - tb.left) / scale - pad,
@@ -334,25 +339,28 @@ class RouteAbout {
     const hits = (a: { l: number; t: number; r: number; b: number }) =>
       a.t < 0 || a.b > h || blocked.some((o) => a.l < o.r && a.r > o.l && a.t < o.b && a.b > o.t);
     const step = 6;
-    const maxShift = this.numTotal * 0.1;
+    const maxShift = this.numTotal * 0.16;
 
     this.kmMarkers = KM_MARKS.map((k) => {
       const ideal = (k / TOTAL_KM) * this.numTotal;
       let p = this.pointAtDist(ideal);
       let below = p.y < 80;
+      let clear = false;
       // Slide along the route (nearest first) until the sign sits clear of photos and other signs.
       search: for (let off = 0; off <= maxShift; off += step) {
         for (const d of off ? [ideal - off, ideal + off] : [ideal]) {
           if (d < 0 || d > this.numTotal) continue;
           const q = this.pointAtDist(d);
-          // Signs always stand upright on top of the path.
-          const bl = false;
-          const box = boxFor(q, bl);
-          if (!hits(box)) {
-            p = q;
-            below = bl;
-            blocked.push({ l: box.l - 8, t: box.t, r: box.r + 8, b: box.b });
-            break search;
+          // Prefer standing on top of the path; hang below it only when that is the clear spot.
+          for (const bl of [false, true]) {
+            const box = boxFor(q, bl);
+            if (!hits(box)) {
+              p = q;
+              below = bl;
+              clear = true;
+              blocked.push({ l: box.l - 8, t: box.t, r: box.r + 8, b: box.b });
+              break search;
+            }
           }
         }
       }
@@ -361,6 +369,8 @@ class RouteAbout {
       marker.className = "km-marker";
       marker.classList.toggle("show", this.started);
       marker.classList.toggle("below", below);
+      // Nowhere clear nearby: leave this sign out rather than cover a photo or text.
+      marker.hidden = !clear;
       marker.style.left = `${p.x.toFixed(1)}px`;
       marker.style.top = `${(below ? p.y + 6 : p.y - 6).toFixed(1)}px`;
       const label = document.createElement("span");

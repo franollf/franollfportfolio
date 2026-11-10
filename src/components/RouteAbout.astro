@@ -605,6 +605,10 @@ const runnerFrameB = `
     transition: opacity 0.9s ease;
   }
 
+  .km-markers :global(.km-marker[hidden]) {
+    display: none;
+  }
+
   .km-markers :global(.km-marker.show) {
     opacity: 1;
   }
@@ -797,7 +801,7 @@ const runnerFrameB = `
     .ra-intro.started {
       width: var(--stage-w, 100vw);
       padding: 16px 20px 96px;
-      align-items: flex-start;
+      align-items: center;
     }
 
     .intro-inner {
@@ -889,12 +893,13 @@ const runnerFrameB = `
     /* the run: one photo + its note per ~screen, instead of the desktop spacing */
     .media-section {
       --step: 290px;
-      width: calc(var(--n) * var(--step) + 40px);
+      --lead: 64px;
+      width: calc(var(--lead) + var(--n) * var(--step) + 20px);
     }
 
     .media-item,
     .route-note {
-      left: calc(20px + var(--i) * var(--step));
+      left: calc(var(--lead) + var(--i) * var(--step));
     }
 
     .media-item {
@@ -902,7 +907,7 @@ const runnerFrameB = `
     }
 
     .wp {
-      left: calc(20px + var(--i) * var(--step) + var(--step) - 16px);
+      left: calc(var(--lead) + var(--i) * var(--step) + var(--step) - 16px);
     }
 
     .route-note {
@@ -949,6 +954,62 @@ const runnerFrameB = `
 
     .progress-bar {
       width: 64px;
+    }
+  }
+
+  /* tall phones: scale the intro up to use the screen */
+  @media (max-width: 760px) and (min-height: 800px) {
+    .intro-text {
+      gap: 16px;
+    }
+
+    .avatar {
+      width: 96px;
+    }
+
+    .intro-greeting {
+      font-size: 18px;
+      padding-right: 104px;
+    }
+
+    .intro-name {
+      padding-right: 104px;
+    }
+
+    .intro-role {
+      font-size: 19px;
+    }
+
+    .intro-info dt {
+      font-size: 13px;
+    }
+
+    .intro-info dd {
+      font-size: 16px;
+    }
+
+    .intro-info dt + dd ~ dt {
+      margin-top: 12px;
+    }
+
+    .chip {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+
+    .btn-primary {
+      min-height: 50px;
+    }
+
+    .btn-icon {
+      width: 50px;
+      height: 50px;
+    }
+
+    .start-btn,
+    .back-btn {
+      top: calc(100% + 28px);
+      min-height: 50px;
     }
   }
 
