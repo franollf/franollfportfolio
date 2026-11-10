@@ -76,12 +76,12 @@ const runnerFrameB = `
         </div>
       </section>
 
-      <section class="media-section fade" aria-label="Photos and clips" data-reveal>
+      <section class="media-section fade" aria-label="Photos and clips" style={`--n: ${routeMedia.length}`} data-reveal>
         {routeMedia.map((media, idx) => (
           <>
             <figure
               class="media-item"
-              style={`left: ${media.left}px; top: ${media.top}; height: ${media.height}; aspect-ratio: ${media.aspect.replace("/", " / ")}; z-index: ${media.layer}`}
+              style={`--l: ${media.left}px; --i: ${idx}; top: ${media.top}; height: ${media.height}; aspect-ratio: ${media.aspect.replace("/", " / ")}; z-index: ${media.layer}`}
               data-route-pt
             >
               <div class="media">
@@ -93,12 +93,12 @@ const runnerFrameB = `
               </div>
               <figcaption class="cap">{media.caption}</figcaption>
             </figure>
-            {media.leg && <div class:list={["route-note", idx % 2 === 0 ? "below" : "above"]} style={idx % 2 === 0 ? `left: ${media.left}px; top: calc(${media.top} + ${media.height} + 48px)` : `left: ${media.left}px`}>
+            {media.leg && <div class:list={["route-note", idx % 2 === 0 ? "below" : "above"]} style={idx % 2 === 0 ? `--l: ${media.left}px; --i: ${idx}; top: calc(${media.top} + ${media.height} + 48px)` : `--l: ${media.left}px; --i: ${idx}`}>
               <p class="leg"><span class="leg-num">LEG {media.leg.n}</span>{media.leg.title}</p>
               <p class="note-text">{media.note}</p>
             </div>}
             {(waypoints[idx] ?? []).map((wp) => (
-              <div class="wp" aria-hidden="true" style={`left: ${wp.left}px; top: ${wp.top}`} data-route-pt></div>
+              <div class="wp" aria-hidden="true" style={`--l: ${wp.left}px; --i: ${idx}; top: ${wp.top}`} data-route-pt></div>
             ))}
           </>
         ))}
@@ -132,7 +132,7 @@ const runnerFrameB = `
   </div>
 
   <div class="progress fade" data-reveal>
-    <span class="progress-label">scroll →</span>
+    <span class="progress-label"><span class="lbl-pointer">scroll →</span><span class="lbl-touch">swipe →</span></span>
     <span class="progress-km" aria-live="polite" data-km-text>0.0 / 42.2 KM</span>
     <span class="progress-bar"><span class="progress-fill" data-progress-fill></span></span>
     <button type="button" class="restart-btn" aria-label="Back to the start" title="Back to the start" data-restart-btn>
@@ -450,6 +450,7 @@ const runnerFrameB = `
 
   .wp {
     position: absolute;
+    left: var(--l);
     width: 2px;
     height: 2px;
     pointer-events: none;
@@ -457,6 +458,7 @@ const runnerFrameB = `
 
   .media-item {
     position: absolute;
+    left: var(--l);
     margin: 0;
   }
 
@@ -493,6 +495,7 @@ const runnerFrameB = `
   /* ---------- Leg text (the "about me" copy, opposite the photo that starts each leg) ---------- */
   .route-note {
     position: absolute;
+    left: var(--l);
     z-index: 6;
     width: 400px;
   }
@@ -779,15 +782,206 @@ const runnerFrameB = `
     transform-origin: left;
   }
 
+  .lbl-touch {
+    display: none;
+  }
+
+  @media (hover: none) {
+    .lbl-pointer { display: none; }
+    .lbl-touch { display: inline; }
+  }
+
+  /* ---------- Phones: intro fits one screen, the run is packed tighter ---------- */
   @media (max-width: 760px) {
-    .intro-inner {
-      flex-direction: column;
+    .ra-intro,
+    .ra-intro.started {
+      width: var(--stage-w, 100vw);
+      padding: 16px 20px 96px;
       align-items: flex-start;
     }
 
+    .intro-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    .intro-text {
+      gap: 12px;
+    }
+
+    /* small portrait tucked beside the greeting and name */
     .avatar {
-      width: 150px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 76px;
       height: auto;
+    }
+
+    .intro-greeting {
+      font-size: 16px;
+      padding-right: 88px;
+    }
+
+    .intro-name {
+      font-size: min(40px, 8.5vw);
+      padding-right: 80px;
+      white-space: nowrap;
+    }
+
+    .intro-role {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .intro-info {
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .intro-info dt {
+      font-size: 12px;
+    }
+
+    .intro-info dt + dd ~ dt {
+      margin-top: 8px;
+    }
+
+    .intro-info dd {
+      font-size: 15px;
+    }
+
+    .intro-skills {
+      gap: 6px;
+    }
+
+    .chip {
+      padding: 4px 10px;
+      font-size: 12px;
+    }
+
+    .intro-actions {
+      flex-wrap: nowrap;
+      gap: 8px;
+      padding-top: 2px;
+    }
+
+    .btn-primary {
+      min-height: 44px;
+      padding: 0 18px;
+      font-size: 16px;
+    }
+
+    .btn-icon {
+      width: 44px;
+      height: 44px;
+    }
+
+    .start-btn,
+    .back-btn {
+      top: calc(100% + 18px);
+      min-height: 44px;
+      padding: 0 16px;
+      font-size: 12px;
+    }
+
+    /* the run: one photo + its note per ~screen, instead of the desktop spacing */
+    .media-section {
+      --step: 290px;
+      width: calc(var(--n) * var(--step) + 40px);
+    }
+
+    .media-item,
+    .route-note {
+      left: calc(20px + var(--i) * var(--step));
+    }
+
+    .media-item {
+      max-width: calc(var(--step) - 56px);
+    }
+
+    .wp {
+      left: calc(20px + var(--i) * var(--step) + var(--step) - 16px);
+    }
+
+    .route-note {
+      width: calc(var(--step) - 40px);
+    }
+
+    .leg {
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 24px;
+    }
+
+    .leg-num {
+      font-size: 9px;
+    }
+
+    .note-text {
+      font-size: 14.5px;
+      line-height: 1.45;
+    }
+
+    .cap {
+      min-width: 0;
+      font-size: 12.5px;
+    }
+
+    .finish {
+      width: var(--stage-w, 100vw);
+      padding: 0 24px 72px;
+    }
+
+    .finish-heading {
+      font-size: 30px;
+    }
+
+    .finish-text {
+      font-size: 15px;
+    }
+
+    .progress {
+      gap: 10px;
+      padding: 9px 14px;
+    }
+
+    .progress-bar {
+      width: 64px;
+    }
+  }
+
+  /* short phones (SE-size): tighten the intro so START/BACK clear the progress pill */
+  @media (max-width: 760px) and (max-height: 760px) {
+    .ra-intro,
+    .ra-intro.started {
+      padding-top: 6px;
+    }
+
+    .intro-text {
+      gap: 8px;
+    }
+
+    .avatar {
+      width: 64px;
+    }
+
+    .intro-role {
+      font-size: 15px;
+    }
+
+    .intro-info dd {
+      font-size: 14px;
+    }
+
+    .intro-info dt + dd ~ dt {
+      margin-top: 4px;
+    }
+
+    .start-btn,
+    .back-btn {
+      top: calc(100% + 12px);
     }
   }
 
